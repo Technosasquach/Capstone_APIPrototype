@@ -1,0 +1,1254 @@
+
+> capstone_apiprototype@1.0.0 watch-client /Users/jonndillon/git/Capstone_APIPrototype
+> webpack -w --display-error-details
+
+Hash: 14f4ba4eedfc64ee9cc6
+Version: webpack 4.30.0
+Time: 5132ms
+Built at: 2019-04-14 19:27:07
+ 2 assets
+Entrypoint main = bundle.js bundle.js.map
+[0] ./streams (ignored) 15 bytes {main} [built]
+[1] ./extend-node (ignored) 15 bytes {main} [built]
+[2] util (ignored) 15 bytes {main} [built]
+[3] util (ignored) 15 bytes {main} [built]
+[4] http (ignored) 15 bytes {main} [built]
+[5] buffer (ignored) 15 bytes {main} [optional] [built]
+[6] crypto (ignored) 15 bytes {main} [optional] [built]
+[./client/src/config/osiPiDetails.ts] 245 bytes {main} [built]
+[./client/src/index.tsx] 1.73 KiB {main} [built]
+[./client/src/public/bootstrap.min.css] 1.09 KiB {main} [built]
+[./node_modules/css-loader/index.js!./client/src/public/bootstrap.min.css] ./node_modules/css-loader!./client/src/public/bootstrap.min.css 142 KiB {main} [built]
+[./node_modules/express/lib sync recursive] ./node_modules/express/lib sync 160 bytes {main} [built]
+[./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 472 bytes {main} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 497 bytes {main} [built]
+    + 375 hidden modules
+
+WARNING in ./node_modules/express/lib/view.js 81:13-25
+Critical dependency: the request of a dependency is an expression
+    at CommonJsRequireContextDependency.getWarnings (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/dependencies/ContextDependency.js:40:18)
+    at Compilation.reportDependencyErrorsAndWarnings (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/Compilation.js:1360:24)
+    at hooks.finishModules.callAsync.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/Compilation.js:1168:10)
+    at AsyncSeriesHook.eval [as callAsync] (eval at create (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:15:1)
+    at AsyncSeriesHook.lazyCompileHook (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/tapable/lib/Hook.js:154:20)
+    at Compilation.finish (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/Compilation.js:1163:28)
+    at hooks.make.callAsync.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/Compiler.js:622:17)
+    at _done (eval at create (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:9:1)
+    at _err1 (eval at create (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/tapable/lib/HookCodeFactory.js:33:10), <anonymous>:32:22)
+    at _addModuleChain (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/Compilation.js:1095:12)
+    at processModuleDependencies.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/Compilation.js:1007:9)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    at process._tickCallback (internal/process/next_tick.js:180:9)
+ @ ./node_modules/express/lib/application.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/destroy/index.js
+Module not found: Error: Can't resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/destroy'
+resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/destroy'
+  Parsed request is a module
+  using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/destroy/package.json (relative path: .)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/client/src
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/destroy/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/node_modules doesn't exist or is not a directory
+      /Users/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/destroy/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules]
+[/Users/jonndillon/git/node_modules]
+[/Users/jonndillon/node_modules]
+[/Users/node_modules]
+[/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json]
+ @ ./node_modules/destroy/index.js 14:17-30
+ @ ./node_modules/send/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/etag/index.js
+Module not found: Error: Can't resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/etag'
+resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/etag'
+  Parsed request is a module
+  using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/etag/package.json (relative path: .)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/client/src
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/etag/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/node_modules doesn't exist or is not a directory
+      /Users/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/etag/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules]
+[/Users/jonndillon/git/node_modules]
+[/Users/jonndillon/node_modules]
+[/Users/node_modules]
+[/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json]
+ @ ./node_modules/etag/index.js 22:12-25
+ @ ./node_modules/express/lib/utils.js
+ @ ./node_modules/express/lib/application.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/express/lib/view.js
+Module not found: Error: Can't resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/lib'
+resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/lib'
+  Parsed request is a module
+  using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/package.json (relative path: ./lib)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/client/src
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/lib/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/node_modules doesn't exist or is not a directory
+      /Users/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/package.json (relative path: ./node_modules/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.json doesn't exist
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/lib/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules]
+[/Users/jonndillon/git/node_modules]
+[/Users/jonndillon/node_modules]
+[/Users/node_modules]
+[/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/fs.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json]
+ @ ./node_modules/express/lib/view.js 18:9-22
+ @ ./node_modules/express/lib/application.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/mime/mime.js
+Module not found: Error: Can't resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/mime'
+resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/mime'
+  Parsed request is a module
+  using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/mime/package.json (relative path: .)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/client/src
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/mime/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/node_modules doesn't exist or is not a directory
+      /Users/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/mime/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules]
+[/Users/jonndillon/git/node_modules]
+[/Users/jonndillon/node_modules]
+[/Users/node_modules]
+[/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json]
+ @ ./node_modules/mime/mime.js 2:9-22
+ @ ./node_modules/send/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/send/index.js
+Module not found: Error: Can't resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/send'
+resolve 'fs' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/send'
+  Parsed request is a module
+  using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/package.json (relative path: .)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/client/src
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/fs doesn't exist
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/node_modules doesn't exist or is not a directory
+      /Users/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/package.json (relative path: ./node_modules/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules/fs)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.json doesn't exist
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs doesn't exist
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/fs.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules]
+[/Users/jonndillon/git/node_modules]
+[/Users/jonndillon/node_modules]
+[/Users/node_modules]
+[/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/send/node_modules/fs.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/fs.json]
+ @ ./node_modules/send/index.js 23:9-22
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/express/lib/request.js
+Module not found: Error: Can't resolve 'net' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/lib'
+resolve 'net' in '/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/lib'
+  Parsed request is a module
+  using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/package.json (relative path: ./lib)
+    Field 'browser' doesn't contain a valid alias configuration
+    resolve as module
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/client/src
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./client/src/net)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/net doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/net.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/net.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/net.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/net.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/net.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/client/src/net doesn't exist
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/lib/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/git/node_modules doesn't exist or is not a directory
+      /Users/jonndillon/node_modules doesn't exist or is not a directory
+      /Users/node_modules doesn't exist or is not a directory
+      /node_modules doesn't exist or is not a directory
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+      looking for modules in /Users/jonndillon/git/Capstone_APIPrototype/node_modules
+        using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules)
+          Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/package.json (relative path: ./node_modules/net)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+          using description file: /Users/jonndillon/git/Capstone_APIPrototype/package.json (relative path: ./node_modules/net)
+            no extension
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/net doesn't exist
+            .ts
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.ts doesn't exist
+            .js
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.js doesn't exist
+            .tsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.tsx doesn't exist
+            .jsx
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.jsx doesn't exist
+            .json
+              Field 'browser' doesn't contain a valid alias configuration
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.json doesn't exist
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.json doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net doesn't exist
+            as directory
+              /Users/jonndillon/git/Capstone_APIPrototype/node_modules/net doesn't exist
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/net]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/net.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/net.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/net.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/net.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/client/src/net.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/lib/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/node_modules]
+[/Users/jonndillon/git/node_modules]
+[/Users/jonndillon/node_modules]
+[/Users/node_modules]
+[/node_modules]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/net]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.ts]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.js]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.tsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.jsx]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/express/node_modules/net.json]
+[/Users/jonndillon/git/Capstone_APIPrototype/node_modules/net.json]
+ @ ./node_modules/express/lib/request.js 18:11-25
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/iconv-lite/encodings/tables/shiftjis.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/iconv-lite/encodings/dbcs-data.js 43:35-68
+ @ ./node_modules/iconv-lite/encodings/index.js
+ @ ./node_modules/iconv-lite/lib/index.js
+ @ ./node_modules/body-parser/lib/read.js
+ @ ./node_modules/body-parser/lib/types/json.js
+ @ ./node_modules/body-parser/index.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/iconv-lite/encodings/tables/cp949.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/iconv-lite/encodings/dbcs-data.js 121:35-65
+ @ ./node_modules/iconv-lite/encodings/index.js
+ @ ./node_modules/iconv-lite/lib/index.js
+ @ ./node_modules/body-parser/lib/read.js
+ @ ./node_modules/body-parser/lib/types/json.js
+ @ ./node_modules/body-parser/index.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/iconv-lite/encodings/tables/big5-added.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/iconv-lite/encodings/dbcs-data.js 169:73-108
+ @ ./node_modules/iconv-lite/encodings/index.js
+ @ ./node_modules/iconv-lite/lib/index.js
+ @ ./node_modules/body-parser/lib/read.js
+ @ ./node_modules/body-parser/lib/types/json.js
+ @ ./node_modules/body-parser/index.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/iconv-lite/encodings/tables/cp936.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/iconv-lite/encodings/dbcs-data.js 87:35-65 93:35-65 105:35-65
+ @ ./node_modules/iconv-lite/encodings/index.js
+ @ ./node_modules/iconv-lite/lib/index.js
+ @ ./node_modules/body-parser/lib/read.js
+ @ ./node_modules/body-parser/lib/types/json.js
+ @ ./node_modules/body-parser/index.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/iconv-lite/encodings/tables/gbk-added.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/iconv-lite/encodings/dbcs-data.js 93:73-107 105:73-107
+ @ ./node_modules/iconv-lite/encodings/index.js
+ @ ./node_modules/iconv-lite/lib/index.js
+ @ ./node_modules/body-parser/lib/read.js
+ @ ./node_modules/body-parser/lib/types/json.js
+ @ ./node_modules/body-parser/index.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/iconv-lite/encodings/tables/eucjp.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/iconv-lite/encodings/dbcs-data.js 60:35-65
+ @ ./node_modules/iconv-lite/encodings/index.js
+ @ ./node_modules/iconv-lite/lib/index.js
+ @ ./node_modules/body-parser/lib/read.js
+ @ ./node_modules/body-parser/lib/types/json.js
+ @ ./node_modules/body-parser/index.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/iconv-lite/encodings/tables/cp950.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = [["...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/iconv-lite/encodings/dbcs-data.js 162:35-65 169:35-65
+ @ ./node_modules/iconv-lite/encodings/index.js
+ @ ./node_modules/iconv-lite/lib/index.js
+ @ ./node_modules/body-parser/lib/read.js
+ @ ./node_modules/body-parser/lib/types/json.js
+ @ ./node_modules/body-parser/index.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/express/node_modules/statuses/codes.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/express/node_modules/statuses/index.js 15:12-35
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/finalhandler/node_modules/statuses/codes.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/finalhandler/node_modules/statuses/index.js 15:12-35
+ @ ./node_modules/finalhandler/index.js
+ @ ./node_modules/express/lib/application.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/send/node_modules/statuses/codes.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/send/node_modules/statuses/index.js 15:12-35
+ @ ./node_modules/send/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/statuses/codes.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/statuses/index.js 15:12-35
+ @ ./node_modules/http-errors/index.js
+ @ ./node_modules/send/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/browserify-sign/browser/curves.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"1...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/browserify-sign/browser/verify.js 5:13-37
+ @ ./node_modules/browserify-sign/browser/index.js
+ @ ./node_modules/crypto-browserify/index.js
+ @ ./node_modules/cookie-signature/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/parse-asn1/aesid.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"2...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"2...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/parse-asn1/index.js 2:12-35
+ @ ./node_modules/browserify-sign/browser/verify.js
+ @ ./node_modules/browserify-sign/browser/index.js
+ @ ./node_modules/crypto-browserify/index.js
+ @ ./node_modules/cookie-signature/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/elliptic/package.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"_...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"_...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4
+    at process.nextTick (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:73:15)
+    at _combinedTickCallback (internal/process/next_tick.js:131:7)
+    at process._tickCallback (internal/process/next_tick.js:180:9)
+ @ ./node_modules/elliptic/lib/elliptic.js 5:19-45
+ @ ./node_modules/create-ecdh/browser.js
+ @ ./node_modules/crypto-browserify/index.js
+ @ ./node_modules/cookie-signature/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/mime-db/db.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"a...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"a...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/mime-db/index.js 11:17-37
+ @ ./node_modules/mime-types/index.js
+ @ ./node_modules/accepts/index.js
+ @ ./node_modules/express/lib/request.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/browserify-aes/modes/list.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"a...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"a...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/browserify-aes/browser.js 3:12-40
+ @ ./node_modules/browserify-cipher/browser.js
+ @ ./node_modules/crypto-browserify/index.js
+ @ ./node_modules/cookie-signature/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/mime/types.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"a...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"a...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/mime/mime.js 87:12-35
+ @ ./node_modules/send/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/diffie-hellman/lib/primes.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"m...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"m...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/diffie-hellman/browser.js 2:13-41
+ @ ./node_modules/crypto-browserify/index.js
+ @ ./node_modules/cookie-signature/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/browserify-sign/browser/algorithms.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"s...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"s...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/browserify-sign/algos.js 1:17-53
+ @ ./node_modules/crypto-browserify/index.js
+ @ ./node_modules/cookie-signature/index.js
+ @ ./node_modules/express/lib/response.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+
+ERROR in ./node_modules/iconv-lite/encodings/tables/gb18030-ranges.json
+Module parse failed: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"u...'
+You may need an appropriate loader to handle this file type.
+SyntaxError: Unexpected token m in JSON at position 0 while parsing near 'module.exports = {"u...'
+    at JSON.parse (<anonymous>)
+    at parseJson (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/json-parse-better-errors/index.js:7:17)
+    at JsonParser.parse (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/JsonParser.js:16:16)
+    at doBuild.err (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:460:32)
+    at runLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/webpack/lib/NormalModule.js:342:12)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:221:10)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:236:3
+    at runSyncOrAsync (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:130:11)
+    at iterateNormalLoaders (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:232:2)
+    at Array.<anonymous> (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:43:16)
+    at provider (/Users/jonndillon/git/Capstone_APIPrototype/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:79:9)
+    at /Users/jonndillon/git/Capstone_APIPrototype/node_modules/graceful-fs/graceful-fs.js:90:16
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:511:3)
+ @ ./node_modules/iconv-lite/encodings/dbcs-data.js 106:37-76
+ @ ./node_modules/iconv-lite/encodings/index.js
+ @ ./node_modules/iconv-lite/lib/index.js
+ @ ./node_modules/body-parser/lib/read.js
+ @ ./node_modules/body-parser/lib/types/json.js
+ @ ./node_modules/body-parser/index.js
+ @ ./node_modules/express/lib/express.js
+ @ ./node_modules/express/index.js
+ @ ./client/src/components/Dashboard.tsx
+ @ ./client/src/index.tsx
+Child html-webpack-plugin for "index.html":
+     1 asset
+    Entrypoint undefined = index.html
+    [./node_modules/html-webpack-plugin/lib/loader.js!./client/src/template.html] 546 bytes {0} [built]
+    [./node_modules/webpack/buildin/global.js] (webpack)/buildin/global.js 472 bytes {0} [built]
+    [./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 497 bytes {0} [built]
+        + 1 hidden module
