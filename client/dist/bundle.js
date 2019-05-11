@@ -86,6 +86,36 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./client/src/components/Dashboard.less":
+/*!**********************************************!*\
+  !*** ./client/src/components/Dashboard.less ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/less-loader/dist/cjs.js!./Dashboard.less */ "./node_modules/css-loader/index.js!./node_modules/less-loader/dist/cjs.js!./client/src/components/Dashboard.less");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./client/src/components/Dashboard.tsx":
 /*!*********************************************!*\
   !*** ./client/src/components/Dashboard.tsx ***!
@@ -112,6 +142,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 var OSIConfig = __webpack_require__(/*! ./../config/osiPiDetails */ "./client/src/config/osiPiDetails.ts");
+__webpack_require__(/*! ./Dashboard.less */ "./client/src/components/Dashboard.less");
 var Dashboard = /** @class */ (function (_super) {
     __extends(Dashboard, _super);
     function Dashboard(props) {
@@ -123,7 +154,7 @@ var Dashboard = /** @class */ (function (_super) {
     }
     Dashboard.prototype.componentDidMount = function () {
         var _this = this;
-        console.log();
+        console.log("[API] Requesting data");
         axios_1.default.get(OSIConfig.default.url, {
             url: OSIConfig.default.url,
             withCredentials: true,
@@ -132,15 +163,16 @@ var Dashboard = /** @class */ (function (_super) {
                 password: OSIConfig.default.credentials.password
             }
         }).then(function (rep) {
+            console.log("[API] Data received");
             console.log(JSON.stringify(rep));
             _this.setState({ resp: rep });
         });
     };
     Dashboard.prototype.render = function () {
-        return (React.createElement("div", null,
+        return (React.createElement("div", { className: "dashboardContainer" },
             React.createElement("h1", null, "OSI PI Web Demo"),
             React.createElement("hr", null),
-            React.createElement("p", null, this.state.resp)));
+            React.createElement("p", null, JSON.stringify(this.state.resp.data, null, "\t"))));
     };
     return Dashboard;
 }(React.Component));
@@ -220,7 +252,13 @@ var Root = /** @class */ (function (_super) {
                         React.createElement("span", null, "OSI API Test"))),
                 React.createElement("div", { className: "right" },
                     React.createElement(react_router_dom_1.Link, { to: "/" },
-                        React.createElement("span", null, "Dashboard")))),
+                        React.createElement("span", null, "Dashboard")),
+                    React.createElement(react_router_dom_1.Link, { to: "/a" },
+                        React.createElement("span", null, "Some Link")),
+                    React.createElement(react_router_dom_1.Link, { to: "/b" },
+                        React.createElement("span", null, "Other Link")),
+                    React.createElement(react_router_dom_1.Link, { to: "/c" },
+                        React.createElement("span", null, "Another Link")))),
             this.props.children));
     };
     return Root;
@@ -244,10 +282,40 @@ exports.default = {
     url: "https:\/\/devdata.osisoft.com/piwebapi/",
     credentials: {
         username: "webapiuser",
-        password: "!try3.24webapi!"
+        password: "!try3.14webapi!"
     }
 };
 
+
+/***/ }),
+
+/***/ "./client/src/index.less":
+/*!*******************************!*\
+  !*** ./client/src/index.less ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../node_modules/css-loader!../../node_modules/less-loader/dist/cjs.js!./index.less */ "./node_modules/css-loader/index.js!./node_modules/less-loader/dist/cjs.js!./client/src/index.less");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ }),
 
@@ -280,6 +348,7 @@ var react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_mod
 var Navbar_1 = __webpack_require__(/*! ./components/Navbar */ "./client/src/components/Navbar.tsx");
 var Dashboard_1 = __webpack_require__(/*! ./components/Dashboard */ "./client/src/components/Dashboard.tsx");
 __webpack_require__(/*! ./public/bootstrap.min.css */ "./client/src/public/bootstrap.min.css");
+__webpack_require__(/*! ./index.less */ "./client/src/index.less");
 var Root = /** @class */ (function (_super) {
     __extends(Root, _super);
     function Root() {
@@ -294,7 +363,10 @@ var Root = /** @class */ (function (_super) {
     Root.prototype.render = function () {
         return (React.createElement(react_router_dom_1.BrowserRouter, null,
             React.createElement(Navbar_1.default, null,
-                React.createElement(react_router_dom_1.Route, { path: "/", exact: true, component: Dashboard_1.default }))));
+                React.createElement(react_router_dom_1.Route, { path: "/", exact: true, component: Dashboard_1.default }),
+                React.createElement(react_router_dom_1.Route, { path: "/a", exact: true, component: Dashboard_1.default }),
+                React.createElement(react_router_dom_1.Route, { path: "/b", exact: true, component: Dashboard_1.default }),
+                React.createElement(react_router_dom_1.Route, { path: "/c", exact: true, component: Dashboard_1.default }))));
     };
     return Root;
 }(React.Component));
@@ -2051,6 +2123,25 @@ exports.push([module.i, "/*!\n * Bootstrap v4.0.0 (https://getbootstrap.com)\n *
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./node_modules/less-loader/dist/cjs.js!./client/src/components/Dashboard.less":
+/*!***************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/less-loader/dist/cjs.js!./client/src/components/Dashboard.less ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".dashboardContainer {\n  margin-top: 40px;\n  width: 70%;\n  margin-left: 15%;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./node_modules/less-loader/dist/cjs.js!./client/src/components/Navbar.less":
 /*!************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/less-loader/dist/cjs.js!./client/src/components/Navbar.less ***!
@@ -2064,6 +2155,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, ".navbar {\n  width: 100vw;\n  height: 50px;\n  box-sizing: border-box;\n  background-color: #003C71;\n  color: #FFFFFF;\n  margin: 0px;\n  padding: 0px;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  align-items: stretch;\n  border-bottom: 1px solid #0057a4;\n}\n.navbar .left {\n  display: flex;\n  float: left;\n  flex-direction: row;\n  box-sizing: border-box;\n}\n.navbar .left img {\n  width: 34px;\n  height: 34px;\n  margin: 8px;\n  margin-right: 16px;\n}\n.navbar .left a {\n  color: #FFFFFF;\n  text-decoration: none;\n}\n.navbar .left a span {\n  line-height: 50px;\n  font-size: 1.2rem;\n}\n.navbar .right {\n  float: right;\n  display: flex;\n  flex-direction: row-reverse;\n  box-sizing: border-box;\n}\n.navbar .right a {\n  display: inline-block;\n  color: #EAEAEA;\n  text-decoration: none;\n  padding: 0 15px;\n  line-height: 50px;\n}\n.navbar .right a:hover {\n  color: #0e141e;\n  background-color: #EAEAEA;\n}\n.navbar .right a:hover > ul {\n  display: block;\n}\n.container {\n  min-height: calc(100vh -  50px);\n  width: 100vw;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/less-loader/dist/cjs.js!./client/src/index.less":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/less-loader/dist/cjs.js!./client/src/index.less ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "body {\n  box-sizing: border-box;\n  margin: 0px;\n  padding: 0px;\n  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;\n  width: 100vw;\n  height: 100vh;\n  overflow: hidden;\n}\n#root {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  padding: 0px;\n  margin: 0px;\n}\n", ""]);
 
 // exports
 

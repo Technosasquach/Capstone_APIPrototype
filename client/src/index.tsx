@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
 
 import "./public/bootstrap.min.css";
+import "./index.less";
 
 export default class Root extends React.Component {
 
@@ -22,6 +23,9 @@ export default class Root extends React.Component {
             <Router>
                 <Navbar>
                     <Route path="/" exact component={Dashboard} />
+                    <Route path="/a" exact component={Dashboard} />
+                    <Route path="/b" exact component={Dashboard} />
+                    <Route path="/c" exact component={Dashboard} />
                 </Navbar>
             </Router>
         );

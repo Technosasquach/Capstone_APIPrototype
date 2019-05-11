@@ -20,6 +20,9 @@ export default class Root extends React.Component {
                     </div>
                     <div className="right">
                         <Link to="/"><span>Dashboard</span></Link>
+                        <Link to="/a"><span>Some Link</span></Link>
+                        <Link to="/b"><span>Other Link</span></Link>
+                        <Link to="/c"><span>Another Link</span></Link>
                     </div>
                 </div>
                 {this.props.children}

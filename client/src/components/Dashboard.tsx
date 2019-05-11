@@ -4,6 +4,8 @@ import * as React from "react";
 import axios from "axios";
 import * as OSIConfig from "./../config/osiPiDetails";
 
+import "./Dashboard.less";
+
 export default class Dashboard extends React.Component<{},{resp: any}> {
 
     constructor(props: any) {
@@ -15,7 +17,7 @@ export default class Dashboard extends React.Component<{},{resp: any}> {
 
     componentDidMount() {
 
-        console.log();
+        console.log("[API] Requesting data");
 
         axios.get(OSIConfig.default.url, {
             url: OSIConfig.default.url,
@@ -25,6 +27,7 @@ export default class Dashboard extends React.Component<{},{resp: any}> {
                 password: OSIConfig.default.credentials.password
             }
         }).then((rep: any) => {
+            console.log("[API] Data received");
             console.log(JSON.stringify(rep));
             this.setState({resp: rep});
         });
@@ -32,10 +35,10 @@ export default class Dashboard extends React.Component<{},{resp: any}> {
 
     render() {
         return (
-            <div>
+            <div className="dashboardContainer">
                 <h1>OSI PI Web Demo</h1>
                 <hr/>
-                <p>{this.state.resp}</p>
+                <p>{JSON.stringify(this.state.resp.data, null, "\t")}</p>
             </div>
         );
     }
