@@ -1,0 +1,36 @@
+@import "./../../variables.less";
+
+.box{
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    color: @colour-black;
+    margin: 0px;
+    padding: 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    float: left;
+
+    .sidebar {
+        background-color: @colour-dark;
+        width: 10vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+
+    .main {
+        width: 90vw;
+        
+        p {
+            float: left;
+        }
+    }
+}
+
+

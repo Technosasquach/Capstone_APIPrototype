@@ -1,0 +1,47 @@
+@import "./../../variables.less";
+
+.nohighlight {
+    a {
+        color: @colour-white;
+        display: inline-block;
+        text-decoration: none;
+        height: 50px;
+        width: 100%;
+        text-align: center;
+        line-height: 50px;
+        margin-top: 2px;
+    }
+    
+    a:hover {
+        color: @colour-black;
+        background-color: @colour-light;
+    }
+    
+    a:hover > ul {
+        display: block;
+    }
+    
+
+}
+
+.highlight {
+    a {
+        color: @colour-white;
+        display: inline-block;
+        text-decoration: none;
+        height: 50px;
+        width: 100%;
+        text-align: center;
+        line-height: 50px;
+        margin-top: 2px;
+        display: block;
+        background-color: @colour-main;
+    }
+    
+    a:hover {
+        text-decoration: none;
+        color: @colour-white;
+        background-color: @colour-main;
+    }
+}
+

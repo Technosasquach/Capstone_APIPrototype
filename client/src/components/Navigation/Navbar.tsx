@@ -16,13 +16,13 @@ export default class Root extends React.Component {
                 <div className="navbar">
                     <div className="left">
                         <Link to="/"><img src="http://via.placeholder.com/20x20"></img></Link>
-                        <Link to="/"><span>OSI API Test</span></Link>
+                        <Link to="/"><span>Syneng|Learn</span></Link>
                     </div>
                     <div className="right">
-                        <Link to="/"><span>Dashboard</span></Link>
-                        <Link to="/a"><span>Some Link</span></Link>
-                        <Link to="/b"><span>Other Link</span></Link>
-                        <Link to="/c"><span>Another Link</span></Link>
+                        <Link to="/"><span>Profle</span></Link>
+                        <Link to="/a"><span>Notifications</span></Link>
+                        <Link to="/b"><span>Help</span></Link>
+                        <Link to="/c"><span>Tutorial</span></Link>
                     </div>
                 </div>
                 {this.props.children}
