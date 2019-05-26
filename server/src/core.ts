@@ -11,7 +11,7 @@ export const Server = server;
 
 // Dependencies
 // ----------------------------------------------------------------------------
-// import * as mongoose from "mongoose";
+import * as mongoose from "mongoose";
 // import * as passport from "passport";
 // export const Passport = passport;
 
@@ -30,11 +30,11 @@ import * as path from "path";
 
 // MongooseDB
 // ----------------------------------------------------------------------------
-// mongoose.connect("mongodb://localhost:27017/above22water");
-// mongoose.connection.on("error", () => {
-//     console.log("MongoDB connection error. Please make sure MongoDB is running.");
-//     process.exit();
-// });
+mongoose.connect("mongodb://localhost:27017/synlern");
+mongoose.connection.on("error", () => {
+    console.log("MongoDB connection error. Please make sure MongoDB is running.");
+    process.exit();
+});
 
 // Server Configuration
 // ----------------------------------------------------------------------------
@@ -81,11 +81,11 @@ if (app.get("env") === "production") {
 }
 
 // Setting up the routes for the rest of the application
-// import routes from "./controllers/routes";
-// app.use("/", routes);
+import routes from "./controllers/routes";
+app.use("/", routes);
 
 // The last route run
 import { Request, Response } from "express";
-app.get("/", (req: Request, res: Response) => {
+app.get("/**/*", (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, "./../../client/dist/index.html"));
 });
