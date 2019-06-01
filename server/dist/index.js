@@ -1,11 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("./core");
+const scraper_1 = require("./controllers/scraper");
 // Start Express server.
 // ----------------------------------------------------------------------------
 core_1.Server.listen(3000, () => {
     console.log(("App is running at http://localhost:%d in %s mode"), 3000, core_1.App.get("env"));
     console.log("Press CTRL-C to stop\n");
+    //Starts scrape when server starts
+    scraper_1.scrape.scrapeWholeAPI();
     // console.log("[Debug] Outputting all mounted routes");
     // App._router.stack.forEach(print.bind(undefined, []));
 });

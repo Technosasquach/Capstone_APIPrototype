@@ -1,4 +1,6 @@
-export default {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = {
     // url: "https:\/\/devdata.osisoft.com/piwebapi/assetservers/",
     // credentials: {
     //     username: "webapiuser",
@@ -9,5 +11,5 @@ export default {
         username: "readonlyuser",
         password: "Rula9917"
     }
-
-}
+};
+//# sourceMappingURL=osiPiDetails.js.map

@@ -11,7 +11,7 @@ const io = require("socket.io")(server);
 exports.Server = server;
 // Dependencies
 // ----------------------------------------------------------------------------
-// import * as mongoose from "mongoose";
+const mongoose = require("mongoose");
 // import * as passport from "passport";
 // export const Passport = passport;
 // Utilities
@@ -24,13 +24,14 @@ const logger = require("morgan");
 const lusca = require("lusca");
 // import * as mongo from "connect-mongo";
 const path = require("path");
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = '0';
 // MongooseDB
 // ----------------------------------------------------------------------------
-// mongoose.connect("mongodb://localhost:27017/above22water");
-// mongoose.connection.on("error", () => {
-//     console.log("MongoDB connection error. Please make sure MongoDB is running.");
-//     process.exit();
-// });
+mongoose.connect("mongodb://localhost:27017/synlern");
+mongoose.connection.on("error", () => {
+    console.log("MongoDB connection error. Please make sure MongoDB is running.");
+    process.exit();
+});
 // Server Configuration
 // ----------------------------------------------------------------------------
 app.set("port", process.env.PORT || 3000);
@@ -73,7 +74,10 @@ if (app.get("env") === "production") {
 else {
     app.locals.pretty = true;
 }
-app.get("/", (req, res) => {
+// Setting up the routes for the rest of the application
+const routes_1 = require("./controllers/routes");
+app.use("/", routes_1.default);
+app.get("/**/*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./../../client/dist/index.html"));
 });
 //# sourceMappingURL=core.js.map

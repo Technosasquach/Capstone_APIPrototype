@@ -141,7 +141,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 //import axios from "axios";
-//import * as OSIConfig from "./../config/osiPiDetails";
+//import * as OSIConfig from "./../../config/osiPiDetails";
 __webpack_require__(/*! ./Dashboard.less */ "./client/src/components/Dashboard/Dashboard.less");
 var Dashboard = /** @class */ (function (_super) {
     __extends(Dashboard, _super);
@@ -152,21 +152,21 @@ var Dashboard = /** @class */ (function (_super) {
         };
         return _this;
     }
-    // componentDidMount() {
-    //     console.log("[API] Requesting data");
-    //     axios.get(OSIConfig.default.url, {
-    //         url: OSIConfig.default.url,
-    //         withCredentials: true,
-    //         auth: {
-    //             username: OSIConfig.default.credentials.username,
-    //             password: OSIConfig.default.credentials.password
-    //         }
-    //     }).then((rep: any) => {
-    //         console.log("[API] Data received");
-    //         console.log(JSON.stringify(rep));
-    //         this.setState({resp: rep});
-    //     });
-    // }
+    Dashboard.prototype.componentDidMount = function () {
+        // console.log("[API] Requesting data");
+        // axios.get(OSIConfig.default.url, {
+        //     url: OSIConfig.default.url,
+        //     withCredentials: true,
+        //     auth: {
+        //         username: OSIConfig.default.credentials.username,
+        //         password: OSIConfig.default.credentials.password
+        //     }
+        // }).then((rep: any) => {
+        //     console.log("[API] Data received");
+        //     console.log(JSON.stringify(rep));
+        //     this.setState({resp: rep});
+        // });
+    };
     Dashboard.prototype.render = function () {
         return (React.createElement("div", { className: "dashboardContainer" },
             React.createElement("h1", null, "Dashboard"),

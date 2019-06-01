@@ -1,13 +1,16 @@
 import { App, Server } from "./core";
-
+import {scrape} from "./controllers/scraper";
 // Start Express server.
 // ----------------------------------------------------------------------------
 Server.listen(3000, () => {
     console.log(("App is running at http://localhost:%d in %s mode"), 3000, App.get("env"));
     console.log("Press CTRL-C to stop\n");
-
+    //Starts scrape when server starts
+    scrape.scrapeWholeAPI();
+    
     // console.log("[Debug] Outputting all mounted routes");
     // App._router.stack.forEach(print.bind(undefined, []));
+
 });
 
 function print (path: any, layer: any) {

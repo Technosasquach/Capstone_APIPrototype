@@ -8,7 +8,6 @@ const server = http.createServer(app);
 const io = require("socket.io")(server);
 export const Server = server;
 
-
 // Dependencies
 // ----------------------------------------------------------------------------
 import * as mongoose from "mongoose";
@@ -27,6 +26,8 @@ import * as fs from "fs";
 import * as lusca from "lusca";
 // import * as mongo from "connect-mongo";
 import * as path from "path";
+
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = '0';
 
 // MongooseDB
 // ----------------------------------------------------------------------------
@@ -89,3 +90,4 @@ import { Request, Response } from "express";
 app.get("/**/*", (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, "./../../client/dist/index.html"));
 });
+
