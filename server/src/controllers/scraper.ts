@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import * as OSIConfig from "./../config/osiPiDetails";
 
 import { Node } from "./../database";
-
+import * as mongoose from "mongoose";
 class OSIPiAPIScraper {
     
     buf = new ObjectBuffer();
@@ -32,33 +32,53 @@ class OSIPiAPIScraper {
         this.recursiveScrape(0, OSIConfig.default.url);
     }
 
-    private async recursiveScrape(depth: number, startingURL?: string) {
+    private async recursiveScrape(depth: number, startingURL?: string, parent?: mongoose.Types.ObjectId) {
         const scrape = await this.requestWrapper(startingURL);
         //if request returned nothing return
         if (scrape == undefined) {
             return;
         }
-        this.storeScrape(depth, scrape);
+        //returns objectIDs for all links stored also stores parent if one exists
+        const ids = this.storeScrape(depth, scrape, parent);
+
+        //sets children on parent
+        if(parent != undefined){
+            const questions = await Node.findOne({_id: parent});
+            questions.children.push(...ids);
+            questions.save();
+        }
+
         this.buf.add(this.extractLinks(scrape, depth));
         const newDepth = depth + 1;
+
+        //lazy to restructure this
+        var i = 0;
         while(this.buf.length() >= 1) {
             //place await infront of this to slow down an excess of requests lol :P
-            this.recursiveScrape(newDepth, this.buf.next());
+            this.recursiveScrape(newDepth, this.buf.next(), ids[i]);
+            i++;
+        }
+        //indicator for finished scrape - ONLY WORKS WITH AWAIT otherwise pointless ;)
+        if(depth == 0) {
+            console.log("DONE");
         }
     }
 
-    private storeScrape(depth: number, scrape: any) {
+    private storeScrape(depth: number, scrape: any, parent?: mongoose.Types.ObjectId): Array<mongoose.Types.ObjectId> {
         var a = scrape['Items'];
+        var b = [] as Array<mongoose.Types.ObjectId>;
         for(var i = 0; i < a.length; i++){
             const node = new Node({
                 depth: depth,
                 name: a[i]['Name'],
                 json: JSON.stringify(a[i]),
-                parents: "",
-                children: ""
+                parents: parent || [],
+                children: []
             })
+            b.push(node._id);
             node.save();
         }
+        return b;
     }
 
     private async requestWrapper(url?: string): Promise<any> {

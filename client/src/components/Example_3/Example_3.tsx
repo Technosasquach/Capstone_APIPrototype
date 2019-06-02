@@ -16,18 +16,8 @@ export default class Dashboard extends React.Component<{},{resp: any}> {
     render() {
         return (
             <div className="dashboardContainer">
-                <h1>Example_1</h1>
-                <div className="sl-sideNav" id="sidebar-wrapper">
-                    <div className="sidebar-heading bg-light sl-logo">Syneng|Learn </div>
-                    <div className="list-group list-group-flush">
-                        <a className="list-group-item active list-group-item-action"><i className="fas fa-desktop mr-3"></i>Dashboard</a>
-                        <a className="list-group-item list-group-item-action"><i className="fas fa-sitemap mr-3"></i>Equipment Detail</a>
-                        <a className="list-group-item list-group-item-action"><i className="fas fa-project-diagram mr-3"></i>Pathways</a>
-                        <a className="list-group-item list-group-item-action"><i className="fas fa-graduation-cap mr-3"></i>Course</a>
-                        <a className="list-group-item list-group-item-action"><i className="fas fa-user mr-3"></i>Profile</a>
-                        <a className="list-group-item list-group-item-action"><i className="fas fa-cog mr-3"></i>Status</a>
-                    </div>
-                </div>
+                <h1>Builder</h1>
+                <hr/>
             </div>
         );
     }

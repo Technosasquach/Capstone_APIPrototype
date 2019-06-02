@@ -6,8 +6,8 @@ exports.NodeSchema = new mongoose.Schema({
     depth: Number,
     name: String,
     json: String,
-    parents: [String],
-    children: [String]
+    parents: [mongoose.Schema.Types.ObjectId],
+    children: [mongoose.Schema.Types.ObjectId]
 });
 exports.Node = mongoose.model("Nodes", exports.NodeSchema);
 //# sourceMappingURL=nodes.js.map

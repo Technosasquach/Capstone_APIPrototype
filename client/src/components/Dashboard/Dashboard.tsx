@@ -2,42 +2,59 @@
 import * as React from "react";
 
 //import axios from "axios";
-//import * as OSIConfig from "./../../config/osiPiDetails";
+//import * as OSIConfig from "./../config/osiPiDetails";
+
+import 'antd/dist/antd.css';
+import { Tree } from 'antd';
+
+const { TreeNode } = Tree;
 
 import "./Dashboard.less";
+//import { Node } from "./../../../../server/src/database";
 
-export default class Dashboard extends React.Component<{},{resp: any}> {
+export default class Dashboard extends React.Component {
 
     constructor(props: any) {
         super(props);
-        this.state = {
-            resp: ""
-        }
-    }
-    componentDidMount() {
-        
-        // console.log("[API] Requesting data");
-
-        // axios.get(OSIConfig.default.url, {
-        //     url: OSIConfig.default.url,
-        //     withCredentials: true,
-        //     auth: {
-        //         username: OSIConfig.default.credentials.username,
-        //         password: OSIConfig.default.credentials.password
-        //     }
-        // }).then((rep: any) => {
-        //     console.log("[API] Data received");
-        //     console.log(JSON.stringify(rep));
-        //     this.setState({resp: rep});
-        // });
     }
 
-    render() {
+    render() { 
         return (
             <div className="dashboardContainer">
-                <h1>Dashboard</h1>
+                <h1 style={{textAlign: 'center'}}>PI Directory</h1>
                 <hr/>
-                <p>{JSON.stringify(this.state.resp.data, null, "\t")}</p>
+
+                <Tree>
+                    
+                </Tree>
+
+                <Tree showLine defaultExpandedKeys={['0-0-0', '0-0-1']}>
+                    <TreeNode title="Field 1" key="0-0">
+                        <TreeNode title="Well 1" key="0-0-0">
+                            <TreeNode title="Downhole Equipment 1" key="0-0-0-0" />
+                            <TreeNode title="Downhole Equipment 2" key="0-0-0-1" />
+                        </TreeNode>
+                        <TreeNode title="Well 2" key="0-0-1">
+                            <TreeNode title="PCP" key="0-0-1-0" />
+                        </TreeNode>
+                    </TreeNode>
+
+                    <TreeNode title="Field 2" key="1-0">
+                        <TreeNode title="Well 1" key="1-0-0">
+                            <TreeNode title="Downhole Equipment 1" key="1-0-0-0" />
+                            <TreeNode title="Downhole Equipment 2" key="1-0-0-1" />
+                            <TreeNode title="Downhole Equipment 3" key="1-0-0-2" />
+                        </TreeNode>
+                        <TreeNode title="Well 2" key="1-0-1">
+                            <TreeNode title="PCP" key="1-0-1-0" />
+                        </TreeNode>
+                        <TreeNode title="Well 3" key="1-0-2">
+                            <TreeNode title="PCP" key="1-0-2-0" />
+                            <TreeNode title="PCP" key="1-0-2-1" />
+                        </TreeNode>
+                    </TreeNode>
+                </Tree>
+
             </div>
         );
     }

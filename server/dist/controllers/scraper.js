@@ -38,34 +38,49 @@ class OSIPiAPIScraper {
         database_1.Node.collection.deleteMany({});
         this.recursiveScrape(0, OSIConfig.default.url);
     }
-    recursiveScrape(depth, startingURL) {
+    recursiveScrape(depth, startingURL, parent) {
         return __awaiter(this, void 0, void 0, function* () {
             const scrape = yield this.requestWrapper(startingURL);
             //if request returned nothing return
             if (scrape == undefined) {
                 return;
             }
-            this.storeScrape(depth, scrape);
+            //returns objectIDs for all links stored
+            const ids = this.storeScrape(depth, scrape, parent);
+            //sets children on parent
+            if (parent != undefined) {
+                const questions = yield database_1.Node.findOne({ _id: parent });
+                questions.children.push(...ids);
+                questions.save();
+            }
             this.buf.add(this.extractLinks(scrape, depth));
             const newDepth = depth + 1;
+            var i = 0;
             while (this.buf.length() >= 1) {
                 //place await infront of this to slow down an excess of requests lol :P
-                this.recursiveScrape(newDepth, this.buf.next());
+                yield this.recursiveScrape(newDepth, this.buf.next(), ids[i]);
+                i++;
+            }
+            if (depth == 0) {
+                console.log("DONE");
             }
         });
     }
-    storeScrape(depth, scrape) {
+    storeScrape(depth, scrape, parent) {
         var a = scrape['Items'];
+        var b = [];
         for (var i = 0; i < a.length; i++) {
             const node = new database_1.Node({
                 depth: depth,
                 name: a[i]['Name'],
                 json: JSON.stringify(a[i]),
-                parents: "",
-                children: ""
+                parents: parent || [],
+                children: []
             });
+            b.push(node._id);
             node.save();
         }
+        return b;
     }
     requestWrapper(url) {
         return __awaiter(this, void 0, void 0, function* () {

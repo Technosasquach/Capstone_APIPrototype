@@ -5,8 +5,8 @@ export interface INodeModel extends mongoose.Document {
     depth: number;
     name: string;
     json: string;
-    parents: string[];
-    children: string[];
+    parents: mongoose.Types.ObjectId[];
+    children: mongoose.Types.ObjectId[];
 }
 
 export const NodeSchema: mongoose.Schema = new mongoose.Schema({
@@ -14,8 +14,8 @@ export const NodeSchema: mongoose.Schema = new mongoose.Schema({
     depth: Number,
     name: String,
     json: String,
-    parents: [String],
-    children: [String]
+    parents: [mongoose.Schema.Types.ObjectId],
+    children: [mongoose.Schema.Types.ObjectId]
 });
 
 export const Node: mongoose.Model<INodeModel> = mongoose.model<INodeModel>("Nodes", NodeSchema);

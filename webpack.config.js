@@ -42,11 +42,6 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: "ts-loader"
             },
-            // JSON
-            {
-                test: /\.json$/,
-                loader: 'json-loader'
-            },
             // LESS
             {
                 test: /\.less$/,
