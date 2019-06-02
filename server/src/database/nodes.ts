@@ -1,10 +1,20 @@
 import * as mongoose from "mongoose";
 
-export interface INodeModel extends mongoose.Document {
-    createdAt: Date;
+export interface NodalModel extends mongoose.Document {
     depth: number;
     name: string;
     json: string;
+}
+
+// A model for in memory array use and recursive nesting
+export interface TSNodalModel extends NodalModel {
+    uuid: string;
+    children: any[];
+}
+
+
+export interface INodeModel extends NodalModel {
+    createdAt: Date;
     parents: mongoose.Types.ObjectId[];
     children: mongoose.Types.ObjectId[];
 }
