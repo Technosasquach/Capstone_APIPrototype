@@ -4,7 +4,7 @@ import * as OSIConfig from "./../config/osiPiDetails";
 
 import { Node } from "./../database";
 import * as mongoose from "mongoose";
-class OSIPiAPIScraper {
+export class OSIPiAPIScraper {
     
     buf = new ObjectBuffer();
 
@@ -26,10 +26,13 @@ class OSIPiAPIScraper {
         return temp;
     }
 
-    public scrapeWholeAPI() {
+    public async scrapeWholeAPI() {
         //clear database while testing
-        Node.collection.deleteMany({});
-        this.recursiveScrape(0, OSIConfig.default.url);
+        // console.log("[Scrapper] Starting whole API scrape");
+        // console.log("[Scrapper] Deleting all past scrapes");
+        // Node.collection.deleteMany({});
+        console.log("[Scrapper] Starting new recursive scrape on " + OSIConfig.default.url);
+        await this.recursiveScrape(0, OSIConfig.default.url);
     }
 
     private async recursiveScrape(depth: number, startingURL?: string, parent?: mongoose.Types.ObjectId) {
@@ -55,6 +58,7 @@ class OSIPiAPIScraper {
         var i = 0;
         while(this.buf.length() >= 1) {
             //place await infront of this to slow down an excess of requests lol :P
+            console.log("[Scrapper] at " + newDepth);
             this.recursiveScrape(newDepth, this.buf.next(), ids[i]);
             i++;
         }

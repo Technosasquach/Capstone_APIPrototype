@@ -9,5 +9,4 @@ export default {
         username: "readonlyuser",
         password: "Rula9917"
     }
-
 }
