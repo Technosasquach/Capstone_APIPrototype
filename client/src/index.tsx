@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import Example_1 from "./components/Example_1/Example_1";
 import Example_2 from "./components/Example_2/Example_2";
 import Example_3 from "./components/Example_3/Example_3";
+import GraphViewPage from "./components/GraphViewPage";
 
 import Sidebar from "./components/Navigation/Sidebar";
 import Header from "./components/Navigation/Header";
@@ -71,7 +72,8 @@ export default class Root extends React.Component<any, any> {
                             <Route path="/"  exact component={Dashboard}/>    
                             <Route path="/a"  exact component={Example_1}/>
                             <Route path="/b"  exact component={Example_2}/>
-                            <Route path="/c"  exact component={Example_3}/>             
+                            <Route path="/c"  exact component={Example_3}/>
+                            <Route path="/d"  exact component={GraphViewPage}/>
                         </Content>
                     </Layout>
                 </Layout>

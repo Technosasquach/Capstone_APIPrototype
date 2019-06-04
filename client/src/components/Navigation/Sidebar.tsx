@@ -19,7 +19,9 @@ export default class Sidebar extends React.Component<any, any> {
             case '/b':
                 return ['2'];
             case '/c':   
-                return ['3']; 
+                return ['3'];
+            case '/d':   
+                return ['4']; 
             default:
                 return ['0']; 
         }
@@ -54,6 +56,12 @@ export default class Sidebar extends React.Component<any, any> {
                         <Link to="/c">
                             <Icon type="bar-chart" />
                             <span className="nav-text">Example 3</span>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="4">
+                        <Link to="/d">
+                            <Icon type="bar-chart" />
+                            <span className="nav-text">GraphViewPage</span>
                         </Link>
                     </Menu.Item>
                 </Menu>
