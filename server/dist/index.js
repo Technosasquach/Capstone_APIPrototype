@@ -6,8 +6,13 @@ const core_1 = require("./core");
 core_1.Server.listen(3000, () => {
     console.log(("App is running at http://localhost:%d in %s mode"), 3000, core_1.App.get("env"));
     console.log("Press CTRL-C to stop\n");
-    //Starts scrape when server starts
-    //scrape.scrapeWholeAPI();
+    // Starts scrape when server starts
+    // scrape.scrapeWholeAPI();
+    // Generates new node graph
+    // new NodalMemory().generateNodeMap(); 
+    // ENABLING THIS WILL CAUSE NPM RUN WATCH TO RESTART LOOP INFINITELY!
+    // IT WILL ALSO NEVER ALLOW A RECOMPILE OF THE SERVER
+    // MUST FORCE QUIT, OR RUN ONCE
     // console.log("[Debug] Outputting all mounted routes");
     // App._router.stack.forEach(print.bind(undefined, []));
 });

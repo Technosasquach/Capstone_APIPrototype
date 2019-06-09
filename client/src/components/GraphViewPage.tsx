@@ -3,7 +3,8 @@ import * as React from "react";
 
 import axios, { AxiosResponse } from "axios";
 // import * as graphlib from "graphlib";
-import * as dagre from "dagre";
+// import * as dagre from "dagre";
+var dagre = require("dagre") as any;
 //import * as OSIConfig from "./../config/osiPiDetails";
 
 const CytoscapeComponent = require('react-cytoscapejs');
@@ -23,23 +24,26 @@ export default class Dashboard extends React.Component<{},{graphObjFinished: any
 
     componentDidMount() {
         // Request the massive graph file
-        axios.post("/fuckingmassivegraphdeffile")
+        axios.post("/graph/")
             .then((response: AxiosResponse) => {
 
                 let g = new dagre.graphlib.Graph();
-                g.setGraph({ width: 600, height: 100 });
-                g.setDefaultEdgeLabel(() => { return ""; });
-                g = dagre.graphlib.json.read(response.data);
-                console.log("Graph facts | Edge Count " + g.edgeCount() + ", Node Count " + g.nodeCount());
-                dagre.layout(g, { width: 600 });
 
+                g = dagre.graphlib.json.read(response.data);
+                
+                g.setGraph({width: 600});
+                g.setDefaultEdgeLabel(() => { return ""; });
+                
+                console.log("Graph facts | Edge Count " + g.edgeCount() + ", Node Count " + g.nodeCount());
+                dagre.layout(g);
+                
                 // For all the nodes
-                g.nodes().forEach((v) => {
+                g.nodes().forEach((v: any) => {
                     const item = g.node(v);
                     this.coreResponse.push({ data: { id: v.toString(), label: item.label }, position: { x: item.x, y: item.y } });
                 });
                 // For all the edges
-                g.edges().forEach((edge) => {
+                g.edges().forEach((edge: any) => {
                     this.coreResponse.push({ data: { source: edge.v, target: edge.w, label: "Edge from " + edge.v + " to " + edge.w }});
                 });
 

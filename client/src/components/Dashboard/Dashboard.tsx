@@ -1,60 +1,80 @@
 
 import * as React from "react";
 
-//import axios from "axios";
-//import * as OSIConfig from "./../config/osiPiDetails";
+
+
+import axios from "axios";
 
 import 'antd/dist/antd.css';
-import { Tree } from 'antd';
-
-const { TreeNode } = Tree;
+import { Table, Spin } from 'antd';
 
 import "./Dashboard.less";
-//import { Node } from "./../../../../server/src/database";
+import Search from "antd/lib/input/Search";
 
-export default class Dashboard extends React.Component {
+const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+        title: 'Category',
+        dataIndex: 'cate',
+        key: 'cate',
+        width: '15%',
+    },
+    {
+        title: 'Data',
+        dataIndex: 'data',
+        key: 'data',
+        width:'60%',
+    }
+  ];
 
+const initstate = {
+    data: [],
+    cached: false,
+    loader: false,
+    searched: false,
+    savedata: [],
+};
+
+export default class Dashboard extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
+        //cache state
+        this.state = localStorage.getItem("appState") ? JSON.parse(localStorage.getItem("appState") || '{}') : initstate;
     }
 
-    render() { 
+    componentWillUnmount() {
+        // Remember state for the next mount
+        localStorage.setItem('appState', JSON.stringify(this.state));
+      }
+
+    componentDidMount() {
+        if(!this.state.cached){
+            //axios.get("http://localhost:3000/Data/Search/?search=field").then(data => this.setState({data: data.data['data'], cached: true, loader: true})); 
+            axios.get("http://localhost:3000/Data/").then(data => this.setState({data: data.data['data'], cached: true, loader: true})); 
+        }
+    }
+
+    render() {     
         return (
             <div className="dashboardContainer">
                 <h1 style={{textAlign: 'center'}}>PI Directory</h1>
                 <hr/>
+                <Search placeholder="input search text" onSearch={e => {
+                    //this.setState({expanded: ['0', '0-5', '0-5-0', '0-5-0-0', '0-5-0-0-0', '0-5-1', '0-5-1-0', '0-5-1-0-0']})
+                    axios.get("http://localhost:3000/Data/Search/?search=" + e).then(data => this.setState({savedata: data.data['data'], cached: true, searched: true})); 
+                }} enterButton />
+                <hr/>
 
-                <Tree>
-                    
-                </Tree>
 
-                <Tree showLine defaultExpandedKeys={['0-0-0', '0-0-1']}>
-                    <TreeNode title="Field 1" key="0-0">
-                        <TreeNode title="Well 1" key="0-0-0">
-                            <TreeNode title="Downhole Equipment 1" key="0-0-0-0" />
-                            <TreeNode title="Downhole Equipment 2" key="0-0-0-1" />
-                        </TreeNode>
-                        <TreeNode title="Well 2" key="0-0-1">
-                            <TreeNode title="PCP" key="0-0-1-0" />
-                        </TreeNode>
-                    </TreeNode>
-
-                    <TreeNode title="Field 2" key="1-0">
-                        <TreeNode title="Well 1" key="1-0-0">
-                            <TreeNode title="Downhole Equipment 1" key="1-0-0-0" />
-                            <TreeNode title="Downhole Equipment 2" key="1-0-0-1" />
-                            <TreeNode title="Downhole Equipment 3" key="1-0-0-2" />
-                        </TreeNode>
-                        <TreeNode title="Well 2" key="1-0-1">
-                            <TreeNode title="PCP" key="1-0-1-0" />
-                        </TreeNode>
-                        <TreeNode title="Well 3" key="1-0-2">
-                            <TreeNode title="PCP" key="1-0-2-0" />
-                            <TreeNode title="PCP" key="1-0-2-1" />
-                        </TreeNode>
-                    </TreeNode>
-                </Tree>
-
+                {this.state.searched ? 
+                 (<Table columns={columns} scroll = {{y: 600}} dataSource={this.state.savedata} defaultExpandedRowKeys={["0-0"]} />)
+                 : 
+                this.state.loader ? (<Table columns={columns} scroll = {{y: 600}} dataSource={this.state.data} defaultExpandedRowKeys={["0-0"]} expandedRowKeys={this.state.expanded} />) : <div style={{textAlign: "center"}}><Spin/></div>}
+            
             </div>
         );
     }

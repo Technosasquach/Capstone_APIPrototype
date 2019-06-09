@@ -34,9 +34,14 @@ class OSIPiAPIScraper {
         return temp;
     }
     scrapeWholeAPI() {
-        //clear database while testing
-        database_1.Node.collection.deleteMany({});
-        this.recursiveScrape(0, OSIConfig.default.url);
+        return __awaiter(this, void 0, void 0, function* () {
+            //clear database while testing
+            // console.log("[Scrapper] Starting whole API scrape");
+            // console.log("[Scrapper] Deleting all past scrapes");
+            database_1.Node.collection.deleteMany({});
+            console.log("[Scrapper] Starting new recursive scrape on " + OSIConfig.default.url);
+            yield this.recursiveScrape(0, OSIConfig.default.url);
+        });
     }
     recursiveScrape(depth, startingURL, parent) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -45,7 +50,7 @@ class OSIPiAPIScraper {
             if (scrape == undefined) {
                 return;
             }
-            //returns objectIDs for all links stored
+            //returns objectIDs for all links stored also stores parent if one exists
             const ids = this.storeScrape(depth, scrape, parent);
             //sets children on parent
             if (parent != undefined) {
@@ -55,12 +60,15 @@ class OSIPiAPIScraper {
             }
             this.buf.add(this.extractLinks(scrape, depth));
             const newDepth = depth + 1;
+            //lazy to restructure this
             var i = 0;
             while (this.buf.length() >= 1) {
                 //place await infront of this to slow down an excess of requests lol :P
-                yield this.recursiveScrape(newDepth, this.buf.next(), ids[i]);
+                console.log("[Scrapper] at " + newDepth);
+                this.recursiveScrape(newDepth, this.buf.next(), ids[i]);
                 i++;
             }
+            //indicator for finished scrape - ONLY WORKS WITH AWAIT otherwise pointless ;)
             if (depth == 0) {
                 console.log("DONE");
             }
@@ -111,6 +119,7 @@ class OSIPiAPIScraper {
         });
     }
 }
+exports.OSIPiAPIScraper = OSIPiAPIScraper;
 class ObjectBuffer {
     constructor() {
         this.buffer = [];

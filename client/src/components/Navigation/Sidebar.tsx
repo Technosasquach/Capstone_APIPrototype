@@ -42,26 +42,8 @@ export default class Sidebar extends React.Component<any, any> {
                     </Menu.Item>
                     <Menu.Item key="1">
                         <Link to="/a">
-                            <Icon type="unordered-list" />
-                            <span className="nav-text">PI Directory-List</span>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="2">
-                        <Link to="/b">
-                            <Icon type="info" />
-                            <span className="nav-text">Example Page</span>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="3">
-                        <Link to="/c">
                             <Icon type="bar-chart" />
-                            <span className="nav-text">Example 3</span>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item key="4">
-                        <Link to="/d">
-                            <Icon type="bar-chart" />
-                            <span className="nav-text">GraphViewPage</span>
+                            <span className="nav-text">Graph Viewer</span>
                         </Link>
                     </Menu.Item>
                 </Menu>
