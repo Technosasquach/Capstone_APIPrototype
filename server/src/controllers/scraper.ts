@@ -30,7 +30,7 @@ export class OSIPiAPIScraper {
         //clear database while testing
         // console.log("[Scrapper] Starting whole API scrape");
         // console.log("[Scrapper] Deleting all past scrapes");
-        // Node.collection.deleteMany({});
+        Node.collection.deleteMany({});
         console.log("[Scrapper] Starting new recursive scrape on " + OSIConfig.default.url);
         await this.recursiveScrape(0, OSIConfig.default.url);
     }

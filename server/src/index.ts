@@ -8,15 +8,15 @@ import { NodalMemory } from "./controllers/nodal";
 Server.listen(3000, () => {
     console.log(("App is running at http://localhost:%d in %s mode"), 3000, App.get("env"));
     console.log("Press CTRL-C to stop\n");
-    //Starts scrape when server starts
-    // try {
-    //scrape.scrapeWholeAPI();
-    //console.log("[Scrapper] Finished recursive scrape");
-    // } catch (e) {
-    //     console.log("Scraping fucked up: " + e.toString());
-    // }
-    new NodalMemory().generateNodeMap();
-    // NodalMemory.generateNodeMap();
+
+    // Starts scrape when server starts
+    // scrape.scrapeWholeAPI();
+
+    // Generates new node graph
+    // new NodalMemory().generateNodeMap(); 
+        // ENABLING THIS WILL CAUSE NPM RUN WATCH TO RESTART LOOP INFINITELY!
+        // IT WILL ALSO NEVER ALLOW A RECOMPILE OF THE SERVER
+        // MUST FORCE QUIT, OR RUN ONCE
 
     // console.log("[Debug] Outputting all mounted routes");
     // App._router.stack.forEach(print.bind(undefined, []));

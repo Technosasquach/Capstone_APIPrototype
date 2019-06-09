@@ -1,9 +1,8 @@
-import { Node  } from "./../database";
-import * as mongoose from "mongoose";
-import * as graphLib from "graphlib";
-import { Graph } from "graphlib";
+import { Node, INodeModel  } from "./../database";
+import * as dagre from "dagre";
 import * as fs from "fs";
 import * as path from "path";
+import * as cliProgress from "cli-progress";
 
 // export interface INodalMemory {
 //     graph: Graph;
@@ -16,48 +15,55 @@ import * as path from "path";
 export class NodalMemory { //implements INodalMemory {
 // export const NodalGraph = () => {
 
-    graph = new Graph(); 
-
-    constructor() {
-        return;
-    }
+    graph = new dagre.graphlib.Graph();
+    traversedItems: number = 0;
+    traversableItems: number = 0;
+    bar1 = new cliProgress.Bar({
+        format: '[NodalMemory] Graphing... [{bar}] {percentage}% | ETA: {eta}s | {value}/{total}'
+    }, cliProgress.Presets.shades_grey);
 
     public generateNodeMap() {
-        // Get the first node, chuck into generate recursive
-        // 'created_at: 1 (Oldest), -1 (Newest)
-        Node.findOne({}, {}, { sort: { 'created_at' : 1 } }, function(err, node: any) {
-            if (err) console.error(err);
-            console.log("[NodalMemory] Starting graph construction");
-            console.log(JSON.stringify(node._doc));
-            this.generateRecursive(); //node._doc);
-            // console.log("[NodalMemory] Completed graph construction");
-            // console.log("[NodalMemory] Saving graph construction");
-            // fs.writeFile(path.join(__dirname, "./graph.json"), graphLib.json.write(this.graph), {encoding: "utf8"}, () => {
-            //     console.log("[NodalMemory] Saved graph construction!");
-            // });
+        this.traversedItems = 0;
+        console.log("[NodalMemory] Starting graph construction");
+        Node.countDocuments({}, (err, count: number) => {
+            this.traversableItems = count;
+            this.bar1.start(this.traversableItems, 0);
+            Node.findOne({}, {}, { sort: { 'created_at' : 1 } }, (err, node: any) => {
+                if (err) console.error(err);
+                this.graph.setNode(node._doc._id, {"depth": node._doc.depth, "label": node._doc.name, "width": "30", "height": "15"});
+                this.generateRecursive(node._doc);
+            });
         });
     }
 
-    private generateRecursive(node: any) {
-        // Get children of given node
-        // console.log("------------");
-        console.log("[NodalMemory] Processing graph: " + JSON.stringify(node._id));
+    private generateRecursive(node: INodeModel) {
+        this.updateProgress();
+        let i = node.children.length;
         node.children.forEach((childID: any) => {
-            console.log("[NodalMemory] Sending child: " + childID._id);
             Node.findById(childID, (err, child: any) => {
-                this.addToGraph(node, child._doc._id);
+                this.addToGraph(node, child._doc);
                 this.generateRecursive(child._doc);
             })
         })
-        return;
     }
 
     public addToGraph(parent: any, child: any) {
-        this.graph.setNode(child.id + "", child.json);
-        this.graph.setEdge(parent.id, child.id);
+        this.graph.setNode(child._id, {"depth": child.depth, "label": child.name, "width": "30", "height": "15"});
+        this.graph.setEdge(parent._id, child._id, { "width": "30" }); //"label": "Edge " + parent._id + " to " + child._id 
     }
 
-    // Save made graph
-    // Load saved graph
-    // UUID to UUID path -> UUID[] returned
+    private updateProgress() {
+        this.traversedItems++;
+        this.bar1.update(this.traversedItems);
+        if(this.traversedItems >= this.traversableItems) {
+            this.bar1.stop();
+            console.log("[NodalMemory] Completed graph construction");
+            console.log("[NodalMemory] Saving graph construction to " + path.join(__dirname, "./graph.json"));
+            
+            fs.writeFile(path.join(__dirname, "./../../../graph.json"), JSON.stringify(dagre.graphlib.json.write(this.graph)), {}, (err) => {
+                if(err) console.error("[NodalMemory] Error: " + err);
+                console.log("[NodalMemory] Saved graph construction!");
+            });
+        }
+    }
 }
