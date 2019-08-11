@@ -7,9 +7,22 @@ export interface IInformationModel extends mongoose.Document {
 }
 
 export const InformationSchema: mongoose.Schema = new mongoose.Schema({
-    createdAt : { type: Date, default: Date.now },
-    related: [mongoose.Schema.Types.ObjectId],
-    text: String
+    createdAt: {
+        type: Date,
+        unique: false,
+        required: true,
+        default: Date.now
+    },
+    related: [{
+        type: [mongoose.Schema.Types.ObjectId],
+        unique: false,
+        required: true
+    }],
+    text: {
+        type: String,
+        unique: false,
+        required: true
+    }
 });
 
 export const Information: mongoose.Model<IInformationModel> = mongoose.model<IInformationModel>("Information", InformationSchema);

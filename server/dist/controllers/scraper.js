@@ -36,8 +36,8 @@ class OSIPiAPIScraper {
     scrapeWholeAPI() {
         return __awaiter(this, void 0, void 0, function* () {
             //clear database while testing
-            // console.log("[Scrapper] Starting whole API scrape");
-            // console.log("[Scrapper] Deleting all past scrapes");
+            console.log("[Scrapper] Starting whole API scrape");
+            console.log("[Scrapper] Deleting all past scrapes");
             database_1.Node.collection.deleteMany({});
             console.log("[Scrapper] Starting new recursive scrape on " + OSIConfig.default.url);
             yield this.recursiveScrape(0, OSIConfig.default.url);

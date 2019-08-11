@@ -2,9 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 exports.InformationSchema = new mongoose.Schema({
-    createdAt: { type: Date, default: Date.now },
-    related: [mongoose.Schema.Types.ObjectId],
-    text: String
+    createdAt: {
+        type: Date,
+        unique: false,
+        required: true,
+        default: Date.now
+    },
+    related: [{
+            type: [mongoose.Schema.Types.ObjectId],
+            unique: false,
+            required: true
+        }],
+    text: {
+        type: String,
+        unique: false,
+        required: true
+    }
 });
 exports.Information = mongoose.model("Information", exports.InformationSchema);
 //# sourceMappingURL=information.js.map

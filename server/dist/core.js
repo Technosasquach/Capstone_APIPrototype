@@ -77,6 +77,9 @@ else {
 // Setting up the routes for the rest of the application
 const routes_1 = require("./controllers/routes");
 app.use("/", routes_1.default);
+// Setting up GraphQL
+const graphql_1 = require("./controllers/graphql");
+app.use("/", graphql_1.default);
 app.get("/**/*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./../../client/dist/index.html"));
 });
