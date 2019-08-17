@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./index.less";
 
 import HeaderBar from "./Components/Top Level/HeaderBar/HeaderBar";
-import SideBar from "./Components/Top Level/SideBar/SideBar";
+import SideBar from "./Components/Top Level/SideBar/VersionCreator/SideBar";
 import ContentArea from "./Components/Top Level/ContentArea/ContentArea";
 
 import NodeDisplay from "./Components/Pages/NodeDisplayPage/NodePage";
@@ -24,6 +24,15 @@ export default class Root extends React.Component<any, any> {
         console.log("[CORE] React will load");
     }
 
+    state = {
+        sidestate: true,
+    };
+
+    ToggleState = () => {
+        this.setState({
+            sidestate: !this.state.sidestate,
+        })
+    }
 
     render() {
         return (
@@ -31,8 +40,8 @@ export default class Root extends React.Component<any, any> {
                 <div>
                     <HeaderBar/>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <SideBar/>
-                        <ContentArea>
+                        <SideBar sidestate={this.state.sidestate}/>
+                        <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                             <Switch>
                                 <Route path="/" exact component={NodeDisplay}/>    
                                 <Route path="/learning" component={LearningPage}/>   
