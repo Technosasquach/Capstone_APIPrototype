@@ -1,0 +1,27 @@
+@import "./../../../core.less";
+@import "./../../../variables.less";
+
+@nav-size-height: 70px;
+@nav-margin-small: 8px;
+@nav-margin-large: 15px;
+
+.navbar {
+    height: @nav-size-height;
+    box-sizing: border-box;
+
+    background-color: @colour-main;
+    color: @colour-main;
+    margin: 0px;
+    padding: 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 1px solid lighten(@colour-dark, 10%);
+}
+
+.container {
+    min-height: calc(~"100vh - "@nav-size-height);
+    width: 100vw;
+}
