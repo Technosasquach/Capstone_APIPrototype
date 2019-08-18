@@ -11,15 +11,16 @@ export default class ContentArea extends React.Component<any, any> {
 
     render() {
         return (
-            <div>
+            <div className="container">
+                <div>
+                <Button type="primary" onClick={this.props.toggler} style={{ marginBottom: 16 }}>
+                    <Icon type={this.props.sidestate ? 'menu-unfold' : 'menu-fold'} />
+                </Button>
+                </div>
                 <div className="content">
-                    <Button type="primary" onClick={this.props.toggler} style={{ marginBottom: 16 }}>
-                        <Icon type={this.props.sidestate ? 'menu-unfold' : 'menu-fold'} />
-                    </Button>
                     {this.props.children}
                 </div>
             </div>
-
         );
     }
 }

@@ -39,7 +39,7 @@ export default class Root extends React.Component<any, any> {
             <Router>
                 <div>
                     <HeaderBar/>
-                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <div className="contentarea">
                         <SideBar sidestate={this.state.sidestate}/>
                         <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                             <Switch>

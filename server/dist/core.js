@@ -80,7 +80,7 @@ app.use("/", routes_1.default);
 // Setting up GraphQL
 const graphql_1 = require("./controllers/graphql");
 app.use("/", graphql_1.default);
-app.get("/**/*", (req, res) => {
+app.get("/**/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./../../client/dist/index.html"));
 });
 //# sourceMappingURL=core.js.map

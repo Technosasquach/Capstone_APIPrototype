@@ -29,7 +29,7 @@ export default class SideBar extends React.Component<any, any> {
     render() {
         return (
             <div className={this.props.sidestate ? "sidebar" : "sidebargone"}>
-                <Menu mode="inline" openKeys={this.state.openKeys} onOpenChange={this.onOpenChange} style={{ width: 256 }}>
+                <Menu mode="inline" openKeys={this.state.openKeys} onOpenChange={this.onOpenChange}>
                     <SubMenu key="sub1" title={
                         <span>
                             <Icon type="book" />

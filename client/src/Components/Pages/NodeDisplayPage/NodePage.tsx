@@ -1,14 +1,21 @@
 import * as React from "react";
 
 import "./NodePage.less";
-import 'antd/dist/antd.css';
+
+import NodeInfo from './nodeInfo';
+import NodeData from './nodeData';
 
 export default class NodeDisplayPage extends React.Component<any, any> {
 
     render() {
         return (
             <div className="NodePage">
-                <h1>Node Display Page</h1>
+                <div className="contentregion">
+                    <NodeInfo/>
+                </div>
+                <div className="dataregion">
+                    <NodeData/>
+                </div>
             </div>
         );
     }
