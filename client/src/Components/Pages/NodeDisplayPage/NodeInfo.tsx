@@ -1,7 +1,30 @@
 import * as React from "react";
 
 import "./NodeInfo.less";
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Table } from 'antd';
+
+const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+     }
+  ];
+  const dataParent = [
+    {
+      key: '1',
+      name: 'Parent',
+    },
+  ];
+  const dataChild = [
+    {
+      key: '1',
+      name: 'Child 1',
+    },
+    {
+        key: '2',
+        name: 'Child 2',
+    },
+  ];
 
 export default class NodeInfo extends React.Component<any, any> {
 
@@ -22,9 +45,9 @@ export default class NodeInfo extends React.Component<any, any> {
                 <hr/>
                 <h2>Related Nodes</h2>
                 <h3>Parent</h3>
-                <p>PARENTS</p>
+                <Table columns={columns} dataSource={dataParent} />
                 <h3>Children</h3>
-                <p>CHILDREN</p>
+                <Table columns={columns} dataSource={dataChild} />
             </div>
         );
     }
