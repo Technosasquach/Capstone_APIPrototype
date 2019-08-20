@@ -13,6 +13,8 @@ core_1.Server.listen(3000, () => {
     // ENABLING THIS WILL CAUSE NPM RUN WATCH TO RESTART LOOP INFINITELY!
     // IT WILL ALSO NEVER ALLOW A RECOMPILE OF THE SERVER
     // MUST FORCE QUIT, OR RUN ONCE
+    // Generates searchable set
+    // 
     // console.log("[Debug] Outputting all mounted routes");
     // App._router.stack.forEach(print.bind(undefined, []));
 });

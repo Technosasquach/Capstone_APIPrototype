@@ -17,6 +17,11 @@ exports.InformationSchema = new mongoose.Schema({
         type: String,
         unique: false,
         required: true
+    },
+    keywords: {
+        type: [String],
+        unique: false,
+        required: false
     }
 });
 exports.Information = mongoose.model("Information", exports.InformationSchema);

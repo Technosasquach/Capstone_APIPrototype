@@ -9,6 +9,7 @@ export const NodeType = new GraphQLObjectType({
         depth: { type: new GraphQLNonNull(GraphQLInt) },
         name: { type: new GraphQLNonNull(GraphQLString) },
         json: { type: new GraphQLNonNull(GraphQLString) },
+        keywords: { type: new GraphQLList(GraphQLString) },
         parents: { type: new GraphQLList(GraphQLID) },
         children: { type: new GraphQLList(GraphQLID) }
     })
@@ -39,6 +40,7 @@ export const NodeMutations = {
             depth: { type: new GraphQLNonNull(GraphQLInt) },
             name: { type: new GraphQLNonNull(GraphQLString) },
             json: { type: new GraphQLNonNull(GraphQLString) },
+            keywords: { type: new GraphQLList(GraphQLString) },
             parents: { type: new GraphQLList(GraphQLID) },
             children: { type: new GraphQLList(GraphQLID) }
         },
@@ -55,6 +57,7 @@ export const NodeMutations = {
             depth: { type: new GraphQLNonNull(GraphQLInt) },
             name: { type: new GraphQLNonNull(GraphQLString) },
             json: { type: new GraphQLNonNull(GraphQLString) },
+            keywords: { type: new GraphQLList(GraphQLString) },
             parents: { type: new GraphQLList(GraphQLID) },
             children: { type: new GraphQLList(GraphQLID) }
         },

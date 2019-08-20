@@ -1,9 +1,17 @@
 import * as mongoose from "mongoose";
 
+/**
+ * IInformationModel
+ *
+ * @export
+ * @interface IInformationModel
+ * @extends {mongoose.Document}
+ */
 export interface IInformationModel extends mongoose.Document {
     createdAt: Date;
     related: mongoose.Types.ObjectId[];
     text: string;
+    keywords: string[];
 }
 
 export const InformationSchema: mongoose.Schema = new mongoose.Schema({
@@ -22,6 +30,11 @@ export const InformationSchema: mongoose.Schema = new mongoose.Schema({
         type: String,
         unique: false,
         required: true
+    },
+    keywords: {
+        type: [String],
+        unique: false,
+        required: false
     }
 });
 

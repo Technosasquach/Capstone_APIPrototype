@@ -10,6 +10,7 @@ exports.NodeType = new graphql_1.GraphQLObjectType({
         depth: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
         name: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         json: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+        keywords: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) },
         parents: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) },
         children: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) }
     })
@@ -38,6 +39,7 @@ exports.NodeMutations = {
             depth: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
             name: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             json: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            keywords: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) },
             parents: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) },
             children: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) }
         },
@@ -54,6 +56,7 @@ exports.NodeMutations = {
             depth: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLInt) },
             name: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             json: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            keywords: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) },
             parents: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) },
             children: { type: new graphql_1.GraphQLList(graphql_1.GraphQLID) }
         },

@@ -11,7 +11,12 @@ const cliProgress = require("cli-progress");
 //     generateRecursive(node: any): void;
 //     addToGraph(parent: any, child: any): void;
 // }
-// Wrapper library for finding elements and sorting the node database
+/**
+ * NodalMemory
+ *
+ * @export
+ * @class NodalMemory
+ */
 class NodalMemory {
     constructor() {
         this.graph = new dagre.graphlib.Graph();
@@ -52,7 +57,7 @@ class NodalMemory {
      *
      * Given a node, it will recursively trawl though all children, and adds it to the larger data structure.
      * @private
-     * @param {INodeModel} node
+     * @param {INodeModel} node - Given node
      * @memberof NodalMemory
      */
     generateRecursive(node) {
@@ -74,8 +79,8 @@ class NodalMemory {
      * addToGraph()
      *
      * Adds a series of node elements together. Binds all children to a parent node element.
-     * @param {*} parent
-     * @param {*} child
+     * @param {*} parent - Parent node
+     * @param {*} child - Child node
      * @memberof NodalMemory
      */
     addToGraph(parent, child) {

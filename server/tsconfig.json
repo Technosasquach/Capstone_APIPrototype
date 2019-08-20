@@ -19,6 +19,7 @@
         "sourceMap": true,
         "outDir": "dist",
         "baseUrl": ".",
+        "removeComments": false,
     },
     "include": [
         "server/src/**/*"

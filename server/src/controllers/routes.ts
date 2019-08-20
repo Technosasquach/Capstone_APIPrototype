@@ -1,4 +1,4 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 import * as fs from "fs";
 import * as path from "path";
 const routes = Router();
@@ -21,18 +21,5 @@ routes.post("/graph/", function(req: Request, res: Response) {
         res.json(JSON.parse(buff.toString())); // Rehydrate the JSON and send to client
     })
 })
-
-import { beginQuery, queryAll, beginSearch} from "./../controllers/query";
-routes.get("/Data/", (req: Request, res: Response) => {
-    beginQuery.then(e => {
-        res.json({ data: queryAll});
-    })
-});
-
-routes.get("/Data/Search/", (req: Request, res: Response) => {
-    beginSearch(req.query.search).then(e => {
-        res.json({data: e});
-    });
-});
 
 export default routes;

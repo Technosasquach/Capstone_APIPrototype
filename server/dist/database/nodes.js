@@ -23,6 +23,11 @@ exports.NodeSchema = new mongoose.Schema({
         unique: false,
         required: true
     },
+    keywords: {
+        type: [String],
+        unique: false,
+        required: false
+    },
     parents: [{
             type: [mongoose.Schema.Types.ObjectId],
             unique: false,
