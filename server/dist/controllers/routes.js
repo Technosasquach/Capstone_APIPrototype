@@ -20,16 +20,5 @@ routes.post("/graph/", function (req, res) {
         res.json(JSON.parse(buff.toString())); // Rehydrate the JSON and send to client
     });
 });
-const query_1 = require("./../controllers/query");
-routes.get("/Data/", (req, res) => {
-    query_1.beginQuery.then(e => {
-        res.json({ data: query_1.queryAll });
-    });
-});
-routes.get("/Data/Search/", (req, res) => {
-    query_1.beginSearch(req.query.search).then(e => {
-        res.json({ data: e });
-    });
-});
 exports.default = routes;
 //# sourceMappingURL=routes.js.map

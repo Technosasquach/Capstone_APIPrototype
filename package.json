@@ -9,7 +9,7 @@
     "serve": "nodemon server/dist/index.js",
     "serve-once": "node server/dist/index.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript-Server,Typescript-Client,Node\" -c \"cyan.bold,cyan.bold,green.bold\" \"npm run watch-server\" \"npm run watch-client\" \"npm run serve\"",
-    "build-server": "tsc -p ./server && npm run doc-compile",
+    "build-server": "tsc -p ./server",
     "watch-server": "tsc -w -p ./server",
     "build-client": "webpack --display-error-details",
     "watch-client": "webpack -w --display-error-details",
