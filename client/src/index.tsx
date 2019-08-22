@@ -43,7 +43,7 @@ export default class Root extends React.Component<any, any> {
                         <SideBar sidestate={this.state.sidestate}/>
                         <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                             <Switch>
-                                <Route path="/" exact component={NodeDisplay}/>    
+                                <Route path="/:id?" component={NodeDisplay}/>    
                                 <Route path="/learning" component={LearningPage}/>   
                                 <Route path="/exam" component={ExamPage}/>   
                                 <Route path="/account" component={AccountPage}/> 

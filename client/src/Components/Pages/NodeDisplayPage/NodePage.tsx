@@ -11,7 +11,7 @@ export default class NodeDisplayPage extends React.Component<any, any> {
         return (
             <div className="NodePage">
                 <div className="contentregion">
-                    <NodeInfo/>
+                    <NodeInfo id={this.props.match.params.id}/>
                 </div>
                 <div className="dataregion">
                     <NodeData/>
