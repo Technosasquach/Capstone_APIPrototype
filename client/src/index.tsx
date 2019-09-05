@@ -1,7 +1,6 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 import "./index.less";
 
 import HeaderBar from "./Components/Top Level/HeaderBar/HeaderBar";
@@ -12,7 +11,9 @@ import NodeDisplay from "./Components/Pages/NodeDisplayPage/NodePage";
 import LearningPage from "./Components/Pages/LearningNodePage/LearningPage";
 import ExamPage from "./Components/Pages/ExamPage/ExamPage";
 import AccountPage from "./Components/Pages/AccountPage/AccountPage";
-import SignInPage from "./Components/Pages/SignInPage/SignIn";
+import SearchPage from "./Components/Pages/SearchPage/SearchPage";
+import CourseBuilder from "./Components/Pages/CourseBuilder/CourseBuilder";
+import PageBuilder from "./Components/Pages/PageBuilder/PageBuilder";
 
 export default class Root extends React.Component<any, any> {
 
@@ -43,11 +44,13 @@ export default class Root extends React.Component<any, any> {
                         <SideBar sidestate={this.state.sidestate}/>
                         <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                             <Switch>
-                                <Route path="/:id?" component={NodeDisplay}/>    
                                 <Route path="/learning" component={LearningPage}/>   
                                 <Route path="/exam" component={ExamPage}/>   
                                 <Route path="/account" component={AccountPage}/> 
-                                <Route path="/signin" component={SignInPage}/> 
+                                <Route path="/search" component={SearchPage}/> 
+                                <Route path="/PageBuilder" component={PageBuilder}/> 
+                                <Route path="/builder/:id" component={CourseBuilder}/>
+                                <Route path="/:id?" component={NodeDisplay}/>    
                             </Switch>
                         </ContentArea>
                     </div>

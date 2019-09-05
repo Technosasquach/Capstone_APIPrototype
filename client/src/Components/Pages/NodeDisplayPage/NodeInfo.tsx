@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import "./NodeInfo.less";
-import { Breadcrumb, Table } from 'antd';
+import { Breadcrumb, Table, Button } from 'antd';
 import axios from 'axios'
 import { Link } from "react-router-dom";
 
@@ -94,8 +94,7 @@ export default class NodeInfo extends React.Component<any, any> {
   parentSet = async () => {
     let data:any = {};
     let names = [] as string[];
-
-    for (let a = 0; a < this.state.childrenIDS.length; a++){
+    for (let a = 0; a < this.state.parentIDS.length; a++){
       data['query'] = "query{node(id: \"" + this.state.parentIDS[a] + "\"){name}}\n\n";
       await axios.post("http://localhost:3000/graphql/", data).then(res => {
         names.push(res.data['data']['node']['name']);
@@ -145,6 +144,7 @@ export default class NodeInfo extends React.Component<any, any> {
               <Table columns={columns} dataSource={this.state.parentdata} />
               <h3>Children</h3>
               <Table columns={columns} dataSource={this.state.childdata} />
+              <Link to={"/builder/" + this.state.id}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
           </div>
       );
     }

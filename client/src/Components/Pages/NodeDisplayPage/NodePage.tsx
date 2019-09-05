@@ -5,7 +5,7 @@ import "./NodePage.less";
 import NodeInfo from './nodeInfo';
 import NodeData from './nodeData';
 
-export default class NodeDisplayPage extends React.Component<any, any> {
+export default class SearchPage extends React.Component<any, any> {
 
     render() {
         return (
