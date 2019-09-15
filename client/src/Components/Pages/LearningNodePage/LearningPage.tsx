@@ -7,7 +7,7 @@ import LearningPageContent from './LearningPageContent';
 import LearningPageDirectory from './LearningPageDirectory';
 import LearningPageTemp from './LearningPageTemp';
 
-export default class NodeDisplayPage extends React.Component<any, any> {
+export default class LearningPage extends React.Component<any, any> {
     
     render() {
         return (

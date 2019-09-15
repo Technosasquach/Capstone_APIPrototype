@@ -9,6 +9,7 @@ routes.post("/", (req, res) => {
 });
 const scraper_1 = require("./../controllers/scraper");
 routes.get("/api/", function (req, res) {
+    console.log("Test");
     scraper_1.scrape.scrapeWholeAPI();
     res.json({
         message: "Scraping Database."

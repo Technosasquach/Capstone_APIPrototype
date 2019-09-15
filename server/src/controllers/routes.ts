@@ -9,6 +9,7 @@ routes.post("/", (req: Request, res: Response) => {
 
 import {scrape} from './../controllers/scraper';
 routes.get("/api/", function(req: Request, res: Response) {
+    console.log("Test");
     scrape.scrapeWholeAPI();
     res.json({
         message: "Scraping Database."
