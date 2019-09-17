@@ -25,7 +25,7 @@ const Post: React.FC<iProps> = (props) => {
     //   const { _id, node, user, contents, date } = post;
     // const {userComment} = post;
 
-    console.log(post.userComment);
+    // console.log(post.userComment);
     
     const user = "Username";
     const data = <ReactMarkdown source={post.userComment} />;
