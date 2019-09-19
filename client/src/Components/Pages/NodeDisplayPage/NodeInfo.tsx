@@ -9,7 +9,7 @@ const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text:string, record:any) => <Link to={"/" + record.name}>{text}</Link>,
+      render: (text:string, record:any) => <Link to={"/node/" + record.link}>{text}</Link>,
      }
   ];
 const dataParent = [
@@ -30,14 +30,20 @@ export default class NodeInfo extends React.Component<any, any> {
     super(props);
     this.state = {
       id: this.props.id,
-      name: "Temp Title",
-      childrenIDS: [] as string[],
-      parentsIDS: [],
+      name: "Loading Data",
       childdata: dataChild,
       parentdata: dataParent,
     };
+  }
 
+  componentDidMount() {
     this.beginQuery();
+  }
+
+  componentDidUpdate(prevProps: any) {
+    if(prevProps !== this.props) {
+      this.beginQuery();
+    }
   }
 
   /**
@@ -46,69 +52,58 @@ export default class NodeInfo extends React.Component<any, any> {
    *
    * @memberof NodeInfo
    */
-  beginQuery = async () => {
-    let data:any = {};
-    data['query'] = "query{node(id: \"" + this.state.id + "\"){name children parents}}\n\n";
-    await axios.post("http://localhost:3000/graphql/", data).then(res => this.setState({
-      name: res.data['data']['node']['name'],
-      childrenIDS: res.data['data']['node']['children'],
-      parentIDS: res.data['data']['node']['parents'],
-    }));
-    this.childSet();
-    this.parentSet();
+  beginQuery = () => {
+    let data:any = {query:  "query{node(id: \"" + this.props.id + "\"){name children parents}}\n\n"};
+    axios.post("http://localhost:3000/graphql/", data).then(res => {
+      return {
+        name: res.data['data']['node']['name'],
+        childrenIDS: res.data['data']['node']['children'],
+        parentIDS: res.data['data']['node']['parents']
+      };
+    }).then(async (json) => {
+      let childData = [];
+      let parentData = [];
+      if(json.childrenIDS.length > 0) {
+        childData = await this.dataSet(json.childrenIDS);
+      } else {
+        childData = dataChild;
+      }
+      if(json.parentIDS.length > 0) {
+        parentData = await this.dataSet(json.parentIDS);
+      } else {
+        parentData = dataParent;
+      }
+      this.setState({
+        name: json.name,
+        childdata: childData,
+        parentdata: parentData
+      }); 
+    });
   }
 
   /**
-   * childSet
-   * Gets all child element names and updates state to render them
+   * dataSet
+   * Gets all element names and returns a array of json objects
    *
    * @memberof NodeInfo
    */
-  childSet = async () => {
-    let data:any = {};
-    let names = [] as string[];
+  dataSet = (IDS: string[]) => {
+    //let data:any = {};
 
-    for (let a = 0; a < this.state.childrenIDS.length; a++){
-      data['query'] = "query{node(id: \"" + this.state.childrenIDS[a] + "\"){name}}\n\n";
-      await axios.post("http://localhost:3000/graphql/", data).then(res => {
-        names.push(res.data['data']['node']['name']);
-      })
-    }
-    let key = 1;
-    let content = [] as any[];
-    names.forEach((element: string) => {
-      content.push(this.setData(key, element));
-      key++;
+    return Promise.all(IDS.map((ID: string) => {
+      let data = {query: "query{node(id: \"" + ID + "\"){name}}\n\n"};
+      return axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
+        return res.data.data.node.name;
+      });
+    })).then((res: any) => {
+      let key = 1;
+      let content = [] as any[];
+      for(let i = 0; i < res.length; i++) {
+        content.push(this.setData(key, res[i], IDS[i]));
+        key++;
+      }
+      return content;
     });
-    this.setState({
-      childdata: content,
-    })
-  }
-
-  /**
-   * parentSet
-   * Gets all parent element names and updates state to render them
-   *
-   * @memberof NodeInfo
-   */
-  parentSet = async () => {
-    let data:any = {};
-    let names = [] as string[];
-    for (let a = 0; a < this.state.parentIDS.length; a++){
-      data['query'] = "query{node(id: \"" + this.state.parentIDS[a] + "\"){name}}\n\n";
-      await axios.post("http://localhost:3000/graphql/", data).then(res => {
-        names.push(res.data['data']['node']['name']);
-      })
-    }
-    let key = 1;
-    let content = [] as any[];
-    names.forEach((element: string) => {
-      content.push(this.setData(key, element));
-      key++;
-    });
-    this.setState({
-      parentdata: content,
-    })
   }
 
     /**
@@ -117,11 +112,12 @@ export default class NodeInfo extends React.Component<any, any> {
    *
    * @memberof NodeInfo
    */
-  setData = (num: number,name: string) => {
-    let temp = {} as any;
-    temp['key'] = num;
-    temp['name'] = name;
-    return temp
+  setData = (num: number,name: string, link: string) => {
+    return {
+      key: num,
+      name: name,
+      link: link
+    }
   }
 
   render() {
@@ -141,10 +137,10 @@ export default class NodeInfo extends React.Component<any, any> {
               <hr/>
               <h2>Related Nodes</h2>
               <h3>Parent</h3>
-              <Table columns={columns} dataSource={this.state.parentdata} />
+              <Table columns={columns} pagination={false} dataSource={this.state.parentdata} />
               <h3>Children</h3>
-              <Table columns={columns} dataSource={this.state.childdata} />
-              <Link to={"/builder/" + this.state.id}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
+              <Table columns={columns} pagination={false} dataSource={this.state.childdata} />
+              <Link to={this.props.id + "/builder/"}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
           </div>
       );
     }

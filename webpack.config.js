@@ -8,7 +8,8 @@ module.exports = {
     entry:  path.join(__dirname, 'client/src/index.tsx'),
     output: {
         path: path.join(__dirname, 'client/dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     externals: ['express'],
     devtool: 'cheap-module-source-map',

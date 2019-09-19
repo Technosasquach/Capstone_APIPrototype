@@ -13,7 +13,7 @@ import ExamPage from "./Components/Pages/ExamPage/ExamPage";
 import AccountPage from "./Components/Pages/AccountPage/AccountPage";
 import SearchPage from "./Components/Pages/SearchPage/SearchPage";
 import CourseBuilder from "./Components/Pages/CourseBuilder/CourseBuilder";
-import PageBuilder from "./Components/Pages/PageBuilder/PageBuilder";
+import HomePage from './Components/Pages/HomePage/HomePage';
 
 export default class Root extends React.Component<any, any> {
 
@@ -48,9 +48,9 @@ export default class Root extends React.Component<any, any> {
                                 <Route path="/exam" component={ExamPage}/>   
                                 <Route path="/account" component={AccountPage}/> 
                                 <Route path="/search" component={SearchPage}/> 
-                                <Route path="/PageBuilder" component={PageBuilder}/> 
-                                <Route path="/builder/:id" component={CourseBuilder}/>
-                                <Route path="/:id?" component={NodeDisplay}/>    
+                                <Route path="/node/:id/builder" component={CourseBuilder}/>
+                                <Route path="/node/:id" component={NodeDisplay}/>
+                                <Route path="/" exact component={HomePage}/>
                             </Switch>
                         </ContentArea>
                     </div>

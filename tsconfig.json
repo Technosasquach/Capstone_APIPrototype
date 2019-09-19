@@ -45,7 +45,7 @@
         "client/**/*.ts",
         "client/**/*.tsx",
         "node_modules/@types/**/*.d.ts",
-        "node_modules/@types/*.d.ts",
+        "node_modules/@types/*.d.ts"
     ],
     "exclude": [
         "client/dist/**/*",

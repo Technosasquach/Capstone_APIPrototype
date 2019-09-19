@@ -1,9 +1,8 @@
 import * as React from "react";
 
 import "./ExamPage.less";
-import 'antd/dist/antd.css';
 
-export default class NodeDisplayPage extends React.Component<any, any> {
+export default class ExamPage extends React.Component<any, any> {
 
     render() {
         return (
