@@ -76,6 +76,7 @@ class OSIPiAPIScraper {
      */
     recursiveScrape(depth, startingURL, parent) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(startingURL);
             const scrape = yield this.requestWrapper(startingURL);
             //if request returned nothing return
             if (scrape == undefined) {

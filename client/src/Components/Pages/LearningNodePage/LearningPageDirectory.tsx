@@ -8,7 +8,7 @@ export default class LearningPageDirectory extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <p>AYYEEE</p>
+                <p> </p>
             </div>
         );
     }

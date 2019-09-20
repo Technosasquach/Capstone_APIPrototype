@@ -68,6 +68,7 @@ export class OSIPiAPIScraper {
      * @memberof OSIPiAPIScraper
      */
     private async recursiveScrape(depth: number, startingURL?: string, parent?: mongoose.Types.ObjectId) {
+        console.log(startingURL);
         const scrape = await this.requestWrapper(startingURL);
         //if request returned nothing return
         if (scrape == undefined) {

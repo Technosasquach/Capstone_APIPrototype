@@ -8,9 +8,9 @@ export default class NavArea extends React.Component<any, any> {
     render() {
         return (
             <div className="navarea">
-                <Button type="primary" size="large">Nav 1</Button>
-                <Button type="primary" size="large">Nav 2</Button>
-                <Button type="primary" size="large">Nav 3</Button>
+                <Button type="primary" size="large" href="/">node view</Button>
+                <Button type="primary" size="large" href="/learning">learning</Button>
+                <Button type="primary" size="large" href="/account">account</Button>
             </div>
         );
     }
