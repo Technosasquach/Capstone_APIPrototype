@@ -52,6 +52,7 @@ export default class Root extends React.Component<any, any> {
                                     <Route path="/searchresults" component={SearchResultPage} />
                                     <Route path="/signin" component={SignInPage} />
                                     <Route path="/learning" component={LearningPage} />
+                                    <Route path="/learning/:nodeID" component={LearningPage} />
                                     <Route path="/exam" component={ExamPage} />
                                     <Route path="/account" component={AccountPage} />
                                     <Route path="/search" component={SearchPage} />

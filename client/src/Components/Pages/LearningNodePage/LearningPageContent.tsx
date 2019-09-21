@@ -1,9 +1,12 @@
 import * as React from "react";
 import "./LearningPageContent.less";
-import { Breadcrumb, Rate } from 'antd';
+import { Rate } from 'antd';
 import MakePost from "./CommentCreate";
 import CommentList from "./CommentList";
-const ReactMarkdown = require('react-markdown')
+import { Typography } from 'antd';
+
+const { Title } = Typography;
+const ReactMarkdown = require('react-markdown');
 
 interface iNode {
     id: string,
@@ -36,36 +39,21 @@ interface iState {
 export default class LearningPageContent extends React.Component<iProps, iState> {
     constructor(props: iProps) {
         super(props);
-        console.log("ctor learning page content");
-        console.log(props);
     }
     
     render() {
         return (
-            <div>
-                <Breadcrumb>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        <a href="">Parent Parent</a>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        <a href="">Parent</a>
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>PCP Pumps</Breadcrumb.Item>
-                </Breadcrumb>
+            <div style={{ overflowWrap: 'break-word' }}>
                 <div className="right">
                     <MakePost nodeID={this.props.theNode.id}/>
                 </div>
-                <h1>{this.props.theNode.name}</h1>
+                <Title level={2}>{this.props.theNode.name}</Title>
+                <div>
+                    {this.props ? (<ReactMarkdown source={this.props.theNode.json} />) : (<ReactMarkdown source=" " />)}
+                </div>
+                <Title level={4}>Comment Section</Title>
                 <hr />
-                <h2>Description</h2>
-                {this.props ? (<ReactMarkdown source={this.props.theNode.json} />) : (<ReactMarkdown source=" " />)}
-                <h2>Data</h2>
-                <h2>Image</h2>
-                <hr />
-                <h2>Comment Section</h2>
                 <CommentList nodeID={this.props.theNode.id}/>
-                {/* <CommentList nodeID="5d69ec97f8bb921aacd38d23"/> */}
                 <Rate />
             </div>
         );
