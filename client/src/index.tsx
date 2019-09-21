@@ -11,7 +11,6 @@ import NodeDisplay from "./Components/Pages/NodeDisplayPage/NodePage";
 import LearningPage from "./Components/Pages/LearningNodePage/LearningPage";
 import ExamPage from "./Components/Pages/ExamPage/ExamPage";
 import AccountPage from "./Components/Pages/AccountPage/AccountPage";
-import SearchPage from "./Components/Pages/SearchPage/SearchPage";
 import CourseBuilder from "./Components/Pages/CourseBuilder/CourseBuilder";
 import HomePage from './Components/Pages/HomePage/HomePage';
 import SignInPage from "./Components/Pages/SignInPage/SignIn";
@@ -54,7 +53,6 @@ export default class Root extends React.Component<any, any> {
                                     <Route path="/learning" component={LearningPage} />
                                     <Route path="/exam" component={ExamPage} />
                                     <Route path="/account" component={AccountPage} />
-                                    <Route path="/search" component={SearchPage} />
                                     <Route path="/node/:id/builder" component={CourseBuilder} />
                                     <Route path="/node/:id" component={NodeDisplay} />
                                     <Route path="/" exact component={HomePage} />

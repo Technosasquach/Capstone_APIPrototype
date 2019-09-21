@@ -12,7 +12,7 @@ if (os.type() === 'Linux') {
     open(__dirname + "./doc/index.html"); 
 } else if (os.type() === 'Windows_NT') {
     console.log("Opening JSDocs for windows...");
-    exec("start ./docs/index.html", puts);
+    //exec("start ./docs/index.html", puts);
 } else {
     throw new Error("Unsupported OS found: " + os.type());
 }

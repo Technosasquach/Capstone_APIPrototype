@@ -16,7 +16,10 @@ export interface ContainerState {
 }
 
 interface Props {
-    Structure: string[]
+    Structure: {
+      id: string,
+      name: string,
+    }[]
 }
 
 function usePrevious(value: any) {
@@ -36,8 +39,8 @@ const Container: React.FC<Props> = ({Structure}) => {
         if(Structure !== prevAmount) {
             let arr: Item[] = [];
             let i = 1;
-            Structure.map(item => {
-                arr.push({id: i++, text: item});
+            Structure.map((item) => {
+                arr.push({id: i++, text: item['name']});
             })
             setCards(arr);
         }
