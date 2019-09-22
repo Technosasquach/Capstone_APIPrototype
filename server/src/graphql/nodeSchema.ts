@@ -1,5 +1,6 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
 import { Node } from '../database/nodes.js';
+import { InformationType } from './informationSchema';
 
 export const NodeType = new GraphQLObjectType({
     name: 'Node',

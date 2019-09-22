@@ -19,6 +19,14 @@ interface iNode {
     children: string[]
 }
 
+interface iInfoNode {
+    id: string,
+    createdAt: Date,
+    nodeId: string,
+    text: string,
+    keywords: string[]
+}
+
 interface iComment {
     node: string;
     user: string;
@@ -27,10 +35,12 @@ interface iComment {
 }
 
 interface iProps {
-    theNode: iNode;
+    myInfoNode: iInfoNode;
+    myNode: iNode;
 };
 
 interface iState {
+    myInfoNode: iInfoNode;
     myNode: iNode;
     myComments: iComment[];
 };
@@ -45,15 +55,15 @@ export default class LearningPageContent extends React.Component<iProps, iState>
         return (
             <div style={{ overflowWrap: 'break-word' }}>
                 <div className="right">
-                    <MakePost nodeID={this.props.theNode.id}/>
+                    <MakePost infoNodeId={this.props.myInfoNode.id}/>
                 </div>
-                <Title level={2}>{this.props.theNode.name}</Title>
+                <Title level={2}>{this.props.myNode.name}</Title>
                 <div>
-                    {this.props ? (<ReactMarkdown source={this.props.theNode.json} />) : (<ReactMarkdown source=" " />)}
+                    {this.props ? (<ReactMarkdown source={this.props.myInfoNode.text} />) : (<ReactMarkdown source=" " />)}
                 </div>
                 <Title level={4}>Comment Section</Title>
                 <hr />
-                <CommentList nodeID={this.props.theNode.id}/>
+                <CommentList infoNodeId={this.props.myInfoNode.id}/>
                 <Rate />
             </div>
         );

@@ -1,17 +1,17 @@
 import * as mongoose from "mongoose";
 
 /**
- * CommentModel
+ * ICommentModel
  *
  * @export
- * @interface CommentModel
+ * @interface ICommentModel
  * @extends {mongoose.Document}
  */
-export interface CommentModel extends mongoose.Document {
-  node: mongoose.Schema.Types.ObjectId;
+export interface ICommentModel extends mongoose.Document {
+  nodeId: mongoose.Schema.Types.ObjectId;
   // user: mongoose.Schema.Types.ObjectId;
-  contents: String;
-  date: Date;
+  contents: string;
+  createdAt: Date;
 }
 
 /*
@@ -27,16 +27,16 @@ export interface CommentModel extends mongoose.Document {
     }
 */
 
-/**
- * ICommentModel
- *
- * @export
- * @interface ICommentModel
- * @extends {CommentModel}
- */
-export interface ICommentModel extends CommentModel {
-  createdAt: Date;
-}
+// /**
+//  * ICommentModel
+//  *
+//  * @export
+//  * @interface ICommentModel
+//  * @extends {CommentModel}
+//  */
+// export interface ICommentModel extends CommentModel {
+//   createdAt: Date;
+// }
 
 export const CommentSchema: mongoose.Schema = new mongoose.Schema({
   createdAt: {
@@ -45,23 +45,21 @@ export const CommentSchema: mongoose.Schema = new mongoose.Schema({
     required: true,
     default: Date.now
   },
-  nodeId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "nodes"
+  infoNodeId: {
+      type: String,
+      unique: false,
+      required: true
   },
+  contents: {
+      type: String,
+      unique: false,
+      required: true
+  }
   // userId: {
   //     type: mongoose.Schema.Types.ObjectId,
   //     ref: 'users'
-  // },
-  contents: {
-    type: String,
-    required: true
-  },
-  date: {
-    type: Date,
-    default: Date.now
-  }
+  // }
 });
 
-// export const Comment: mongoose.Model<CommentModel> = mongoose.model<CommentModel>("Comments", CommentSchema);
-export const Comment: mongoose.Model<ICommentModel> = mongoose.model<ICommentModel>("Comments", CommentSchema);
+
+export const Comment: mongoose.Model<ICommentModel> = mongoose.model<ICommentModel>("Comment", CommentSchema);

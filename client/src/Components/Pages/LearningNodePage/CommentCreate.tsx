@@ -2,13 +2,9 @@
 import * as React from "react";
 // import axios from "axios";
 import "antd/dist/antd.css";
-// import "../post.css";
 import { Button, Modal, Form, Input } from "antd";
 import { FormComponentProps } from 'antd/es/form';
-
-// const ReactDOM = require('react-dom')
 const ReactMarkdown = require('react-markdown')
-// const { Text } = Typography;
 const { TextArea } = Input;
 /* #endregion */
 
@@ -83,7 +79,7 @@ const PostCreateForm = Form.create<iMakePostProps>({ name: "form_in_modal" })(
 /* #region  Class component */
 
 interface iUserFormProps {
-    nodeID: string;
+    infoNodeId: string;
 };
 
 interface iState {
@@ -122,13 +118,29 @@ export default class MakePost extends React.Component<iUserFormProps, iState> {
             }
         });
 
+        //mutation
+
+        // const CreateCommentForNode = 
+        //     mutation CreateCommentForNode($infoNodeId: String!, $comment: String!){
+        //         addComment(objects: {infoNodeId: $infoNodeId, contents: $comment}){
+        //         } 
+        //     }
+        
+        
+        
+
+        //end of mutation
+
+
+
+    
         // const userComment = this.formRef.state.userComment;
 
         // const newPost = {
-        //     node: this.props.nodeID,
-        //     user: "5d69e751a4ed4c6064f620fd",
+        //     infoNodeId: this.props.infoNodeId,
+        //     // user: "5d69e751a4ed4c6064f620fd",
         //     contents: userComment,
-        //     date: Date.now
+        //     createdAt: Date.now
         // };
 
         // const config = {
@@ -140,7 +152,10 @@ export default class MakePost extends React.Component<iUserFormProps, iState> {
         try {
             // const res = axios.post("/api/postings", newPost, config);// why need const res?
             // axios.post("/api/postings", newPost, config);
-            console.log("CHRIS: Data is sent to the database, commented out until DB access is granted");
+
+
+
+            console.log("data sent to the db");
 
         } catch (err) {
             console.log(err);

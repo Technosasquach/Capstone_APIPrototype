@@ -8,7 +8,8 @@ exports.InformationType = new graphql_1.GraphQLObjectType({
         id: { type: graphql_1.GraphQLString },
         createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         related: { type: new graphql_1.GraphQLNonNull(new graphql_1.GraphQLList(graphql_1.GraphQLID)) },
-        text: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
+        text: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+        nodeId: { type: graphql_1.GraphQLString }
     })
 });
 exports.InformationQueries = {
@@ -23,6 +24,13 @@ exports.InformationQueries = {
         args: { id: { type: graphql_1.GraphQLString } },
         resolve(parent, args) {
             return information_js_1.Information.findById(args.id);
+        }
+    },
+    informationByNodeId: {
+        type: exports.InformationType,
+        args: { nodeId: { type: graphql_1.GraphQLString } },
+        resolve(parent, args) {
+            return information_js_1.Information.findOne({ nodeId: args.nodeId });
         }
     }
 };
@@ -58,6 +66,17 @@ exports.InformationMutations = {
         resolve(parent, args) {
             return information_js_1.Information.findByIdAndRemove(args.id);
         }
-    }
+    },
+    addInformationNode: {
+        type: exports.InformationType,
+        args: {
+            text: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            nodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
+        },
+        resolve(parent, args) {
+            const information = new information_js_1.Information(args);
+            return information.save();
+        }
+    },
 };
 //# sourceMappingURL=informationSchema.js.map

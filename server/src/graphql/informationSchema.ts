@@ -7,7 +7,8 @@ export const InformationType = new GraphQLObjectType({
         id: { type: GraphQLString },
         createdAt: { type: new GraphQLNonNull(GraphQLString) },
         related: { type: new GraphQLNonNull(new GraphQLList(GraphQLID)) },
-        text: { type: new GraphQLNonNull(GraphQLString) }
+        text: { type: new GraphQLNonNull(GraphQLString) },
+        nodeId: {type: GraphQLString }
     })
 });
 
@@ -23,6 +24,13 @@ export const InformationQueries = {
         args: { id: { type: GraphQLString }},
         resolve(parent: any, args: any) {
             return Information.findById(args.id);
+        }
+    },
+    informationByNodeId: {
+        type: InformationType,
+        args: { nodeId: { type: GraphQLString }},
+        resolve(parent: any, args: any) {
+            return Information.findOne({nodeId: args.nodeId});
         }
     }
 };
@@ -59,5 +67,16 @@ export const InformationMutations = {
         resolve(parent: any, args: any) {
             return Information.findByIdAndRemove(args.id);
         }
-    }
+    },
+    addInformationNode: {
+        type: InformationType,
+        args: {
+            text: { type: new GraphQLNonNull(GraphQLString) },
+            nodeId: { type: new GraphQLNonNull(GraphQLString) }
+        },
+        resolve(parent: any, args: any) {
+            const information = new Information(args);
+            return information.save();
+        }
+    },
 }

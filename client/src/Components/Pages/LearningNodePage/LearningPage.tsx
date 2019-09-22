@@ -21,6 +21,14 @@ interface iNode {
     children: string[]
 }
 
+interface iInfoNode {
+    id: string,
+    createdAt: Date,
+    nodeId: string,
+    text: string,
+    keywords: string[]
+}
+
 interface iComment {
     node: string;
     user: string;
@@ -33,6 +41,7 @@ interface iProps extends RouteComponentProps {
 };
 
 interface iState {
+    myInfoNode: iInfoNode | null;
     myNode: iNode | null;
     myComments: iComment[] | null;
 };
@@ -42,9 +51,9 @@ export default class LearningPage extends React.Component<iProps, iState> {
         super(props);
         this.state = {
             myNode: null,
+            myInfoNode: null,
             myComments: null
-        }
-
+        }        
     }
 
     componentDidMount() {
@@ -52,8 +61,17 @@ export default class LearningPage extends React.Component<iProps, iState> {
         // see 'const columns' in SearchResults.tsx
         if (this.props.location.state != undefined) {
             const { nodeID } = this.props.location.state;
+            this.loadInformationNodeData(nodeID);
             this.loadNodeData(nodeID);
-        }
+        }        
+    }
+
+    loadInformationNodeData = async (id: string) => {
+        let data2: any = {};
+        data2['query'] = "query{informationByNodeId(nodeId: \"" + id + "\"){ id createdAt text nodeId }}\n\n";
+        await axios.post("http://localhost:3000/graphql/", data2).then(res => this.setState({
+            myInfoNode: res.data['data']['informationByNodeId']
+        }));
     }
 
     loadNodeData = async (id: string) => {
@@ -68,23 +86,17 @@ export default class LearningPage extends React.Component<iProps, iState> {
         return (
             <div className="learningpage">
                 <div className="contentregion">
-                    {this.state.myNode == null
-                        ? <Alert
+                    {
+                        this.state.myNode != null && this.state.myInfoNode != null
+                        ? <LearningPageContent
+                        myInfoNode={this.state.myInfoNode}
+                        myNode={this.state.myNode} />
+                        :  <Alert
                             message="No nodes to display"
                             description="Please search for a node."
                             type="info"
                             showIcon />
-                        : <LearningPageContent
-                            theNode={this.state.myNode} />
                     }
-                </div>
-                <div className="dualcontent">
-                    {/* <div className="directory">
-                        <LearningPageDirectory/>
-                    </div>
-                    <div className="temp">
-                        <LearningPageTemp/>
-                    </div> */}
                 </div>
             </div>
         );

@@ -22,6 +22,11 @@ exports.InformationSchema = new mongoose.Schema({
         type: [String],
         unique: false,
         required: false
+    },
+    nodeId: {
+        type: String,
+        unique: true,
+        required: true
     }
 });
 exports.Information = mongoose.model("Information", exports.InformationSchema);

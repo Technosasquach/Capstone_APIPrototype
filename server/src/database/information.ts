@@ -12,6 +12,7 @@ export interface IInformationModel extends mongoose.Document {
     related: mongoose.Types.ObjectId[];
     text: string;
     keywords: string[];
+    nodeId: mongoose.Schema.Types.ObjectId;
 }
 
 export const InformationSchema: mongoose.Schema = new mongoose.Schema({
@@ -35,6 +36,11 @@ export const InformationSchema: mongoose.Schema = new mongoose.Schema({
         type: [String],
         unique: false,
         required: false
+    },
+    nodeId: {
+        type: String,
+        unique: true,
+        required: true
     }
 });
 

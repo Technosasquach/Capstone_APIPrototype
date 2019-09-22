@@ -14,13 +14,12 @@ const ReactMarkdown = require('react-markdown')
 //     date: Date
 // }
 interface iProps {
-    _id?: string,
     comment: string,
 }
 
-const Post: React.FC<iProps> = (props) => {
-   
-    const post = JSON.parse(props.comment);
+const Post: React.FC<iProps> = (props, {}) => {
+    
+    //const post = JSON.parse(props.comment);
  
     //   const { _id, node, user, contents, date } = post;
     // const {userComment} = post;
@@ -28,14 +27,14 @@ const Post: React.FC<iProps> = (props) => {
     // console.log(post.userComment);
     
     const user = "Username";
-    const data = <ReactMarkdown source={post.userComment} />;
+    const data = <ReactMarkdown source={props.comment} />;
     return (
-        <div>
+        <React.Fragment>
             <Comment
                 author={user}
                 content={data}
             />
-        </div>
+        </React.Fragment>
 
     );
 };
