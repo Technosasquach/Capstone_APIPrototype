@@ -19,7 +19,12 @@ import SearchResultPage from "./Components/Pages/Search/SearchResult";
 import SearchState from './Context/Search/SearchState'
 
 export default class Root extends React.Component<any, any> {
-
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            sidestate: true,
+        }
+    }
     componentDidMount() {
         console.log("[CORE] React has loaded");
     }
@@ -27,10 +32,6 @@ export default class Root extends React.Component<any, any> {
     componentWillMount() {
         console.log("[CORE] React will load");
     }
-
-    state = {
-        sidestate: true,
-    };
 
     ToggleState = () => {
         this.setState({

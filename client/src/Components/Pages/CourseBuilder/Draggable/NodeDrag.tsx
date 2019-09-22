@@ -3,12 +3,15 @@ import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import { XYCoord } from 'dnd-core'
 
+import { Button } from 'antd'
+
+import './NodeDrag.less'
+
 const style = {
   border: '1px dashed gray',
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',
   backgroundColor: 'white',
-  cursor: 'move',
 }
 
 export interface CardProps {
@@ -88,7 +91,12 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
   drag(drop(ref))
   return (
     <div ref={ref} style={{ ...style, opacity }}>
+      <span>
       {text}
+      <Button className={"Selector"}>></Button>
+      <Button className={"Selector"}>+</Button>
+      <Button className={"Selector"}>x</Button>
+      </span>
     </div>
   )
 }

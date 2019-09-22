@@ -3,7 +3,7 @@ import Card from './NodeDrag'
 import update from 'immutability-helper'
 
 const style = {
-  width: 400,
+  width: "100%",
 }
 
 export interface Item {
@@ -54,6 +54,7 @@ const Container: React.FC<Props> = ({Structure}) => {
             $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
           }),
         )
+        console.log(cards);
       },
       [cards],
     )

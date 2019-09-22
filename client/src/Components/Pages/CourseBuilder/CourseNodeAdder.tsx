@@ -5,11 +5,12 @@ import { Tree } from 'antd';
 const { TreeNode } = Tree;
 
 interface selector {
-  children: string[];
+  nodechildren: string[];
   treeData: any[];
   structure: any[];
+  enabled?: boolean;
   updateStructure(input: any[]): void;
-  loading(input: any[]): void;
+  loader(input: any[]): void;
 }
 
 export default class CourseNodeAdder extends React.Component<selector, any> {
@@ -19,41 +20,7 @@ export default class CourseNodeAdder extends React.Component<selector, any> {
       checkedKeys: [],
       treeData: this.props.treeData
     }
-  }
-    
-  componentDidUpdate(prev: any) {
-    if (prev.children != this.props.children) {
-      if(this.props.children.length > 0) {
-        this.requestData(this.props.children);
-      }
-    }
-  };
-
-  requestData(IDS: any[]) {
-    return Promise.all(IDS.map((ID: string) => {
-      let data = {query: "query{node(id: \"" + ID + "\"){name children}}\n\n"};
-      return axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
-        return {
-          name: res.data.data.node.name,
-          children: res.data.data.node.children,
-          nodeID: ID,
-        };
-      });
-    })).then((res: any) => {
-      let treeData = [] as any[];
-      let key = 1;
-      res.map((node: any) => {
-        treeData.push({
-          title: node.name,
-          key: key++,
-          childIDS: node.children,
-          nodeID: node.nodeID
-        })
-      });
-      this.props.loading(treeData);
-    });
-  }
-    
+  }   
 
   requestChildren(IDS: any[], key: number) {
     if(IDS.length > 0) {
@@ -103,7 +70,7 @@ export default class CourseNodeAdder extends React.Component<selector, any> {
       return;
     }
     treeNode.props.dataRef.children = await this.requestChildren(treeNode.props.childIDS, treeNode.props.eventKey);
-    this.props.loading(this.state.treeData);
+    this.props.loader(this.state.treeData);
     resolve();
   });
 
@@ -123,10 +90,9 @@ export default class CourseNodeAdder extends React.Component<selector, any> {
   render() {
     return (
       <div>
-        <h1>Structure Select</h1>
-        <Tree loadData={this.onLoadData} checkable checkStrictly onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}>
-          {this.renderTreeNodes(this.state.treeData)}
-        </Tree>
+          <Tree loadData={this.onLoadData} checkable checkStrictly onCheck={this.onCheck} checkedKeys={this.state.checkedKeys}>
+            {this.renderTreeNodes(this.props.treeData)}
+          </Tree>
       </div>
     );
   }

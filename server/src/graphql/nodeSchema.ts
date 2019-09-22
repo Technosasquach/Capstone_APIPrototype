@@ -15,6 +15,9 @@ export const NodeType = new GraphQLObjectType({
     })
 });
 
+
+
+
 export const NodeQueries = {
     everyNode: {
         type: new GraphQLList(NodeType),
