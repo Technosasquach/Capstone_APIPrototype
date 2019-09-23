@@ -16,8 +16,17 @@ routes.get("/api/", function(req: Request, res: Response) {
     });
 });
 
+import {Course} from './../database/courses'
 routes.post("/CourseCreate/", function(req: Request, res: Response) {
     console.log(req.body);
+    const data = req.body;
+    
+    const test = new Course({
+        name: data.coursename,
+        pages: [{}],
+        content: [{}],
+    });
+
     res.end();
 })
 

@@ -2,8 +2,9 @@ import * as mongoose from "mongoose";
 
 
 export interface CourseModel extends mongoose.Document {
+    name: string;
     pages: {}[];
-    content: string[];
+    content: {}[];
 }
 
 export interface TSCourseModel extends CourseModel {
@@ -18,13 +19,18 @@ export const CourseSchema: mongoose.Schema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
+    name: {
+        type: String,
+        unique: false,
+        required: true
+    },
     pages: [{
-        type: {},
+        type: Object,
         unique: false,
         required: true
     }],
     content: [{
-        type: String,
+        type: Object,
         unique: false,
         required: true
     }],

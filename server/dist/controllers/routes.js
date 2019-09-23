@@ -14,8 +14,15 @@ routes.get("/api/", function (req, res) {
         message: "Scraping Database."
     });
 });
+const courses_1 = require("./../database/courses");
 routes.post("/CourseCreate/", function (req, res) {
     console.log(req.body);
+    const data = req.body;
+    const test = new courses_1.Course({
+        name: data.coursename,
+        pages: [{}],
+        content: [{}],
+    });
     res.end();
 });
 routes.post("/graph/", function (req, res) {
