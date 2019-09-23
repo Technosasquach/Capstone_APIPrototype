@@ -7,13 +7,16 @@ const routes = express_1.Router();
 routes.post("/", (req, res) => {
     res.json({ message: "API is active" });
 });
-const scraper_1 = require("./../controllers/scraper");
 routes.get("/api/", function (req, res) {
     console.log("Test");
-    scraper_1.scrape.scrapeWholeAPI();
+    //scrape.scrapeWholeAPI();
     res.json({
         message: "Scraping Database."
     });
+});
+routes.post("/CourseCreate/", function (req, res) {
+    console.log(req.body);
+    res.end();
 });
 routes.post("/graph/", function (req, res) {
     console.log("[Routes] API Triggered: MassiveGraphDefFile");

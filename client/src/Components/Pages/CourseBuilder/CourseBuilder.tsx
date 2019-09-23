@@ -21,11 +21,11 @@ export default class CourseBuilderPage extends React.Component<any, any> {
       parent: [] as card[],
       structure: [],
       treeData: [],
-      children: [] as string[],
+      selectedPage: {},
+      pages: {},
       loading: true,
-      building: false,
-      pages: [],
-      visible: false
+      visible: false,
+      submit: false
     };
   }
 
@@ -54,7 +54,11 @@ export default class CourseBuilderPage extends React.Component<any, any> {
           structure: [{id: res.id, name: res.name}],
           children: res.children,
           treeData: response,
-          loading: false
+          loading: false,
+          selectedPage: {
+            name: res.name,
+            id: 0
+          }
         });
       });
     });
@@ -104,28 +108,53 @@ export default class CourseBuilderPage extends React.Component<any, any> {
   };
 
   handleOk = (e: any) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   };
 
   handleCancel = (e: any) => {
-    console.log(e);
     this.setState({
       visible: false,
     });
   };
+
+  switchPage = (id: any) => {
+    const node = this.state.structure[id];
+    this.setState({
+      selectedPage: {
+        name: node.name,
+        id: id
+      }
+    });
+  }
+
+  savePageState = (input: any, id: number) => {
+    let temp = this.state.pages;
+    temp[id] = input;
+    this.setState({
+      pages: temp
+    });
+    console.log(this.state.pages);
+  }
+
+  submitCourse = (name: string) => {
+    this.setState({
+      submit: true
+    })
+    let data = { coursename: name, data: this.state.pages};
+    axios.post("http://localhost:3000/CourseCreate", data);
+  }
 
   render() {
       return (
         <Loader loading={this.state.loading}>
             <div className="coursepage">
                 <div className="stuctureregion">
-                  <CourseStructure showModal={this.showModal} structure={this.state.structure} />
+                  <CourseStructure showModal={this.showModal} structure={this.state.structure} switcher={this.switchPage} submitter={this.submitCourse}/>
                 </div>
                 <div className="selectregion">
-                  <PageBuilder/> 
+                  <PageBuilder node={this.state.selectedPage} save={this.savePageState} pages={this.state.pages} submit={this.state.submit} /> 
                 </div>
             </div>
             <Modal
@@ -134,7 +163,7 @@ export default class CourseBuilderPage extends React.Component<any, any> {
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
                 >
-                <CourseNodeAdder enabled={true} structure={this.state.structure} updateStructure={this.updateStructure} nodechildren={this.state.children} treeData={this.state.treeData} loader={this.updateLoading}/>
+                <CourseNodeAdder enabled={true} structure={this.state.structure} updateStructure={this.updateStructure} treeData={this.state.treeData} loader={this.updateLoading}/>
             </Modal>
         </Loader>
       );

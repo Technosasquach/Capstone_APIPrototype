@@ -18,7 +18,8 @@ export interface CardProps {
   id: any
   text: string
   index: number
-  moveCard: (dragIndex: number, hoverIndex: number) => void
+  moveCard: (dragIndex: number, hoverIndex: number) => void,
+  switcher: (id: any) => void
 }
 
 interface DragItem {
@@ -26,7 +27,7 @@ interface DragItem {
   id: string
   type: string
 }
-const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
+const Card: React.FC<CardProps> = ({ id, text, index, moveCard, switcher }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop({
     accept: ItemTypes.CARD,
@@ -87,13 +88,17 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
     }),
   })
 
+  const editPage = () => {
+    switcher(id);
+  }
+
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
   return (
     <div ref={ref} style={{ ...style, opacity }}>
       <span>
       {text}
-      <Button className={"Selector"}>></Button>
+      <Button onClick={editPage} className={"Selector"}>></Button>
       <Button className={"Selector"}>+</Button>
       <Button className={"Selector"}>x</Button>
       </span>

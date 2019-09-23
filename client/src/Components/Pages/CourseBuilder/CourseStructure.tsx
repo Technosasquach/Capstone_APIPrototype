@@ -2,23 +2,39 @@ import React from "react";
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Draggable from './Draggable/DragContainer'
-import {Button, Icon} from 'antd'
+import {Button, Icon, Input} from 'antd'
 
 import "./CourseStructure.less";
 
 export default class CourseStructure extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      CourseName: ""
+    }
+  }
+  submit = () => {
+    this.props.submitter(this.state.CourseName);
+  }
+
+  updateName = (e: any) => {
+    this.setState({
+      CourseName: e.target.value
+    })
+  }
 
   render() {
       return (
         <DndProvider backend={HTML5Backend}>
           <h1>Course Structure</h1>
-          <Draggable Structure={this.props.structure} />
+          <span style={{display: "flex"}}><h5>Course Name</h5><Input onChange={this.updateName} /></span>
+          <Draggable Structure={this.props.structure} switcher={this.props.switcher} />
           <div id={"AddButton"}>
             <Button onClick={this.props.showModal} type="dashed" style={{ width: '100%', height: '100%' }}>
               <Icon type="plus" /> Add Page
             </Button>
           </div>
-          <Button type="primary" style={{float: "right"}}>
+          <Button onClick={this.submit} type="primary" style={{float: "right"}}>
             Submit Course
           </Button>
         </DndProvider>

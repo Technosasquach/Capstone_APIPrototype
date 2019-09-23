@@ -19,7 +19,8 @@ interface Props {
     Structure: {
       id: string,
       name: string,
-    }[]
+    }[];
+    switcher: () => void;
 }
 
 function usePrevious(value: any) {
@@ -30,7 +31,7 @@ function usePrevious(value: any) {
     return ref.current;
 }
 
-const Container: React.FC<Props> = ({Structure}) => {
+const Container: React.FC<Props> = ({Structure, switcher}) => {
   {
     const [cards, setCards] = useState([] as Item[]);
 
@@ -38,7 +39,7 @@ const Container: React.FC<Props> = ({Structure}) => {
     useEffect(() => {
         if(Structure !== prevAmount) {
             let arr: Item[] = [];
-            let i = 1;
+            let i = 0;
             Structure.map((item) => {
                 arr.push({id: i++, text: item['name']});
             })
@@ -54,7 +55,6 @@ const Container: React.FC<Props> = ({Structure}) => {
             $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
           }),
         )
-        console.log(cards);
       },
       [cards],
     )
@@ -67,10 +67,10 @@ const Container: React.FC<Props> = ({Structure}) => {
           id={card.id}
           text={card.text}
           moveCard={moveCard}
+          switcher={switcher}
         />
       )
     }
-
     return (
       <>
         <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>

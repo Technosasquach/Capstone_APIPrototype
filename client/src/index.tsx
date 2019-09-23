@@ -18,6 +18,8 @@ import SearchResultPage from "./Components/Pages/Search/SearchResult";
 
 import SearchState from './Context/Search/SearchState'
 
+import test from './Components/Pages/CourseBuilder/PageBuilder/PageBuilder'
+
 export default class Root extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -49,6 +51,7 @@ export default class Root extends React.Component<any, any> {
                             <SideBar sidestate={this.state.sidestate} />
                             <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                                 <Switch>
+                                    <Route path="/test" component={test} />
                                     <Route path="/searchresults" component={SearchResultPage} />
                                     <Route path="/signin" component={SignInPage} />
                                     <Route path="/learning" component={LearningPage} />

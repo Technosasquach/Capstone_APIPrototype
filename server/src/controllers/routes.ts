@@ -10,11 +10,16 @@ routes.post("/", (req: Request, res: Response) => {
 import {scrape} from './../controllers/scraper';
 routes.get("/api/", function(req: Request, res: Response) {
     console.log("Test");
-    scrape.scrapeWholeAPI();
+    //scrape.scrapeWholeAPI();
     res.json({
         message: "Scraping Database."
     });
 });
+
+routes.post("/CourseCreate/", function(req: Request, res: Response) {
+    console.log(req.body);
+    res.end();
+})
 
 routes.post("/graph/", function(req: Request, res: Response) {
     console.log("[Routes] API Triggered: MassiveGraphDefFile");

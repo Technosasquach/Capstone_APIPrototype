@@ -5,7 +5,6 @@ import { Tree } from 'antd';
 const { TreeNode } = Tree;
 
 interface selector {
-  nodechildren: string[];
   treeData: any[];
   structure: any[];
   enabled?: boolean;
