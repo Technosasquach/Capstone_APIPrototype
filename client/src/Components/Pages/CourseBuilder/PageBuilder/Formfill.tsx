@@ -5,17 +5,6 @@ import './Formfill.less';
 const { TextArea } = Input;
 import ExtendedFields from './ExtraFieldBuilder/ExtendedFields';
 
-// function getBase64(img: any, callback: any) {
-//     const reader = new FileReader();
-//     reader.addEventListener('load', () => callback(reader.result));
-//     reader.readAsDataURL(img);
-// }
-
-function beforeUpload(file: any) {
-    
-    return false;
-  }
-
 export default class Formfill extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -23,6 +12,20 @@ export default class Formfill extends React.Component<any, any> {
         this.state = {
             loading: false
         }
+
+        this.beforeUpload = this.beforeUpload.bind(this);
+    }
+
+    beforeUpload(file: any) {
+        var reader = new FileReader();
+        reader.onload = (e: any) => {
+            var contents = e.target.result;
+            this.setState({
+                imageUrl: contents
+            })
+        };
+        reader.readAsDataURL(file);
+        return false;
     }
 
     componentDidUpdate(prevProps: any) {
@@ -52,18 +55,6 @@ export default class Formfill extends React.Component<any, any> {
         }
     }
 
-    handleChange = (info: any) => {
-        if (info.file.status === 'uploading') {
-          this.setState({ loading: true });
-          return;
-        }
-        if (info.file.status === 'done') {
-            console.log(info.file.originFileObj);
-          // Get this url from response in real world.
-
-        }
-      };
-    
     render() {
         const uploadButton = (
             <div>
@@ -79,8 +70,7 @@ export default class Formfill extends React.Component<any, any> {
                         listType="picture-card"
                         className="avatar-uploader"
                         showUploadList={false}
-                        beforeUpload={beforeUpload}
-                        onChange={this.handleChange}
+                        beforeUpload={this.beforeUpload}
                     >
                         {this.state.imageUrl ? <img src={this.state.imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                     </Upload>

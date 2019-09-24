@@ -11,10 +11,34 @@ const { TextArea } = Input;
 class ExtendedField extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      loading: false
+    }
+
+    this.beforeUpload = this.beforeUpload.bind(this);
   }
-  
+
+  beforeUpload(file: any) {
+    var reader = new FileReader();
+    reader.onload = (e: any) => {
+        var contents = e.target.result;
+        this.setState({
+            imageUrl: contents
+        })
+    };
+    reader.readAsDataURL(file);
+    return false;
+  }
+
+
 
   render() {
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
       return (
         <div id="containerExtend">
           <span id="spanExtend">
@@ -23,13 +47,13 @@ class ExtendedField extends React.Component<any, any> {
           </span>
           <span id="uploadExtend">
             <Upload
-                  name="avatar"
-                  listType="picture-card"
-                  className="avatar-uploader"
-                  showUploadList={false}
-              >
-                  <Icon type='plus' />
-                  <div className="ant-upload-text">Upload Image</div>
+              name="avatar"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              beforeUpload={this.beforeUpload}
+            >
+            {this.state.imageUrl ? <img src={this.state.imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
             </Upload>
           </span>
         </div>
