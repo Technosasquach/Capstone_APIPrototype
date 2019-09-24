@@ -13,7 +13,7 @@ export default class PageBuilderPage extends React.Component<any, any> {
       return (
         <div className="pageBuilder">
           <h1>Page Builder</h1>
-          <Formfill nodeName={this.props.node.name} nodeID={this.props.node.id} save={this.props.save} pages={this.props.pages} submit={this.props.submit}/>
+          <Formfill addAddition={this.props.addAddition} additions={this.props.additions} nodeName={this.props.node.name} nodeID={this.props.node.id} save={this.props.save} pages={this.props.pages} submit={this.props.submit}/>
         </div>
       );
   }

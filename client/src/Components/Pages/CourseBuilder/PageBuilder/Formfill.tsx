@@ -3,10 +3,26 @@ import * as React from "react";
 import { Input, Button, Icon, Upload } from 'antd';
 import './Formfill.less';
 const { TextArea } = Input;
+import ExtendedFields from './ExtraFieldBuilder/ExtendedFields';
+
+// function getBase64(img: any, callback: any) {
+//     const reader = new FileReader();
+//     reader.addEventListener('load', () => callback(reader.result));
+//     reader.readAsDataURL(img);
+// }
+
+function beforeUpload(file: any) {
+    
+    return false;
+  }
 
 export default class Formfill extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
+
+        this.state = {
+            loading: false
+        }
     }
 
     componentDidUpdate(prevProps: any) {
@@ -36,7 +52,25 @@ export default class Formfill extends React.Component<any, any> {
         }
     }
 
+    handleChange = (info: any) => {
+        if (info.file.status === 'uploading') {
+          this.setState({ loading: true });
+          return;
+        }
+        if (info.file.status === 'done') {
+            console.log(info.file.originFileObj);
+          // Get this url from response in real world.
+
+        }
+      };
+    
     render() {
+        const uploadButton = (
+            <div>
+              <Icon type={this.state.loading ? 'loading' : 'plus'} />
+              <div className="ant-upload-text">Upload</div>
+            </div>
+          );
         return (
             <div className="containerInput">
                 <span id="top">
@@ -45,9 +79,10 @@ export default class Formfill extends React.Component<any, any> {
                         listType="picture-card"
                         className="avatar-uploader"
                         showUploadList={false}
+                        beforeUpload={beforeUpload}
+                        onChange={this.handleChange}
                     >
-                        <Icon type='plus' />
-                        <div className="ant-upload-text">Upload Image</div>
+                        {this.state.imageUrl ? <img src={this.state.imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                     </Upload>
                     <div className="title">
                         <h1>{this.props.nodeName}</h1>
@@ -63,14 +98,15 @@ export default class Formfill extends React.Component<any, any> {
                     </span>
                     <span>
                         <TextArea id="desc" autosize={{ minRows: 4, maxRows: 4 }} />
-                        <TextArea id="content" autosize={{ minRows: 4, maxRows: 4 }} />
+                        <TextArea id="content" autosize={{ minRows: 8, maxRows: 8 }} />
                     </span>
                 </span>
-                <Button type="dashed">
-                    <span>
-                       <p>Add field</p> 
-                    </span>
-                </Button>
+                <ExtendedFields additions={this.props.additions}/>
+                    <Button onClick={this.props.addAddition} type="dashed">
+                        <span>
+                        <p>Add field</p> 
+                        </span>
+                    </Button>
             </div>
         );
        

@@ -25,19 +25,23 @@ export default class CourseStructure extends React.Component<any, any> {
 
   render() {
       return (
-        <DndProvider backend={HTML5Backend}>
+        <div id="container">
           <h1>Course Structure</h1>
           <span style={{display: "flex"}}><h5>Course Name</h5><Input onChange={this.updateName} /></span>
-          <Draggable Structure={this.props.structure} switcher={this.props.switcher} />
-          <div id={"AddButton"}>
-            <Button onClick={this.props.showModal} type="dashed" style={{ width: '100%', height: '100%' }}>
-              <Icon type="plus" /> Add Page
-            </Button>
+          <div id="adder">
+            <DndProvider backend={HTML5Backend}>
+              <Draggable Structure={this.props.structure} switcher={this.props.switcher} />
+              <div id={"AddButton"}>
+                <Button onClick={this.props.showModal} type="dashed" style={{ width: '100%', height: '100%' }}>
+                  <Icon type="plus" /> Add Page
+                </Button>
+              </div>
+              <Button onClick={this.submit} type="primary" id="SubmitButton">
+                Submit Course
+              </Button>
+            </DndProvider>
           </div>
-          <Button onClick={this.submit} type="primary" style={{float: "right"}}>
-            Submit Course
-          </Button>
-        </DndProvider>
+        </div>
       );
   }
 }

@@ -23,6 +23,7 @@ export default class CourseBuilderPage extends React.Component<any, any> {
       treeData: [],
       selectedPage: {},
       pages: {},
+      additions: [],
       loading: true,
       visible: false,
       submit: false
@@ -135,7 +136,6 @@ export default class CourseBuilderPage extends React.Component<any, any> {
     this.setState({
       pages: temp
     });
-    console.log(this.state.pages);
   }
 
   submitCourse = (name: string) => {
@@ -146,6 +146,14 @@ export default class CourseBuilderPage extends React.Component<any, any> {
     axios.post("http://localhost:3000/CourseCreate", data);
   }
 
+  addAddition = () => {
+    const temp = this.state.additions;
+    temp.push({});
+    this.setState({
+      additions: temp
+    });
+  }
+
   render() {
       return (
         <Loader loading={this.state.loading}>
@@ -154,7 +162,7 @@ export default class CourseBuilderPage extends React.Component<any, any> {
                   <CourseStructure showModal={this.showModal} structure={this.state.structure} switcher={this.switchPage} submitter={this.submitCourse}/>
                 </div>
                 <div className="selectregion">
-                  <PageBuilder node={this.state.selectedPage} save={this.savePageState} pages={this.state.pages} submit={this.state.submit} /> 
+                  <PageBuilder addAddition={this.addAddition} additions={this.state.additions} node={this.state.selectedPage} save={this.savePageState} pages={this.state.pages} submit={this.state.submit} /> 
                 </div>
             </div>
             <Modal
