@@ -1,14 +1,17 @@
 import * as React from "react";
 import axios from 'axios'
 import { Alert } from 'antd'
-
+import { Rate } from 'antd';
+import MakePost from "./CommentCreate";
+import CommentList from "./CommentList";
+import { Typography } from 'antd';
 import "./LearningPage.less";
 import 'antd/dist/antd.css';
+const { Title } = Typography;
+const ReactMarkdown = require('react-markdown');
 
-import LearningPageContent from './LearningPageContent';
 import { RouteComponentProps } from "react-router-dom";
-// import LearningPageDirectory from './LearningPageDirectory';
-// import LearningPageTemp from './LearningPageTemp';
+
 
 interface iNode {
     id: string,
@@ -30,10 +33,11 @@ interface iInfoNode {
 }
 
 interface iComment {
-    node: string;
-    user: string;
+    id: string;
+    infoNodeId: string;
+    // user: string;
     contents: string;
-    date: Date;
+    createdAt: Date;
 }
 
 interface iProps extends RouteComponentProps {
@@ -41,19 +45,14 @@ interface iProps extends RouteComponentProps {
 };
 
 interface iState {
-    myInfoNode: iInfoNode | null;
-    myNode: iNode | null;
-    myComments: iComment[] | null;
+    myInfoNode: iInfoNode;
+    myNode: iNode;
+    myComments: iComment[];
 };
 
 export default class LearningPage extends React.Component<iProps, iState> {
     constructor(props: iProps) {
         super(props);
-        this.state = {
-            myNode: null,
-            myInfoNode: null,
-            myComments: null
-        }        
     }
 
     componentDidMount() {
@@ -63,7 +62,7 @@ export default class LearningPage extends React.Component<iProps, iState> {
             const { nodeID } = this.props.location.state;
             this.loadInformationNodeData(nodeID);
             this.loadNodeData(nodeID);
-        }        
+        }
     }
 
     loadInformationNodeData = async (id: string) => {
@@ -71,7 +70,11 @@ export default class LearningPage extends React.Component<iProps, iState> {
         data2['query'] = "query{informationByNodeId(nodeId: \"" + id + "\"){ id createdAt text nodeId }}\n\n";
         await axios.post("http://localhost:3000/graphql/", data2).then(res => this.setState({
             myInfoNode: res.data['data']['informationByNodeId']
-        }));
+        })).then(
+            () => this.state.myInfoNode
+                ? this.loadCommentData(this.state.myInfoNode.id)
+                : console.log("No InfoNode to display")
+        );
     }
 
     loadNodeData = async (id: string) => {
@@ -82,20 +85,49 @@ export default class LearningPage extends React.Component<iProps, iState> {
         }));
     }
 
-    render() {        
+    loadCommentData = async (infoNodeid: string) => {
+        let data: any = {};
+        data['query'] = "query{commentsForNode(infoNodeId: \"" + infoNodeid + "\"){ id createdAt contents infoNodeId }}\n\n";
+        await axios.post("http://localhost:3000/graphql/", data).then(res => this.setState({
+            myComments: res.data['data']['commentsForNode']
+        }));
+    }
+
+    render() {
+
         return (
             <div className="learningpage">
                 <div className="contentregion">
                     {
-                        this.state.myNode != null && this.state.myInfoNode != null
-                        ? <LearningPageContent
-                        myInfoNode={this.state.myInfoNode}
-                        myNode={this.state.myNode} />
-                        :  <Alert
-                            message="No nodes to display"
-                            description="Please search for a node."
-                            type="info"
-                            showIcon />
+                        this.state
+                            ?
+                            <div style={{ overflowWrap: 'break-word' }}>
+                                <div className="right">
+                                    {this.state.myInfoNode && <MakePost infoNodeId={this.state.myInfoNode.id} triggerUpdate={this.loadCommentData} />}
+                                </div>
+                                {this.state.myNode && <Title level={2}>{this.state.myNode.name}</Title>}
+                                <div>
+                                    {this.state.myInfoNode
+                                        ? (<ReactMarkdown source={this.state.myInfoNode.text} />)
+                                        : (<Alert
+                                            message="No information has been entered for this nodes"
+                                            description="Please contact your supervisor."
+                                            type="info"
+                                            showIcon
+                                        />)}
+                                </div>
+                                {this.state.myInfoNode && <Title level={4}>Comment Section</Title>}
+                                <hr />
+                                {this.state.myComments && <CommentList userComments={this.state.myComments} />}
+                                <Rate />
+                            </div>
+                            :
+                            <Alert
+                                message="No nodes to display"
+                                description="Please search for a node."
+                                type="info"
+                                showIcon
+                            />
                     }
                 </div>
             </div>

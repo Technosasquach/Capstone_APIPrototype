@@ -27,7 +27,7 @@ const SearchState = (props: any) => {
                 return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
             }));
             
-        console.log("Sending search to reducer from SearchState");
+        //console.log("Sending search to reducer from SearchState");
         dispatch({
             type: SEARCH_NODES,
             payload: res

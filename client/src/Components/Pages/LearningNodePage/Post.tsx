@@ -1,9 +1,6 @@
 import * as React from "react";
 import { Comment } from "antd";
 
-// import "../post.css";
-
-// const ReactDOM = require('react-dom')
 const ReactMarkdown = require('react-markdown')
 
 // interface iPost {
@@ -17,15 +14,8 @@ interface iProps {
     comment: string,
 }
 
-const Post: React.FC<iProps> = (props, {}) => {
-    
-    //const post = JSON.parse(props.comment);
- 
-    //   const { _id, node, user, contents, date } = post;
-    // const {userComment} = post;
+const Post: React.FC<iProps> = (props, { }) => {
 
-    // console.log(post.userComment);
-    
     const user = "Username";
     const data = <ReactMarkdown source={props.comment} />;
     return (
@@ -35,7 +25,6 @@ const Post: React.FC<iProps> = (props, {}) => {
                 content={data}
             />
         </React.Fragment>
-
     );
 };
 export default Post;

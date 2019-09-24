@@ -31,7 +31,6 @@ export const CommentMutations = {
     addComment: {
         type: CommentType,
         args: {
-            id: { type: GraphQLString },
             contents: { type: new GraphQLNonNull(GraphQLString) },
             infoNodeId: { type: new GraphQLNonNull(GraphQLString) }
         },

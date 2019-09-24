@@ -38,7 +38,6 @@ exports.InformationMutations = {
     addInformation: {
         type: exports.InformationType,
         args: {
-            id: { type: graphql_1.GraphQLString },
             createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             related: { type: new graphql_1.GraphQLNonNull(new graphql_1.GraphQLList(graphql_1.GraphQLID)) },
             text: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }

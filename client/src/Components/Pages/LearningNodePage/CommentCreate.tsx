@@ -1,6 +1,6 @@
 /* #region  Imports */
 import * as React from "react";
-// import axios from "axios";
+import axios from "axios";
 import "antd/dist/antd.css";
 import { Button, Modal, Form, Input } from "antd";
 import { FormComponentProps } from 'antd/es/form';
@@ -21,12 +21,13 @@ const PostCreateForm = Form.create<iMakePostProps>({ name: "form_in_modal" })(
     class extends React.Component<iMakePostProps, iState> {
 
         onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            e.preventDefault();
             this.setState({ userComment: e.target.value });
         };
 
         sendForm = () => {
-            this.props.onCreate();
-            this.setState({ userComment: "" });
+            
+            this.props.onCreate(this.state.userComment);
         }
 
         render() {
@@ -78,8 +79,11 @@ const PostCreateForm = Form.create<iMakePostProps>({ name: "form_in_modal" })(
 
 /* #region  Class component */
 
+
+
 interface iUserFormProps {
     infoNodeId: string;
+    triggerUpdate: ((id: string) => void);
 };
 
 interface iState {
@@ -110,7 +114,7 @@ export default class MakePost extends React.Component<iUserFormProps, iState> {
         this.setState({ formVisible: false });
     };
 
-    handleCreate = () => {
+    handleCreate = (text: string) => {
         const { form } = this.formRef.props;
         form.validateFields((err: any, values: any) => {
             if (err) {
@@ -118,44 +122,31 @@ export default class MakePost extends React.Component<iUserFormProps, iState> {
             }
         });
 
-        //mutation
-
-        // const CreateCommentForNode = 
-        //     mutation CreateCommentForNode($infoNodeId: String!, $comment: String!){
-        //         addComment(objects: {infoNodeId: $infoNodeId, contents: $comment}){
-        //         } 
-        //     }
-        
-        
-        
-
-        //end of mutation
-
-
-
-    
-        // const userComment = this.formRef.state.userComment;
-
-        // const newPost = {
-        //     infoNodeId: this.props.infoNodeId,
-        //     // user: "5d69e751a4ed4c6064f620fd",
-        //     contents: userComment,
-        //     createdAt: Date.now
-        // };
-
-        // const config = {
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        // };
-
+        const infoNodeId: string = this.props.infoNodeId;
+        const comment: string = text;
         try {
-            // const res = axios.post("/api/postings", newPost, config);// why need const res?
-            // axios.post("/api/postings", newPost, config);
+            //const axiosReply = 
+            axios({
 
-
-
-            console.log("data sent to the db");
+                url: 'http://localhost:3000/graphql',
+                method: 'post',
+                data: {
+                    query: `
+                    mutation CreateCommentForNode($infoNodeId: String!, $comment: String!){
+                        addComment(infoNodeId: $infoNodeId, contents: $comment) {
+                            infoNodeId
+                            contents
+                          }
+                      }`,
+                    variables: {
+                        infoNodeId: infoNodeId,
+                        comment: comment
+                    }
+                }
+            }).then((result) => {
+                console.log(result.data)
+                this.props.triggerUpdate(infoNodeId);
+            });
 
         } catch (err) {
             console.log(err);

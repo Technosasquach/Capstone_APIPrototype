@@ -38,8 +38,7 @@ export const InformationQueries = {
 export const InformationMutations = {
     addInformation: {
         type: InformationType,
-        args: {
-            id: { type: GraphQLString },
+        args: { // dont have id in here, doesnt work from axios.
             createdAt: { type: new GraphQLNonNull(GraphQLString) },
             related: { type: new GraphQLNonNull(new GraphQLList(GraphQLID)) },
             text: { type: new GraphQLNonNull(GraphQLString) }

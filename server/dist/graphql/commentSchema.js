@@ -30,7 +30,6 @@ exports.CommentMutations = {
     addComment: {
         type: exports.CommentType,
         args: {
-            id: { type: graphql_1.GraphQLString },
             contents: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             infoNodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
         },
