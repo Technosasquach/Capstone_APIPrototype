@@ -1,6 +1,7 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
 import { Course } from '../database/courses'
 import { Page } from '../database/pages'
+import { Comment } from '../database/comment'
 
 export const PageType = new GraphQLObjectType({
     name: 'Page',
@@ -8,6 +9,7 @@ export const PageType = new GraphQLObjectType({
         id: {type: GraphQLString },
         name: {type: GraphQLString},
         content: {type: GraphQLString},
+        image: {type: GraphQLString}
     })
 })
 
@@ -45,7 +47,7 @@ export const CourseQueries = {
     everyPage: {
         type: new GraphQLList(PageType),
         resolve() {
-            return Course.find({});
+            return Page.find({});
         }
     },
     page: {

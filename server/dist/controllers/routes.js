@@ -26,7 +26,7 @@ routes.post("/CourseCreate/", function (req, res) {
         console.log(temp);
         pages.push(new pages_1.Page({
             name: data.data["" + i]['title'],
-            content: JSON.stringify(data.data["" + i]),
+            content: JSON.stringify(temp),
             image: image
         }));
     }

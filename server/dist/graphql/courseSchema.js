@@ -9,6 +9,7 @@ exports.PageType = new graphql_1.GraphQLObjectType({
         id: { type: graphql_1.GraphQLString },
         name: { type: graphql_1.GraphQLString },
         content: { type: graphql_1.GraphQLString },
+        image: { type: graphql_1.GraphQLString }
     })
 });
 exports.CourseType = new graphql_1.GraphQLObjectType({
@@ -44,7 +45,7 @@ exports.CourseQueries = {
     everyPage: {
         type: new graphql_1.GraphQLList(exports.PageType),
         resolve() {
-            return courses_1.Course.find({});
+            return pages_1.Page.find({});
         }
     },
     page: {
