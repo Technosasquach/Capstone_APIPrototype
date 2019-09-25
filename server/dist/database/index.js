@@ -9,4 +9,6 @@ exports.Information = information_1.Information;
 var comment_1 = require("./comment");
 exports.CommentSchema = comment_1.CommentSchema;
 exports.Comment = comment_1.Comment;
+var courses_1 = require("./courses");
+exports.Course = courses_1.Course;
 //# sourceMappingURL=index.js.map

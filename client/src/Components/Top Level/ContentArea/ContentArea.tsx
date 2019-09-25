@@ -4,10 +4,6 @@ import "./ContentArea.less";
 import 'antd/dist/antd.css';
 import { Icon, Button } from 'antd';
 export default class ContentArea extends React.Component<any, any> {
-    constructor(props: any) {
-        super(props);
-        //cache state
-    }
 
     render() {
         return (

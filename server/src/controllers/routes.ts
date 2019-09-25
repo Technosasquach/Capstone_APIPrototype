@@ -10,11 +10,39 @@ routes.post("/", (req: Request, res: Response) => {
 import {scrape} from './../controllers/scraper';
 routes.get("/api/", function(req: Request, res: Response) {
     console.log("Test");
-    scrape.scrapeWholeAPI();
+    //scrape.scrapeWholeAPI();
     res.json({
         message: "Scraping Database."
     });
 });
+
+import {Course} from './../database/courses'
+import {Page} from './../database/pages'
+routes.post("/CourseCreate/", function(req: Request, res: Response) {
+    const data = req.body;
+    let pages = [];
+
+    for(let i = 0; i < data.amount; i++) {
+        let temp = data.data["" + i];
+        let image = temp['image'];
+        delete temp['image'];
+        pages.push(new Page({
+            name: data.data["" + i]['title'],
+            content: JSON.stringify(temp),
+            image: image
+        }));
+    }
+    pages.forEach(element => {
+        element.save();
+    });
+    
+    new Course({
+        name: data.coursename,
+        pages: pages,
+    }).save();
+
+    res.end();
+})
 
 routes.post("/graph/", function(req: Request, res: Response) {
     console.log("[Routes] API Triggered: MassiveGraphDefFile");

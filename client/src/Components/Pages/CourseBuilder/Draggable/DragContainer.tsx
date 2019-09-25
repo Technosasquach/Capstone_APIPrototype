@@ -3,7 +3,7 @@ import Card from './NodeDrag'
 import update from 'immutability-helper'
 
 const style = {
-  width: 400,
+  width: "100%",
 }
 
 export interface Item {
@@ -16,7 +16,11 @@ export interface ContainerState {
 }
 
 interface Props {
-    Structure: string[]
+    Structure: {
+      id: string,
+      name: string,
+    }[];
+    switcher: () => void;
 }
 
 function usePrevious(value: any) {
@@ -27,7 +31,7 @@ function usePrevious(value: any) {
     return ref.current;
 }
 
-const Container: React.FC<Props> = ({Structure}) => {
+const Container: React.FC<Props> = ({Structure, switcher}) => {
   {
     const [cards, setCards] = useState([] as Item[]);
 
@@ -35,9 +39,9 @@ const Container: React.FC<Props> = ({Structure}) => {
     useEffect(() => {
         if(Structure !== prevAmount) {
             let arr: Item[] = [];
-            let i = 1;
-            Structure.map(item => {
-                arr.push({id: i++, text: item});
+            let i = 0;
+            Structure.map((item) => {
+                arr.push({id: i++, text: item['name']});
             })
             setCards(arr);
         }
@@ -63,10 +67,10 @@ const Container: React.FC<Props> = ({Structure}) => {
           id={card.id}
           text={card.text}
           moveCard={moveCard}
+          switcher={switcher}
         />
       )
     }
-
     return (
       <>
         <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>

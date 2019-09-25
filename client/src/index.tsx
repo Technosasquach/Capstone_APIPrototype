@@ -11,7 +11,6 @@ import NodeDisplay from "./Components/Pages/NodeDisplayPage/NodePage";
 import LearningPage from "./Components/Pages/LearningNodePage/LearningPage";
 import ExamPage from "./Components/Pages/ExamPage/ExamPage";
 import AccountPage from "./Components/Pages/AccountPage/AccountPage";
-import SearchPage from "./Components/Pages/SearchPage/SearchPage";
 import CourseBuilder from "./Components/Pages/CourseBuilder/CourseBuilder";
 import HomePage from './Components/Pages/HomePage/HomePage';
 import SignInPage from "./Components/Pages/SignInPage/SignIn";
@@ -19,8 +18,15 @@ import SearchResultPage from "./Components/Pages/Search/SearchResult";
 
 import SearchState from './Context/Search/SearchState'
 
-export default class Root extends React.Component<any, any> {
+import test from './Components/Pages/CourseBuilder/PageBuilder/PageBuilder'
 
+export default class Root extends React.Component<any, any> {
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            sidestate: true,
+        }
+    }
     componentDidMount() {
         console.log("[CORE] React has loaded");
     }
@@ -28,10 +34,6 @@ export default class Root extends React.Component<any, any> {
     componentWillMount() {
         console.log("[CORE] React will load");
     }
-
-    state = {
-        sidestate: true,
-    };
 
     ToggleState = () => {
         this.setState({
@@ -49,13 +51,13 @@ export default class Root extends React.Component<any, any> {
                             <SideBar sidestate={this.state.sidestate} />
                             <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                                 <Switch>
+                                    <Route path="/test" component={test} />
                                     <Route path="/searchresults" component={SearchResultPage} />
                                     <Route path="/signin" component={SignInPage} />
                                     <Route path="/learning" component={LearningPage} />
                                     <Route path="/learning/:nodeID" component={LearningPage} />
                                     <Route path="/exam" component={ExamPage} />
                                     <Route path="/account" component={AccountPage} />
-                                    <Route path="/search" component={SearchPage} />
                                     <Route path="/node/:id/builder" component={CourseBuilder} />
                                     <Route path="/node/:id" component={NodeDisplay} />
                                     <Route path="/" exact component={HomePage} />

@@ -2,7 +2,7 @@ import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt,
 import { Node } from '../database/nodes.js';
 import { InformationType } from './informationSchema';
 
-export const NodeType = new GraphQLObjectType({
+export const NodeType:any = new GraphQLObjectType({
     name: 'Node',
     fields: () => ({
         id: { type: GraphQLString },
@@ -11,8 +11,24 @@ export const NodeType = new GraphQLObjectType({
         name: { type: new GraphQLNonNull(GraphQLString) },
         json: { type: new GraphQLNonNull(GraphQLString) },
         keywords: { type: new GraphQLList(GraphQLString) },
-        parents: { type: new GraphQLList(GraphQLID) },
-        children: { type: new GraphQLList(GraphQLID) }
+        parents: { 
+            type: new GraphQLList(GraphQLID) 
+            // type: new GraphQLList(NodeType),
+            // resolve(parent, args) {
+            //     return parent.children.map((id: string) => {
+            //         return Node.findById(id);
+            //     });
+            // }
+        },
+        children: {
+            type: new GraphQLList(GraphQLID) 
+            // type: new GraphQLList(NodeType),
+            // resolve(parent, args) {
+            //     return parent.children.map((id: string) => {
+            //         return Node.findById(id);
+            //     });
+            // }
+         }
     })
 });
 

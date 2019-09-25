@@ -4,6 +4,7 @@ import "./NodeInfo.less";
 import { Breadcrumb, Table, Button } from 'antd';
 import axios from 'axios'
 import { Link } from "react-router-dom";
+import Loader from "./../../Utility/Loader";
 
 const columns = [
     {
@@ -33,6 +34,7 @@ export default class NodeInfo extends React.Component<any, any> {
       name: "Loading Data",
       childdata: dataChild,
       parentdata: dataParent,
+      loading: true
     };
   }
 
@@ -53,6 +55,9 @@ export default class NodeInfo extends React.Component<any, any> {
    * @memberof NodeInfo
    */
   beginQuery = () => {
+    this.setState({
+      loading: true
+    });
     let data:any = {query:  "query{node(id: \"" + this.props.id + "\"){name children parents}}\n\n"};
     axios.post("http://localhost:3000/graphql/", data).then(res => {
       return {
@@ -76,10 +81,12 @@ export default class NodeInfo extends React.Component<any, any> {
       this.setState({
         name: json.name,
         childdata: childData,
-        parentdata: parentData
+        parentdata: parentData,
+        loading: false
       }); 
     });
   }
+
 
   /**
    * dataSet
@@ -88,8 +95,6 @@ export default class NodeInfo extends React.Component<any, any> {
    * @memberof NodeInfo
    */
   dataSet = (IDS: string[]) => {
-    //let data:any = {};
-
     return Promise.all(IDS.map((ID: string) => {
       let data = {query: "query{node(id: \"" + ID + "\"){name}}\n\n"};
       return axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
@@ -122,7 +127,7 @@ export default class NodeInfo extends React.Component<any, any> {
 
   render() {
       return (
-          <div>
+          <Loader loading={this.state.loading}>
               <Breadcrumb>
                   <Breadcrumb.Item>Home</Breadcrumb.Item>
                   <Breadcrumb.Item>
@@ -141,7 +146,7 @@ export default class NodeInfo extends React.Component<any, any> {
               <h3>Children</h3>
               <Table columns={columns} pagination={false} dataSource={this.state.childdata} />
               <Link to={this.props.id + "/builder/"}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
-          </div>
+          </Loader>
       );
     }
 }

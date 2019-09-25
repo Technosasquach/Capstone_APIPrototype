@@ -8,6 +8,7 @@ const routes = Router();
 import { InformationType, InformationQueries, InformationMutations } from "./../graphql/informationSchema";
 import { NodeType, NodeQueries, NodeMutations } from "./../graphql/nodeSchema";
 import { CommentType, CommentQueries, CommentMutations } from "./../graphql/commentSchema";
+import {CourseQueries} from './../graphql/courseSchema';
 
 // WE SHOULD IMPLEMENT THIS https://github.com/Urigo/graphql-scalars?source=post_page-----3f8a38965b53----------------------
 
@@ -16,7 +17,8 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         ...InformationQueries,
         ...NodeQueries,
-        ...CommentQueries
+        ...CommentQueries,
+        ...CourseQueries
     }
 });
 
