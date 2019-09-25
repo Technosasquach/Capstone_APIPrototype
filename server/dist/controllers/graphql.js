@@ -6,10 +6,11 @@ const express_1 = require("express");
 const routes = express_1.Router();
 const informationSchema_1 = require("./../graphql/informationSchema");
 const nodeSchema_1 = require("./../graphql/nodeSchema");
+const courseSchema_1 = require("./../graphql/courseSchema");
 // WE SHOULD IMPLEMENT THIS https://github.com/Urigo/graphql-scalars?source=post_page-----3f8a38965b53----------------------
 const RootQuery = new graphql_1.GraphQLObjectType({
     name: 'RootQueryType',
-    fields: Object.assign({}, informationSchema_1.InformationQueries, nodeSchema_1.NodeQueries)
+    fields: Object.assign({}, informationSchema_1.InformationQueries, nodeSchema_1.NodeQueries, courseSchema_1.CourseQueries)
 });
 const RootMutation = new graphql_1.GraphQLObjectType({
     name: 'Mutation',

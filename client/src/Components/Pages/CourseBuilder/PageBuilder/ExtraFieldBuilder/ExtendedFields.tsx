@@ -30,7 +30,11 @@ class ExtendedField extends React.Component<any, any> {
     return false;
   }
 
-
+  componentDidUpdate(prevProps: any) {
+    if (prevProps.nodeID !== this.props.nodeID) {
+      this.props.getAdditionsData();
+    }
+  }
 
   render() {
     const uploadButton = (
@@ -64,17 +68,20 @@ class ExtendedField extends React.Component<any, any> {
 export default class PageBuilderPage extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      save: false,
+    }
   }
   
-  renderAddition = () => {
+  renderAddition = (input: any) => {
     return (
-      <ExtendedField/>
+      <ExtendedField save={this.state.save}/>
     );
   }
 
   render() {
       return (
-        <div>{this.props.additions.map(() => this.renderAddition())}</div>
+        <div>{this.props.additions.map(() => this.renderAddition(this.props.addAdditions))}</div>
       );
   }
 }

@@ -1,10 +1,9 @@
 import * as mongoose from "mongoose";
 
-
+import { PageModel } from './pages'
 export interface CourseModel extends mongoose.Document {
     name: string;
-    pages: {}[];
-    content: {}[];
+    pages: [PageModel];
 }
 
 export interface TSCourseModel extends CourseModel {
@@ -25,12 +24,8 @@ export const CourseSchema: mongoose.Schema = new mongoose.Schema({
         required: true
     },
     pages: [{
-        type: Object,
-        unique: false,
-        required: true
-    }],
-    content: [{
-        type: Object,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pages',
         unique: false,
         required: true
     }],

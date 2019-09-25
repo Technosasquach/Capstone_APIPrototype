@@ -14,6 +14,11 @@ interface card {
   text: string;
 }
 
+export interface pageData {
+  id: number;
+  data: {};
+}
+
 export default class CourseBuilderPage extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
@@ -22,8 +27,8 @@ export default class CourseBuilderPage extends React.Component<any, any> {
       structure: [],
       treeData: [],
       selectedPage: {},
+      indexes: 1,
       pages: {},
-      additions: [],
       loading: true,
       visible: false,
       submit: false
@@ -98,7 +103,8 @@ export default class CourseBuilderPage extends React.Component<any, any> {
 
   updateStructure = (structure: card[]) => {
     this.setState({
-      structure: this.state.parent.concat(structure)
+      structure: this.state.parent.concat(structure),
+      indexes: this.state.indexes + 1
     });
   }
 
@@ -142,17 +148,17 @@ export default class CourseBuilderPage extends React.Component<any, any> {
     this.setState({
       submit: true
     })
-    let data = { coursename: name, data: this.state.pages};
+    let data = { coursename: name, data: this.state.pages, amount: this.state.indexes};
     axios.post("http://localhost:3000/CourseCreate", data);
   }
 
-  addAddition = () => {
-    const temp = this.state.additions;
-    temp.push({});
-    this.setState({
-      additions: temp
-    });
-  }
+  // addAddition = () => {
+  //   const temp = this.state.additions;
+  //   temp.push({});
+  //   this.setState({
+  //     additions: temp
+  //   });
+  // }
 
   render() {
       return (
@@ -162,7 +168,7 @@ export default class CourseBuilderPage extends React.Component<any, any> {
                   <CourseStructure showModal={this.showModal} structure={this.state.structure} switcher={this.switchPage} submitter={this.submitCourse}/>
                 </div>
                 <div className="selectregion">
-                  <PageBuilder addAddition={this.addAddition} additions={this.state.additions} node={this.state.selectedPage} save={this.savePageState} pages={this.state.pages} submit={this.state.submit} /> 
+                  <PageBuilder node={this.state.selectedPage} save={this.savePageState} pages={this.state.pages} submit={this.state.submit} /> 
                 </div>
             </div>
             <Modal

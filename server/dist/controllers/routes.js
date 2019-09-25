@@ -15,14 +15,28 @@ routes.get("/api/", function (req, res) {
     });
 });
 const courses_1 = require("./../database/courses");
+const pages_1 = require("./../database/pages");
 routes.post("/CourseCreate/", function (req, res) {
-    console.log(req.body);
     const data = req.body;
-    const test = new courses_1.Course({
-        name: data.coursename,
-        pages: [{}],
-        content: [{}],
+    let pages = [];
+    for (let i = 0; i < data.amount; i++) {
+        let temp = data.data["" + i];
+        let image = temp['image'];
+        delete temp['image'];
+        console.log(temp);
+        pages.push(new pages_1.Page({
+            name: data.data["" + i]['title'],
+            content: JSON.stringify(data.data["" + i]),
+            image: image
+        }));
+    }
+    pages.forEach(element => {
+        element.save();
     });
+    new courses_1.Course({
+        name: data.coursename,
+        pages: pages,
+    }).save();
     res.end();
 });
 routes.post("/graph/", function (req, res) {

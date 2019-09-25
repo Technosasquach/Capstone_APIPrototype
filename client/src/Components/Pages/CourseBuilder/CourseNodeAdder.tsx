@@ -59,6 +59,8 @@ export default class CourseNodeAdder extends React.Component<selector, any> {
         name: node.props.title
       });
     })
+    console.log(structure);
+    console.log(this.props.structure);
     this.props.updateStructure(structure);
   };
 
