@@ -144,7 +144,7 @@ export default class MakePost extends React.Component<iUserFormProps, iState> {
                     }
                 }
             }).then((result) => {
-                console.log(result.data)
+                //console.log(result.data)
                 this.props.triggerUpdate(infoNodeId);
             });
 
@@ -153,7 +153,6 @@ export default class MakePost extends React.Component<iUserFormProps, iState> {
         }
 
         form.resetFields();
-
         this.setState({ formVisible: false, userComment: "" });
     };
 
@@ -167,6 +166,7 @@ export default class MakePost extends React.Component<iUserFormProps, iState> {
                 <Button type="primary" onClick={this.showModal}>
                     Create Post
                 </Button>
+                
                 <PostCreateForm
                     wrappedComponentRef={this.saveFormRef}
                     visible={this.state.formVisible}
