@@ -44,6 +44,7 @@ const SearchResult = () => {
             dataIndex: 'id',
             key: 'id',
             width: '20%',
+            render: (text, record) => <Link to={'node/' + record.id}>{text}</Link>
         },
     ];
     

@@ -32,6 +32,11 @@ interface iInfoNode {
     keywords: string[]
 }
 
+// interface iPageNode {
+//     content: string;
+//     text: string;
+// }
+
 interface iComment {
     id: string;
     infoNodeId: string;
@@ -48,6 +53,7 @@ interface iState {
     myInfoNode: iInfoNode;
     myNode: iNode;
     myComments: iComment[];
+    myPageNode: string;
 };
 
 export default class LearningPage extends React.Component<iProps, iState> {
@@ -61,6 +67,7 @@ export default class LearningPage extends React.Component<iProps, iState> {
         if (this.props.location.state != undefined) {
             const { nodeID } = this.props.location.state;
             this.loadInformationNodeData(nodeID);
+            this.loadPageNodeData(nodeID);
             this.loadNodeData(nodeID);
         }
     }
@@ -77,6 +84,14 @@ export default class LearningPage extends React.Component<iProps, iState> {
         );
     }
 
+    loadPageNodeData = async (id: string) => {
+        let data2: any = {};
+        data2['query'] = "query{pageForNodeId(NodeId: \"" + id + "\"){ content }}\n\n";
+        await axios.post("http://localhost:3000/graphql/", data2).then(res => this.setState({
+            myPageNode: res.data['data']['pageForNodeId']['content']
+        })).then(()=> console.log(JSON.parse(this.state.myPageNode))
+        );
+    }
     loadNodeData = async (id: string) => {
         let data: any = {};
         data['query'] = "query{node(id: \"" + id + "\"){ id createdAt depth name json keywords parents children }}\n\n";
@@ -93,8 +108,10 @@ export default class LearningPage extends React.Component<iProps, iState> {
         }));
     }
 
-    render() {
 
+    render() {
+        //let convertedText : string;
+        //{this.state ? (convertedText = this.state.myPageNode.content.stringify.toString()):(convertedText = " no data ") } 
         return (
             <div className="learningpage">
                 <div className="contentregion">
@@ -107,8 +124,8 @@ export default class LearningPage extends React.Component<iProps, iState> {
                                 </div>
                                 {this.state.myNode && <Title level={2}>{this.state.myNode.name}</Title>}
                                 <div>
-                                    {this.state.myInfoNode
-                                        ? (<ReactMarkdown source={this.state.myInfoNode.text} />)
+                                    {this.state.myPageNode
+                                        ? (<ReactMarkdown source={JSON.parse(this.state.myPageNode)['content']} />)
                                         : (<Alert
                                             message="No information has been entered for this nodes"
                                             description="Please contact your supervisor."

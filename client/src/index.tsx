@@ -60,6 +60,7 @@ export default class Root extends React.Component<any, any> {
                                     <Route path="/account" component={AccountPage} />
                                     <Route path="/node/:id/builder" component={CourseBuilder} />
                                     <Route path="/node/:id" component={NodeDisplay} />
+                                    <Route path="/node/" component={NodeDisplay} />
                                     <Route path="/" exact component={HomePage} />
                                 </Switch>
                             </ContentArea>

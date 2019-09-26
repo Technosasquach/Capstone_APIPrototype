@@ -57,4 +57,11 @@ export const CourseQueries = {
             return Page.findById(args.id);
         }
     },
+    pageForNodeId: {
+        type: PageType,
+        args: { NodeId: { type: GraphQLString}},
+        resolve(parent: any, args: any) {
+            return Page.findOne({"content":{$regex:".*"+args.NodeId+".*"}});
+        }
+    }
 };
