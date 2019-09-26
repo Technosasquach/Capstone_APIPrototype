@@ -31,20 +31,21 @@ export default class Formfill extends React.Component<any, any> {
     }
 
     componentDidUpdate(prevProps: any) {
-        if(prevProps.nodeID !== this.props.nodeID) {
+        if(prevProps.id !== this.props.id) {
             const object = {
                 title: (document.getElementById("title") as HTMLInputElement).value,
                 description: (document.getElementById("desc") as HTMLInputElement).value,
                 content: (document.getElementById("content") as HTMLInputElement).value,
+                nodeid: prevProps.nodeid,
                 image: this.state.imageUrl
             }
-            this.props.save(object, prevProps.nodeID);
-            if(this.props.pages[this.props.nodeID] !== undefined) {
-                (document.getElementById("content") as HTMLInputElement).value = this.props.pages[this.props.nodeID].content;
-                (document.getElementById("desc") as HTMLInputElement).value = this.props.pages[this.props.nodeID].description;
-                (document.getElementById("title") as HTMLInputElement).value = this.props.pages[this.props.nodeID].title;
+            this.props.save(object, prevProps.id);
+            if(this.props.pages[this.props.id] !== undefined) {
+                (document.getElementById("content") as HTMLInputElement).value = this.props.pages[this.props.id].content;
+                (document.getElementById("desc") as HTMLInputElement).value = this.props.pages[this.props.id].description;
+                (document.getElementById("title") as HTMLInputElement).value = this.props.pages[this.props.id].title;
                 this.setState({
-                    imageUrl: this.props.pages[this.props.nodeID].image
+                    imageUrl: this.props.pages[this.props.id].image
                 })
             } else {
                 (document.getElementById("content") as HTMLInputElement).value = "";
@@ -59,9 +60,10 @@ export default class Formfill extends React.Component<any, any> {
                 title: (document.getElementById("title") as HTMLInputElement).value,
                 description: (document.getElementById("desc") as HTMLInputElement).value,
                 content: (document.getElementById("content") as HTMLInputElement).value,
+                nodeid: prevProps.nodeid,
                 image: this.state.imageUrl
             }
-            this.props.save(object, prevProps.nodeID);
+            this.props.save(object, prevProps.id);
         } else if (prevProps.additions !== this.props.additions) {
             this.setState({
                 additions: this.props.additions

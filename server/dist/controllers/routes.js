@@ -19,15 +19,18 @@ const pages_1 = require("./../database/pages");
 routes.post("/CourseCreate/", function (req, res) {
     const data = req.body;
     let pages = [];
+    console.log(data);
     for (let i = 0; i < data.amount; i++) {
         let temp = data.data["" + i];
         let image = temp['image'];
         delete temp['image'];
         pages.push(new pages_1.Page({
             name: data.data["" + i]['title'],
-            content: JSON.stringify(temp),
-            image: image
+            content: JSON.stringify(temp)
         }));
+        if (image) {
+            pages[i].image = image;
+        }
     }
     pages.forEach(element => {
         element.save();

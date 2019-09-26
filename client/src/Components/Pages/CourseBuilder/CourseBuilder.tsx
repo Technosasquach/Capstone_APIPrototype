@@ -63,6 +63,7 @@ export default class CourseBuilderPage extends React.Component<any, any> {
           loading: false,
           selectedPage: {
             name: res.name,
+            nodeid: res.id,
             id: 0
           }
         });
@@ -131,6 +132,7 @@ export default class CourseBuilderPage extends React.Component<any, any> {
     this.setState({
       selectedPage: {
         name: node.name,
+        nodeid: node.id,
         id: id
       }
     });
@@ -151,14 +153,6 @@ export default class CourseBuilderPage extends React.Component<any, any> {
     let data = { coursename: name, data: this.state.pages, amount: this.state.indexes};
     axios.post("http://localhost:3000/CourseCreate", data);
   }
-
-  // addAddition = () => {
-  //   const temp = this.state.additions;
-  //   temp.push({});
-  //   this.setState({
-  //     additions: temp
-  //   });
-  // }
 
   render() {
       return (
