@@ -4,15 +4,17 @@ import "./SignIn.less";
 import 'antd/dist/antd.css';
 
 import { Icon, Input, Button } from 'antd';
+import Loader from "./../../Utility/Loader"
 
-export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg: string }, { username: string, password: string }> {
+export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg: string }, { username: string, password: string, isWaiting: boolean }> {
 
     constructor(props: any) {
         super(props);
 
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            isWaiting: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,9 +22,18 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
 
+    componentWillReceiveProps() {
+        this.setState({
+            isWaiting: false
+        })
+    }
+
     handleSubmit(e: any) {
         e.preventDefault();
         this.props.submitFunc(this.state.username, this.state.password);
+        this.setState({
+            isWaiting: true
+        })
     }
 
     handleUsernameChange(event: any) {
@@ -41,24 +52,26 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
                         <span>SynLERN</span>
                     </div>
                     <div className="SignInRight">
-                        <Input 
-                            prefix={
-                                <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                            }
-                            onChange={this.handleUsernameChange}
-                            value={this.state.username}
-                            placeholder="Username"
-                        />
-                        <Input
-                            prefix={
-                                <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                            }
-                            onChange={this.handlePasswordChange}
-                            value={this.state.password}
-                            placeholder="Password"
-                        />
-                        { this.props.errorMsg != "" ? <div><span>{this.props.errorMsg}</span><br/></div> : undefined}
-                        <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a href="">register now!</a>
+                        <Loader loading={this.state.isWaiting}>
+                            <Input 
+                                prefix={
+                                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                                }
+                                onChange={this.handleUsernameChange}
+                                value={this.state.username}
+                                placeholder="Username"
+                            />
+                            <Input
+                                prefix={
+                                    <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                                }
+                                onChange={this.handlePasswordChange}
+                                value={this.state.password}
+                                placeholder="Password"
+                            />
+                            { this.props.errorMsg != "" ? <div><span>{this.props.errorMsg}</span><br/></div> : undefined}
+                            <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a href="">register now!</a>
+                        </Loader>
                     </div>
                 </div>
             </div>

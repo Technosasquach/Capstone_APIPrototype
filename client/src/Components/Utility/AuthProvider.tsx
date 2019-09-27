@@ -40,15 +40,19 @@ export default class Loader extends React.Component<any, { isAuthorized: boolean
             }
         }
 
-        if(isAuthed) {
-            this.setState({
-                isAuthorized: true
-            })
-        } else {
-            this.setState({
-                errorMsg: "Incorrect Username or Password"
-            })
-        }
+        setTimeout(() => {
+            if(isAuthed) {
+                this.setState({
+                    isAuthorized: true
+                })
+            } else {
+                this.setState({
+                    errorMsg: "Incorrect Username or Password"
+                })
+            }
+        }, 1 + 1000 * Math.random())
+
+        
     }
 
     render() {
