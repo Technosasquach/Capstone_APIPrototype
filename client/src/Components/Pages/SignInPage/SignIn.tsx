@@ -69,7 +69,7 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
                                 value={this.state.password}
                                 placeholder="Password"
                             />
-                            { this.props.errorMsg != "" ? <div><span>{this.props.errorMsg}</span><br/></div> : undefined}
+                            { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span>{this.props.errorMsg}</span><br/></div> : undefined}
                             <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a href="">register now!</a>
                         </Loader>
                     </div>
