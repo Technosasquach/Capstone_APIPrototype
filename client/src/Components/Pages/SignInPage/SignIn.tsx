@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 
 import { Icon, Input, Button } from 'antd';
 
-export class SignInPage extends React.Component<{ submitFunc: Function }, { username: string, password: string }> {
+export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg: string }, { username: string, password: string }> {
 
     constructor(props: any) {
         super(props);
@@ -57,6 +57,7 @@ export class SignInPage extends React.Component<{ submitFunc: Function }, { user
                             value={this.state.password}
                             placeholder="Password"
                         />
+                        { this.props.errorMsg != "" ? <div><span>{this.props.errorMsg}</span><br/></div> : undefined}
                         <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a href="">register now!</a>
                     </div>
                 </div>
