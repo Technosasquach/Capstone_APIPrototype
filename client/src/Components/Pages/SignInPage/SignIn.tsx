@@ -47,7 +47,7 @@ export class SignInPage extends React.Component<{ submitFunc: Function }, { user
                             }
                             onChange={this.handleUsernameChange}
                             value={this.state.username}
-                            placeholder="username"
+                            placeholder="Username"
                         />
                         <Input
                             prefix={
@@ -55,9 +55,9 @@ export class SignInPage extends React.Component<{ submitFunc: Function }, { user
                             }
                             onChange={this.handlePasswordChange}
                             value={this.state.password}
-                            placeholder="password"
+                            placeholder="Password"
                         />
-                        <Button onClick={this.handleSubmit}>Submit</Button>
+                        <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a href="">register now!</a>
                     </div>
                 </div>
             </div>

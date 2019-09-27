@@ -1,9 +1,46 @@
 @import "./../../../core.less";
 @import "./../../../variables.less";
 
+.SignInContainer {
+    width: 100vw;
+    height: 100vh;
 
-.SignIn {
-    width: 100%;
-    height:100%;
-    background-color: @colour-grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .SignIn {
+        border-radius: 20px;
+        border: solid 1px @colour-light;
+        -webkit-box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
+        -moz-box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
+        box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
+
+        display: flex;
+        align-items: stretch;
+
+        .SignInLeft {
+            background-color: @colour-main;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+
+            display: flex;
+            align-items: center;
+
+            span  {
+                color: white;
+                font-size: 2rem;
+                padding: 20px;
+            }
+        }
+
+        .SignInRight {
+            padding: 20px;
+            min-width: 100px;
+
+            input {
+                margin-bottom: 8px !important;
+            }
+        }
+    }
 }
