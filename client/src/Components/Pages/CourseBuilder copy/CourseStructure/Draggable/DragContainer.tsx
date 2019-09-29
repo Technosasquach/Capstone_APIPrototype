@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import Card from './NodeDrag'
 import update from 'immutability-helper'
 
@@ -29,31 +29,20 @@ interface Props {
   Structure: structure;
 }
 
-function usePrevious(value: any) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-}
-
 const Container: React.FC<Props> = ({Structure}) => {
   {
     const [cards, setCards] = useState([] as Item[]);
 
-    const prevAmount = usePrevious(Structure);
     useEffect(() => {
-        if(Structure !== prevAmount) {
-          if(Structure.cards !== undefined && Structure.cards.length > 0) {
-            let arr: Item[] = [];
-            let i = 0;
-            Structure.cards.map((item) => {
-                arr.push({id: i++, text: item.name});
-            })
-            setCards(arr);
-          }
-        }
-    });
+        if(Structure.cards !== undefined && Structure.cards.length > 0) {
+          let arr: Item[] = [];
+          let i = 0;
+          Structure.cards.map((item) => {
+              arr.push({id: i++, text: item.name});
+          })
+          setCards(arr);
+        } 
+    }, [Structure]);
 
     const moveCard = useCallback(
       (dragIndex: number, hoverIndex: number) => {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Draggable from './Draggable/DragContainer'
@@ -10,30 +10,6 @@ import "./CourseStructure.less";
 const CourseStructure = (props: any) => {
   const [, setCourseName] = useState("");
   const [Visible, setVisible] = useState(false);
-  const [Tree, setTree] = useState();
-
-  useEffect(() => {
-    if(props.Children.length > 0) {
-      setUpTree(props.Children);
-    }
-  }, [props.Children]);
-
-  useEffect(() => {
-    console.log(Tree);
-  }, [Tree]);
-
-  const setUpTree = (data: any[]) => {
-    let treeData = [] as any[];
-    let key = 1;
-    data.map((node: any) => {
-      treeData.push({
-        title: node.name,
-        nodeID: node.id,
-        key: key++
-      })
-    });
-    setTree(treeData);
-  }
 
   const updateName = (e: any) => {
     setCourseName(e.target.value);
@@ -72,7 +48,7 @@ const CourseStructure = (props: any) => {
           onOk={handleOk}
           onCancel={handleCancel}
           >
-            <CourseNodeAdder enabled={true} Structure={props.Structure} setStructure={props.setStructure} Tree={Tree} setTree={setTree} />
+            <CourseNodeAdder enabled={true} Structure={props.Structure} setStructure={props.setStructure} Children={props.Children} />
           </Modal>
         </div>
       </div>
