@@ -11,7 +11,7 @@ import NodeDisplay from "./Components/Pages/NodeDisplayPage/NodePage";
 import LearningPage from "./Components/Pages/LearningNodePage/LearningPage";
 import ExamPage from "./Components/Pages/ExamPage/ExamPage";
 import AccountPage from "./Components/Pages/AccountPage/AccountPage";
-import CourseBuilder from "./Components/Pages/CourseBuilder/CourseBuilder";
+import CourseBuilder from "./Components/Pages/CourseBuilder copy/CourseBuilder";
 import HomePage from './Components/Pages/HomePage/HomePage';
 import SearchResultPage from "./Components/Pages/Search/SearchResult";
 

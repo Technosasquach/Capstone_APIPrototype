@@ -12,22 +12,20 @@ export const NodeType:any = new GraphQLObjectType({
         json: { type: new GraphQLNonNull(GraphQLString) },
         keywords: { type: new GraphQLList(GraphQLString) },
         parents: { 
-            type: new GraphQLList(GraphQLID) 
-            // type: new GraphQLList(NodeType),
-            // resolve(parent, args) {
-            //     return parent.children.map((id: string) => {
-            //         return Node.findById(id);
-            //     });
-            // }
+            type: new GraphQLList(NodeType),
+            resolve(parent, args) {
+                return parent.parents.map((id: string) => {
+                    return Node.findById(id);
+                });
+            }
         },
         children: {
-            type: new GraphQLList(GraphQLID) 
-            // type: new GraphQLList(NodeType),
-            // resolve(parent, args) {
-            //     return parent.children.map((id: string) => {
-            //         return Node.findById(id);
-            //     });
-            // }
+            type: new GraphQLList(NodeType),
+            resolve(parent, args) {
+                return parent.children.map((id: string) => {
+                    return Node.findById(id);
+                });
+            }
          }
     })
 });

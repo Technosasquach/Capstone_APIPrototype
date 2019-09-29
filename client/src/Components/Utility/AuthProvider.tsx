@@ -24,7 +24,7 @@ export default class Loader extends React.Component<any, { isAuthorized: boolean
         super(props);
 
         this.state = {
-            isAuthorized: false,
+            isAuthorized: true,
             errorMsg: ""
         }
 

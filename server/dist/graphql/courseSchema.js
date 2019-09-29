@@ -55,5 +55,12 @@ exports.CourseQueries = {
             return pages_1.Page.findById(args.id);
         }
     },
+    pageForNodeId: {
+        type: exports.PageType,
+        args: { NodeId: { type: graphql_1.GraphQLString } },
+        resolve(parent, args) {
+            return pages_1.Page.findOne({ "content": { $regex: ".*" + args.NodeId + ".*" } });
+        }
+    }
 };
 //# sourceMappingURL=courseSchema.js.map

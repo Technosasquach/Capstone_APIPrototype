@@ -12,22 +12,20 @@ exports.NodeType = new graphql_1.GraphQLObjectType({
         json: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         keywords: { type: new graphql_1.GraphQLList(graphql_1.GraphQLString) },
         parents: {
-            type: new graphql_1.GraphQLList(graphql_1.GraphQLID)
-            // type: new GraphQLList(NodeType),
-            // resolve(parent, args) {
-            //     return parent.children.map((id: string) => {
-            //         return Node.findById(id);
-            //     });
-            // }
+            type: new graphql_1.GraphQLList(exports.NodeType),
+            resolve(parent, args) {
+                return parent.parents.map((id) => {
+                    return nodes_js_1.Node.findById(id);
+                });
+            }
         },
         children: {
-            type: new graphql_1.GraphQLList(graphql_1.GraphQLID)
-            // type: new GraphQLList(NodeType),
-            // resolve(parent, args) {
-            //     return parent.children.map((id: string) => {
-            //         return Node.findById(id);
-            //     });
-            // }
+            type: new graphql_1.GraphQLList(exports.NodeType),
+            resolve(parent, args) {
+                return parent.children.map((id) => {
+                    return nodes_js_1.Node.findById(id);
+                });
+            }
         }
     })
 });
