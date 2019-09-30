@@ -99,7 +99,6 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
       {text}
       <Button onClick={editPage} className={"Selector"}>></Button>
       <Button className={"Selector"}>+</Button>
-      <Button className={"Selector"}>x</Button>
       </span>
     </div>
   )

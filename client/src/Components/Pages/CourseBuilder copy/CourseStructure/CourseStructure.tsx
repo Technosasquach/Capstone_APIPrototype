@@ -26,13 +26,14 @@ const CourseStructure = (props: any) => {
   const handleCancel = (e: any) => {
     setVisible(false);
   };
+
     return (
       <div id="container">
         <h1>Course Structure</h1>
         <span style={{display: "flex"}}><h5>Course Name</h5><Input onChange={updateName} /></span>
         <div id="adder">
           <DndProvider backend={HTML5Backend}>
-            <Draggable Structure={props.Structure} />
+            <Draggable Parent={props.Parent} Structure={props.Structure} />
             <div id={"AddButton"}>
               <Button onClick={showModal} type="dashed" style={{ width: '100%', height: '100%' }}>
                 <Icon type="plus" /> Add Page

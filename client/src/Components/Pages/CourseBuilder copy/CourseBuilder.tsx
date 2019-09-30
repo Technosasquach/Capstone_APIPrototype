@@ -14,16 +14,17 @@ interface card {
 
 interface structure {
   index: [number];
-  cards: [card]
+  treeIndex: [string];
+  cards: [card];
 }
 
 const CourseBuilderPage = (props: any) => {
-  const [Structure, setStructure] = useState({} as structure);
+  const [Parent, setParent] = useState({} as card);
+  const [Structure, setStructure] = useState({index: ([] as number[]), treeIndex: ([] as string[]), cards: ([] as card[])} as structure);
   const [Children, setChildren] = useState([] as string[]);
   //const [content, setContent] = useState({});
 
   const [Loading, fetchedData] = useRequest({query:  "query{node(id:\"" + props.match.params.id + "\"){id name children { id name }}}"}, [props.match.params.id]);
-
   useEffect(() => {
     if(!Loading && fetchedData) {
       const parsed = {
@@ -31,7 +32,7 @@ const CourseBuilderPage = (props: any) => {
         name: fetchedData['data']['node']['name'],
         children: fetchedData['data']['node']['children']
       }
-      setStructure({index: [0], cards: [{id: parsed.id, name: parsed.name}]});
+      setParent({id: parsed.id, name: parsed.name});
       setChildren(parsed.children);
     }
   }, [fetchedData]);
@@ -40,7 +41,7 @@ const CourseBuilderPage = (props: any) => {
     <Loader loading={Loading}>
         <div className="coursepage">
             <div className="stuctureregion">
-              <CourseStructure Structure={Structure} setStructure={setStructure} Children={Children}/>
+              <CourseStructure Parent={Parent} Structure={Structure} setStructure={setStructure} Children={Children}/>
             </div>
             <div className="selectregion">
             </div>

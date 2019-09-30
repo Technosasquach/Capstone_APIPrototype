@@ -11,11 +11,12 @@ interface card {
 
 interface structure {
   index: [number];
-  cards: [card]
+  cards: [card];
+  treeIndex: [string];
 }
 
 const CourseNodeAdder = (props: any) => {
-  const [CheckedKeys, setCheckedKeys] = useState([] as any);
+  const [CheckedKeys, setCheckedKeys] = useState({checked: []} as any);
   const [TreeData, setTreeData] = useState([] as any);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const CourseNodeAdder = (props: any) => {
 
   const setUpTree = (data: any[]) => {
     let treeData = [] as any[];
-    let key = 1;
+    let key = 0;
     data.map((node: any) => {
       treeData.push({
         title: node.name,
@@ -45,7 +46,7 @@ const CourseNodeAdder = (props: any) => {
       return res.data.data.node.children;
     }).then((res: any[]) => {
         let treeData = [] as any[];
-        let childkey = 1;
+        let childkey = 0;
         res.map((node: any) => {
           treeData.push({
             title: node.name,
@@ -59,19 +60,59 @@ const CourseNodeAdder = (props: any) => {
     });
   }
 
-  const onCheck = (CheckedKeys: any, e: any) => {
-    setCheckedKeys(CheckedKeys);
-    console.log(props.Structure);
-    let structure = Object.create(props.Structure) as structure;
-    e.checkedNodes.map((node: any) => {
-      structure.cards.push({
-        id: node.props.nodeID,
-        name: node.props.title
+  const changed = (a1: any[], a2: any[]) => {
+    var a = [], diff = [];
+
+    for (var i = 0; i < a1.length; i++) {
+        a[a1[i]] = true;
+    }
+
+    for (var i = 0; i < a2.length; i++) {
+        if (a[a2[i]]) {
+            delete a[a2[i]];
+        } else {
+            a[a2[i]] = true;
+        }
+    }
+
+    for (var k in a) {
+        diff.push(k);
+    }
+    return diff[0];
+}
+
+  const onCheck = (CheckedKeysNew: any, e: any) => {
+    const change = changed(CheckedKeysNew.checked, CheckedKeys.checked);
+    const structure = {cards: props.Structure.cards, index: props.Structure.index, treeIndex: props.Structure.treeIndex} as structure;
+    if(CheckedKeysNew.checked.length > CheckedKeys.checked.length) {
+      setCheckedKeys(CheckedKeysNew);
+      const index = props.Structure.index.length;
+      e.checkedNodes.forEach((element: any) => {
+        if(element.key === change) {
+          structure.cards.push({
+            id: element.props.nodeID,
+            name: element.props.title
+          });
+          structure.index.push(index);
+          structure.treeIndex.push(change);
+          props.setStructure(structure);
+        }
       });
-      structure.index.push(1);
-    });
-    props.setStructure(structure);
-    console.log(props.Structure);
+    } else if (CheckedKeysNew.checked.length < CheckedKeys.checked.length) {
+      setCheckedKeys(CheckedKeysNew);
+      const remove = structure.treeIndex.indexOf(change);
+      if (remove < structure.cards.length-1) {
+        for(let i = remove+1; i < structure.cards.length; i++) {
+          const temp = structure.index.indexOf(i);
+          structure.index[temp] -= 1;
+        }
+      }
+      structure.cards.splice(remove, 1);
+      structure.treeIndex.splice(remove, 1);
+      const findIndex = structure.index.indexOf(remove);
+      structure.index.splice(findIndex, 1);
+      props.setStructure(structure);
+    }
   };
 
   const onLoadData = (treeNode: any) =>
@@ -81,7 +122,7 @@ const CourseNodeAdder = (props: any) => {
       return;
     }
     treeNode.props.dataRef.children = await requestChildren(treeNode.props.nodeID, treeNode.props.eventKey);
-    const temp = Object.create(TreeData);
+    const temp = [...TreeData];
     setTreeData(temp);
     resolve();
   });
