@@ -15,6 +15,14 @@ interface structure {
   treeIndex: [string];
 }
 
+interface content {
+  key: number;
+  content: any;
+  removeable: boolean;
+  imageSet: boolean;
+  imageData?: string;
+}
+
 const CourseNodeAdder = (props: any) => {
   const [CheckedKeys, setCheckedKeys] = useState({checked: []} as any);
   const [TreeData, setTreeData] = useState([] as any);
@@ -96,6 +104,10 @@ const CourseNodeAdder = (props: any) => {
           structure.index.push(index);
           structure.treeIndex.push(change);
           props.setStructure(structure);
+
+          const temp = [...props.Content];
+          temp[props.Selected].push([{key: 0, content: "", removeable: false, imageSet: false}] as content[]);
+          props.setContent(temp);
         }
       });
     } else if (CheckedKeysNew.checked.length < CheckedKeys.checked.length) {
@@ -112,6 +124,13 @@ const CourseNodeAdder = (props: any) => {
       const findIndex = structure.index.indexOf(remove);
       structure.index.splice(findIndex, 1);
       props.setStructure(structure);
+
+      const temp2 = [...props.Content];
+      temp2.splice(remove, 1);
+      props.setContent(temp2);
+      if(props.Selected === remove) {
+        props.setSelected(0);
+      }
     }
   };
 

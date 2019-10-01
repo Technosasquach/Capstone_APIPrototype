@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 
 import './NodePage.less'
 import { Table, Button } from 'antd';
@@ -26,66 +26,48 @@ const dataChild = [
   },
 ];
 
-export default class SearchPage extends React.Component<any, any> {
-    constructor(props: any){
-        super(props);
-        this.state = {
-          id: this.props.id,
-          name: "Loading Data",
-          childdata: dataChild,
-          parentdata: dataParent,
-          loading: true
-        };
+const SearchPage = (props: any) => {
+  const [Name, setName] = useState("Loading Data");
+  const [ChildData, setChildData] = useState(dataChild);
+  const [ParentData, setParentData] = useState(dataParent);
+  const [Loading, setLoading] = useState(false);
+
+
+  useEffect(() => {
+    beginQuery();
+  }, [props.match.params.id])
+
+  /**
+   * beginQuery
+   * Initates requests for data for specific node
+   *
+   * @memberof NodeInfo
+   */
+  const beginQuery = () => {
+    setLoading(true);
+    setName("Loading Data");
+    let data:any = {query:  "query{node(id: \"" + props.match.params.id + "\"){name children {id name} parents {id name}}}\n\n"};
+    axios.post("http://localhost:3000/graphql/", data).then(res => {
+      return {
+        name: res.data['data']['node']['name'],
+        children: res.data['data']['node']['children'],
+        parents: res.data['data']['node']['parents']
+      };
+    }).then((json) => {
+      setName(json.name);
+      if(json.children.length > 0) {
+        setChildData(dataSet(json.children));
+      } else {
+        setChildData(dataChild);
       }
-    
-      componentDidMount() {
-        this.beginQuery();
+      if(json.parents.length > 0) {
+        setParentData(dataSet(json.parents));
+      } else {
+        setParentData(dataParent);
       }
-    
-      componentDidUpdate(prevProps: any) {
-        if(prevProps.match.params.id !== this.props.match.params.id) {
-          this.beginQuery();
-        }
-      }
-    
-      /**
-       * beginQuery
-       * Initates requests for data for specific node
-       *
-       * @memberof NodeInfo
-       */
-      beginQuery = () => {
-        this.setState({
-          loading: true
-        });
-        let data:any = {query:  "query{node(id: \"" + this.props.match.params.id + "\"){name children {id name} parents {id name}}}\n\n"};
-        axios.post("http://localhost:3000/graphql/", data).then(res => {
-          return {
-            name: res.data['data']['node']['name'],
-            children: res.data['data']['node']['children'],
-            parents: res.data['data']['node']['parents']
-          };
-        }).then((json) => {
-          let childData = [] as any;
-          let parentData = [] as any;
-          if(json.children.length > 0) {
-            childData = this.dataSet(json.children);
-          } else {
-            childData = dataChild;
-          }
-          if(json.parents.length > 0) {
-            parentData = this.dataSet(json.parents);
-          } else {
-            parentData = dataParent;
-          }
-          this.setState({
-            name: json.name,
-            childdata: childData,
-            parentdata: parentData,
-            loading: false
-          }); 
-        });
-      }
+      setLoading(false);
+    });
+  }
     
     
       /**
@@ -94,11 +76,11 @@ export default class SearchPage extends React.Component<any, any> {
        *
        * @memberof NodeInfo
        */
-      dataSet = (array: any[]) => {
+      const dataSet = (array: any[]) => {
         let key = 1;
         let content = [] as any[];
         for(let i = 0; i < array.length; i++) {
-          content.push(this.setData(key++, array[i].name, array[i].id));
+          content.push(setData(key++, array[i].name, array[i].id));
         }
         return content;
       }
@@ -109,7 +91,7 @@ export default class SearchPage extends React.Component<any, any> {
        *
        * @memberof NodeInfo
        */
-      setData = (num: number,name: string, link: string) => {
+      const setData = (num: number,name: string, link: string) => {
         return {
           key: num,
           name: name,
@@ -117,20 +99,22 @@ export default class SearchPage extends React.Component<any, any> {
         }
       }
     
-    render() {
-        return (
-            <Loader loading={this.state.loading}>
-                <div id="NodePage">
-                    <h1>{this.state.name}</h1>
-                    <hr/>
-                    <h2>Related Nodes</h2>
-                    <h3>Parent</h3>
-                    <Table columns={columns} pagination={false} dataSource={this.state.parentdata} />
-                    <h3>Children</h3>
-                    <Table columns={columns} pagination={false} dataSource={this.state.childdata} />
-                    <Link to={this.props.match.params.id + "/builder/"}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
-                </div>
-            </Loader>
-        );
-    }
+
+  return (
+      <Loader loading={Loading}>
+          <div id="NodePage">
+              <h1>{Name}</h1>
+              <hr/>
+              <h2>Related Nodes</h2>
+              <h3>Parent</h3>
+              <Table columns={columns} pagination={false} dataSource={ParentData} />
+              <h3>Children</h3>
+              <Table columns={columns} pagination={false} dataSource={ChildData} />
+              <Link to={props.match.params.id + "/builder/"}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
+          </div>
+      </Loader>
+  );
+    
 }
+
+export default SearchPage;

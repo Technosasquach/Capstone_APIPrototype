@@ -1,24 +1,13 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
 import { Course } from '../database/courses'
-import { Comment } from '../database/comment'
-
-export const PageType = new GraphQLObjectType({
-    name: 'Page',
-    fields: () => ({
-        id: {type: GraphQLString },
-        name: {type: GraphQLString},
-        content: {type: GraphQLString},
-        image: {type: GraphQLString}
-    })
-})
 
 export const CourseType = new GraphQLObjectType({
     name: 'Course',
     fields: () => ({
         id: { type: GraphQLString },
         createdAt: { type: new GraphQLNonNull(GraphQLString) },
-        name: {type: GraphQLString},
-
+        name: {type: new GraphQLNonNull(GraphQLString)},
+        nodes: {type: new GraphQLList(GraphQLString)}
     })
 });
 

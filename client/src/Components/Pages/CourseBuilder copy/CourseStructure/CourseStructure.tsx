@@ -49,7 +49,15 @@ const CourseStructure = (props: any) => {
           onOk={handleOk}
           onCancel={handleCancel}
           >
-            <CourseNodeAdder enabled={true} Structure={props.Structure} setStructure={props.setStructure} Children={props.Children} />
+            <CourseNodeAdder 
+            enabled={true} 
+            Structure={props.Structure} 
+            setStructure={props.setStructure} 
+            Children={props.Children} 
+            Content={props.Content}
+            setContent={props.setContent}
+            Selected={props.Selected} 
+            setSelected={props.setSelected}/>
           </Modal>
         </div>
       </div>
