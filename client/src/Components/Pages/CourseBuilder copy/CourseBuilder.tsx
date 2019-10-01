@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import CourseStructure from './CourseStructure/CourseStructure';
 import Loader from './../../Utility/Loader';
-//import PageBuilder from './PageBuilder/PageBuilder';
+import PageBuilder from './PageBuilder/PageBuilder';
 
 import {useRequest} from './Hooks/Request';
 
@@ -22,7 +22,7 @@ const CourseBuilderPage = (props: any) => {
   const [Parent, setParent] = useState({} as card);
   const [Structure, setStructure] = useState({index: ([] as number[]), treeIndex: ([] as string[]), cards: ([] as card[])} as structure);
   const [Children, setChildren] = useState([] as string[]);
-  //const [content, setContent] = useState({});
+  const [Content, setContent] = useState({});
 
   const [Loading, fetchedData] = useRequest({query:  "query{node(id:\"" + props.match.params.id + "\"){id name children { id name }}}"}, [props.match.params.id]);
   useEffect(() => {
@@ -44,6 +44,7 @@ const CourseBuilderPage = (props: any) => {
               <CourseStructure Parent={Parent} Structure={Structure} setStructure={setStructure} Children={Children}/>
             </div>
             <div className="selectregion">
+              <PageBuilder nodeName={Parent.name} Content={Content} setContent={setContent} />
             </div>
         </div>
     </Loader>

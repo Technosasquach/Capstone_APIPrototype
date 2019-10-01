@@ -1,20 +1,51 @@
-import * as React from "react";
-
+import React, {useState} from "react";
+import InformationField from './InformationField'
+import { Input, Icon, Upload } from 'antd';
 import "./PageBuilder.less";
 
-import Formfill from './Formfill';
+const PageBuilderPage = (props: any) => {
+  const [Loading,] = useState(false);
+  const [Image, setImage] = useState(undefined);
 
-export default class PageBuilderPage extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
+  const uploadButton = (
+    <div>
+      <Icon type={Loading ? 'loading' : 'plus'} />
+      <div className="ant-upload-text">Upload</div>
+    </div>
+  );
+
+  const beforeUpload = (file: any) => {
+    var reader = new FileReader();
+    reader.onload = (e: any) => {
+        setImage(e.target.result);
+    };
+    reader.readAsDataURL(file);
+    return false;
   }
 
-  render() {
-      return (
-        <div className="pageBuilder">
-          <h1>Page Builder</h1>
-          <Formfill addAddition={this.props.addAddition} additions={this.props.additions} nodeName={this.props.node.name} nodeid={this.props.node.nodeid} id={this.props.node.id} save={this.props.save} pages={this.props.pages} submit={this.props.submit}/>
+  return (
+    <div className="pageBuilder">
+      <span id="top">
+        <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            beforeUpload={beforeUpload}
+        >
+            {Image !== undefined ? <img src={Image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        </Upload>
+        <div className="title">
+            <h1>{props.nodeName}</h1>
+            <span>
+                <h1>Title</h1><Input id="title" />
+            </span>
         </div>
-      );
-  }
+      </span>
+      <InformationField/>
+    </div>
+  );
 }
+
+
+export default PageBuilderPage;

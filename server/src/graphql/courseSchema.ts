@@ -1,6 +1,5 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
 import { Course } from '../database/courses'
-import { Page } from '../database/pages'
 import { Comment } from '../database/comment'
 
 export const PageType = new GraphQLObjectType({
@@ -19,14 +18,7 @@ export const CourseType = new GraphQLObjectType({
         id: { type: GraphQLString },
         createdAt: { type: new GraphQLNonNull(GraphQLString) },
         name: {type: GraphQLString},
-        pages: {
-            type: new GraphQLList(PageType),
-            resolve(parent, args) {
-                return parent.pages.map((id: string) => {
-                    return Page.findById(id);
-                })
-            }
-        },
+
     })
 });
 
@@ -44,24 +36,4 @@ export const CourseQueries = {
             return Course.findById(args.id);
         }
     },
-    everyPage: {
-        type: new GraphQLList(PageType),
-        resolve() {
-            return Page.find({});
-        }
-    },
-    page: {
-        type: PageType,
-        args: { id: { type: GraphQLString}},
-        resolve(parent: any, args: any) {
-            return Page.findById(args.id);
-        }
-    },
-    pageForNodeId: {
-        type: PageType,
-        args: { NodeId: { type: GraphQLString}},
-        resolve(parent: any, args: any) {
-            return Page.findOne({"content":{$regex:".*"+args.NodeId+".*"}});
-        }
-    }
 };

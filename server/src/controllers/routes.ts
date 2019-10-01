@@ -17,32 +17,8 @@ routes.get("/api/", function(req: Request, res: Response) {
 });
 
 import {Course} from './../database/courses'
-import {Page} from './../database/pages'
 routes.post("/CourseCreate/", function(req: Request, res: Response) {
     const data = req.body;
-    let pages = [];
-    console.log(data);
-    for(let i = 0; i < data.amount; i++) {
-        let temp = data.data["" + i];
-        let image = temp['image'];
-        delete temp['image'];
-        pages.push(new Page({
-            name: data.data["" + i]['title'],
-            content: JSON.stringify(temp)
-        }));
-        if(image) {
-            pages[i].image = image;
-        }
-    }
-    pages.forEach(element => {
-        element.save();
-    });
-    
-    new Course({
-        name: data.coursename,
-        pages: pages,
-    }).save();
-
     res.end();
 })
 

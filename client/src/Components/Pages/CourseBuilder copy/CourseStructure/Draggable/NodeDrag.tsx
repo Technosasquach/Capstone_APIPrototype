@@ -8,7 +8,6 @@ import { Button } from 'antd'
 import './NodeDrag.less'
 
 const style = {
-  border: '1px dashed gray',
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',
   backgroundColor: 'white',
