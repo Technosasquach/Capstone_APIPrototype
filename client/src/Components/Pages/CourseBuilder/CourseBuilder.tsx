@@ -1,20 +1,22 @@
 import React, {useState, useEffect} from "react";
 import CourseStructure from './CourseStructure/CourseStructure';
-import Loader from './../../Utility/Loader';
+import Loader from '../../Utility/Loader';
 import PageBuilder from './PageBuilder/PageBuilder';
+import QuizBuilder from './QuizBuilder/QuizBuilder';
 
 import {useRequest} from './Hooks/Request';
 
 import "./CourseBuilder.less";
 
-import {card, content, structure} from './Types'
+import {card, content, structure, selected, quiz} from './Types'
 
 const CourseBuilderPage = (props: any) => {
   const [Parent, setParent] = useState({} as card);
   const [Structure, setStructure] = useState({index: ([] as number[]), treeIndex: ([] as string[]), cards: ([] as card[])} as structure);
   const [Children, setChildren] = useState([] as string[]);
   const [Content, setContent] = useState([[{key: 0, content: "", removeable: false, imageData: ""}]] as content[][]);
-  const [Selected, setSelected] = useState(0);
+  const [, ] = useState([] as quiz[]);
+  const [Selected, setSelected] = useState({index: 0, type: 0} as selected);
   const [Loading, fetchedData] = useRequest({query:  "query{node(id:\"" + props.match.params.id + "\"){id name children { id name }}}"}, [props.match.params.id]);
 
   useEffect(() => {
@@ -46,15 +48,21 @@ const CourseBuilderPage = (props: any) => {
               Children={Children} 
               Content={Content} 
               setContent={setContent} 
-              Selected={Selected} 
+              Selected={Selected.index} 
               setSelected={setSelected}/>
             </div>
             <div className="selectregion">
-              <PageBuilder 
-              nodeName={Parent.name} 
-              Content={Content} 
-              setContent={setContent} 
-              Selected={Selected} />
+              {Selected.type ?
+                <QuizBuilder 
+                Selected={Selected.index}/>
+                  :
+                <PageBuilder 
+                nodeName={Parent.name} 
+                Content={Content} 
+                setContent={setContent} 
+                Selected={Selected.index} />
+              }
+
             </div>
         </div>
     </Loader>

@@ -11,7 +11,7 @@ const style = {
 
 const Carder = (props: any) => {
     const select = () => {
-      props.setSelected(0);
+      props.setSelected({index: 0, type: 0});
     }
 
     return (

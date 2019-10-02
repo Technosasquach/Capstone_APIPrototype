@@ -7,6 +7,8 @@ import { Button } from 'antd'
 
 import './NodeDrag.less'
 
+import {selected} from './../../Types'
+
 const style = {
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',
@@ -18,7 +20,7 @@ export interface CardProps {
   text: string
   index: number
   moveCard: (dragIndex: number, hoverIndex: number) => void,
-  setSelected: (id: number) => void;
+  setSelected: (input: selected) => void;
 }
 
 interface DragItem {
@@ -88,7 +90,7 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard, setSelected }) =
   })
 
   const editPage = () => {
-    setSelected(id + 1);
+    setSelected({index: id + 1, type: 0});
   }
 
   const opacity = isDragging ? 0 : 1

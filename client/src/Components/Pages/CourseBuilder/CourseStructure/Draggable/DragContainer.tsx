@@ -4,6 +4,8 @@ import update from 'immutability-helper'
 
 import Carder from './Card'
 
+import {selected} from './../../Types';
+
 const style = {
   width: "100%",
 }
@@ -30,7 +32,7 @@ interface structure {
 interface Props {
   Structure: structure;
   Parent: card;
-  setSelected: (id: number) => void;
+  setSelected: (input: selected) => void;
 }
 
 const Container: React.FC<Props> = ({Structure, Parent, setSelected}) => {

@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Input, Icon, Button, Upload } from 'antd';
 const { TextArea } = Input;
-
 import './InformationField.less';
-import {content} from './../Types';
+import {content} from '../Types';
 
 let updater = false;
 
@@ -56,6 +55,7 @@ const InformationField = (props: any) => {
         <div className="fieldContainer">
             <div id="image">
                 <TextArea onChange={change} className={'none'} id={'text' + props.id} rows={8} autosize={{minRows: 8, maxRows: 8}} />
+                
             </div>
             <div id='imagediv'>
                 <Upload name="avatar" listType="picture-card" className="avatar-uploader imagediv" showUploadList={false} beforeUpload={beforeUpload}>
@@ -66,5 +66,6 @@ const InformationField = (props: any) => {
         </div>
     )
 }
+
 
 export default InformationField;
