@@ -1,124 +1,64 @@
-import * as React from "react";
-import axios from 'axios'
-import CourseStructure from './CourseStructure';
-import CourseNodeAdder from './CourseNodeAdder';
+import React, {useState, useEffect} from "react";
+import CourseStructure from './CourseStructure/CourseStructure';
 import Loader from './../../Utility/Loader';
-//import PageBuilder from './PageBuilder/PageBuilder';
+import PageBuilder from './PageBuilder/PageBuilder';
+
+import {useRequest} from './Hooks/Request';
 
 import "./CourseBuilder.less";
 
-import { Modal } from 'antd';
+import {card, content, structure} from './Types'
 
-interface card {
-  id: string;
-  text: string;
-}
+const CourseBuilderPage = (props: any) => {
+  const [Parent, setParent] = useState({} as card);
+  const [Structure, setStructure] = useState({index: ([] as number[]), treeIndex: ([] as string[]), cards: ([] as card[])} as structure);
+  const [Children, setChildren] = useState([] as string[]);
+  const [Content, setContent] = useState([[{key: 0, content: "", removeable: false, imageData: ""}]] as content[][]);
+  const [Selected, setSelected] = useState(0);
+  const [Loading, fetchedData] = useRequest({query:  "query{node(id:\"" + props.match.params.id + "\"){id name children { id name }}}"}, [props.match.params.id]);
 
-export default class CourseBuilderPage extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      parent: {} as card,
-      structure: {index: [], cards: []},
-      treeData: [],
-      loading: true,
-      visible: false,
-    };
-  }
-
-  componentDidMount() {
-    this.requestData();
-  }
-
-  componentDidUpdate(previous: any) {
-    if(previous.match.params.id !== this.props.match.params.id) {
-      this.requestData();
+  useEffect(() => {
+    if(!Loading && fetchedData) {
+      const parsed = {
+        id: fetchedData['data']['node']['id'],
+        name: fetchedData['data']['node']['name'],
+        children: fetchedData['data']['node']['children']
+      }
+      setParent({id: parsed.id, name: parsed.name});
+      setChildren(parsed.children);
     }
-  }
+  }, [fetchedData]);
 
-  requestData = () => {
-    let data:any = {query:  "query{node(id: \"" + this.props.match.params.id + "\"){id name children { id name } }}\n\n"};
-    axios.post("http://localhost:3000/graphql/", data).then(res => {
-      return {
-        id: res.data['data']['node']['id'],
-        name: res.data['data']['node']['name'],
-        children: res.data['data']['node']['children']
-      };
-    }).then((res) => {
-      const tree = this.setUpTree(res.children)
-      this.setState({
-        parent: {id: res.id, name: res.name},
-        structure: {index: [0], cards: [{id: res.id, name: res.name}]},
-        children: res.children,
-        treeData: tree,
-        loading: false,
-      });
-    });
-  }
-
-  setUpTree(data: any[]) {
-    let treeData = [] as any[];
-    let key = 1;
-    data.map((node: any) => {
-      treeData.push({
-        title: node.name,
-        nodeID: node.id,
-        key: key++
-      })
-    });
-    return treeData;
-  }
-
-  updateLoading = (treedata: any[]) => {
-    this.setState({
-      treeData: treedata
+  useEffect(() => {
+    Content.forEach(item => {
+      console.log(...item);
     })
-  }
+  }, [Content])
 
-  updateStructure = (structure: card[]) => {
-    this.setState({
-      structure: this.state.parent.concat(structure),
-      indexes: this.state.indexes + 1
-    });
-  }
-
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  handleOk = (e: any) => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  handleCancel = (e: any) => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  render() {
-      return (
-        <Loader loading={this.state.loading}>
-            <div className="coursepage">
-                <div className="stuctureregion">
-                  <CourseStructure showModal={this.showModal} structure={this.state.structure}/>
-                </div>
-                <div className="selectregion">
-                </div>
+  return (
+    <Loader loading={false}>
+        <div className="coursepage">
+            <div className="stuctureregion">
+              <CourseStructure 
+              Parent={Parent} 
+              Structure={Structure} 
+              setStructure={setStructure} 
+              Children={Children} 
+              Content={Content} 
+              setContent={setContent} 
+              Selected={Selected} 
+              setSelected={setSelected}/>
             </div>
-            <Modal
-                title="Structure Select"
-                visible={this.state.visible}
-                onOk={this.handleOk}
-                onCancel={this.handleCancel}
-                >
-                <CourseNodeAdder enabled={true} structure={this.state.structure} updateStructure={this.updateStructure} treeData={this.state.treeData} loader={this.updateLoading}/>
-            </Modal>
-        </Loader>
-      );
-  }
+            <div className="selectregion">
+              <PageBuilder 
+              nodeName={Parent.name} 
+              Content={Content} 
+              setContent={setContent} 
+              Selected={Selected} />
+            </div>
+        </div>
+    </Loader>
+  );
 }
+
+export default CourseBuilderPage;

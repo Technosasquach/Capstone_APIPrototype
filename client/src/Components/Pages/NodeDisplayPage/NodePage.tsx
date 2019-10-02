@@ -110,7 +110,7 @@ const SearchPage = (props: any) => {
               <Table columns={columns} pagination={false} dataSource={ParentData} />
               <h3>Children</h3>
               <Table columns={columns} pagination={false} dataSource={ChildData} />
-              <Link to={props.match.params.id + "/builder/"}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
+              <Link to={"/node/" + props.match.params.id + "/builder/"}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
           </div>
       </Loader>
   );
