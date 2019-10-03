@@ -4,7 +4,7 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import Draggable from './Draggable/DragContainer'
 import {Button, Icon, Input, Modal} from 'antd'
 import CourseNodeAdder from "./CourseNodeAdder";
-
+import { withRouter } from 'react-router-dom'
 import axios from 'axios';
 
 import "./CourseStructure.less";
@@ -50,7 +50,9 @@ const CourseStructure = (props: any) => {
     query.coursename = CourseName;
     query.nodes = nodes;
     query.data = data;
-    axios.post("http://localhost:3000/coursebuilder/", query);
+    axios.post("http://localhost:3000/coursebuilder/", query).then(res => {
+        props.history.push('/course/' + res.data);
+    });
   }
 
   return (
@@ -90,4 +92,4 @@ const CourseStructure = (props: any) => {
   );
 }
 
-export default CourseStructure;
+export default withRouter(CourseStructure);

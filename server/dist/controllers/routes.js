@@ -17,24 +17,30 @@ routes.get("/api/", function (req, res) {
 const index_1 = require("./../database/index");
 routes.post("/coursebuilder/", function (req, res) {
     const data = req.body;
-    new index_1.Course({
+    const temp = new index_1.Course({
         name: data.coursename,
         nodes: data.nodes
-    }).save();
-    let node = 0;
-    data.data.forEach((element) => {
-        let order = 0;
-        element.forEach((items) => {
-            new index_1.Information({
-                text: items.content,
-                image: items.imageData,
-                nodeId: data.nodes[node],
-                order: order++,
-            }).save();
-        });
-        node++;
     });
-    res.end();
+    temp.save();
+    try {
+        let node = 0;
+        data.data.forEach((element) => {
+            let order = 0;
+            element.forEach((items) => {
+                new index_1.Information({
+                    text: items.content,
+                    image: items.imageData,
+                    nodeId: data.nodes[node],
+                    order: order++,
+                }).save();
+            });
+            node++;
+        });
+    }
+    catch (e) {
+        console.log(e);
+    }
+    res.end("" + temp._id);
 });
 routes.post("/graph/", function (req, res) {
     console.log("[Routes] API Triggered: MassiveGraphDefFile");
