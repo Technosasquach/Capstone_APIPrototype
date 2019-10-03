@@ -81,7 +81,6 @@ export default class LearningPage extends React.Component<iProps, iState> {
             this.setState({
             myInfoNode: res.data['data']['informationByNodeId']
         })
-        console.log(this.state.myInfoNode);
     }).then(
             () => this.state.myInfoNode
                 ? this.loadCommentData(this.state.myInfoNode[0].id)
@@ -119,10 +118,9 @@ export default class LearningPage extends React.Component<iProps, iState> {
         const temp = [] as any[];
         for(let i = 0; i < this.state.myInfoNode.length; i++) {
             for(let j = 0; j < this.state.myInfoNode.length; j++) {
-                console.log(this.state.myInfoNode[j]);
                 if(this.state.myInfoNode[j].order == i) {
                     const item = this.state.myInfoNode[j];
-                    temp.push(<div key={i} style={{display: "flex"}}><ReactMarkdown source={(item)['text']} />{item['image'] ? <img src={item['image']} style={{width: "100px", height: "100px"}}/> : ""}</div>)
+                    temp.push(<div key={j} style={{display: "flex"}}><ReactMarkdown source={(item)['text']} />{item['image'] ? <img src={item['image']} style={{width: "100px", height: "100px"}}/> : ""}</div>)
                 }
             }
         }

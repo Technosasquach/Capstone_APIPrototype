@@ -19,6 +19,7 @@ const SearchBar = (props: any) => {
         } else {
             //passes the text up to the app level
             searchContext.searchNodes(text);
+            searchContext.searchCourses(text);
             setText('');
             props.history.push('/searchresults');
         }

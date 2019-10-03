@@ -5,6 +5,7 @@ import SearchReducer from './searchReducer';
 import {
     SEARCH_NODES,
     SET_LOADING,
+    SEARCH_COURSES,
 } from '../types';
 
 const SearchState = (props: any) => {
@@ -27,7 +28,6 @@ const SearchState = (props: any) => {
             .then((res) => res.data.data.everyNode.filter((name: any) => {
                 return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
             }));
-            
         //console.log("Sending search to reducer from SearchState");
         dispatch({
             type: SEARCH_NODES,
@@ -39,16 +39,16 @@ const SearchState = (props: any) => {
         setLoading();
 
         let data: any = {};
-        data['query'] = "query{everyNode{ id createdAt depth name json keywords }}\n\n";
+        data['query'] = "query{everyCourse{ id name nodes }}\n\n";
         
         const res = await axios.post("http://localhost:3000/graphql/", data)
-            .then((res) => res.data.data.everyNode.filter((name: any) => {
+            .then((res) => res.data.data.everyCourse.filter((name: any) => {
                 return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
             }));
             
         //console.log("Sending search to reducer from SearchState");
         dispatch({
-            type: SEARCH_NODES,
+            type: SEARCH_COURSES,
             payload: res
         });
     }
