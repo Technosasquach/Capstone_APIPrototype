@@ -17,6 +17,7 @@ const CourseBuilderPage = (props: any) => {
   const [Content, setContent] = useState([[{key: 0, content: "", removeable: false, imageData: ""}]] as content[][]);
   const [, ] = useState([] as quiz[]);
   const [Selected, setSelected] = useState({index: 0, type: 0} as selected);
+  
   const [Loading, fetchedData] = useRequest({query:  "query{node(id:\"" + props.match.params.id + "\"){id name children { id name }}}"}, [props.match.params.id]);
 
   useEffect(() => {

@@ -1,21 +1,13 @@
 import React, {useState, useEffect} from "react";
 import InformationField from './InformationField'
-import { Input, Icon, Upload, Button } from 'antd';
+import { Icon, Button } from 'antd';
 import "./PageBuilder.less";
 
-import {content} from './../Types'
+import {content} from '../Types'
 
 const PageBuilderPage = (props: any) => {
-  const [Image, setImage] = useState(undefined);
   const [Information, setInformation] = useState([{key: 0, content: "", removeable: false, imageData: ""}] as content[]);
   const [ReRender, setReRender] = useState(true);
-
-  const uploadButton = (
-    <div>
-      <Icon type={'plus'} />
-      <div className="ant-upload-text">Upload</div>
-    </div>
-  );
 
   useEffect(() => {
     setReRender(false);
@@ -31,15 +23,6 @@ const PageBuilderPage = (props: any) => {
     temp[props.Selected][data.key] = data;
     props.setContent(temp);
     setInformation([...temp[props.Selected]]);
-  }
-
-  const beforeUpload = (file: any) => {
-    var reader = new FileReader();
-    reader.onload = (e: any) => {
-        setImage(e.target.result);
-    };
-    reader.readAsDataURL(file);
-    return false;
   }
 
   const addInfo = () => {    
@@ -66,23 +49,9 @@ const PageBuilderPage = (props: any) => {
 
   return (
     <div className="pageBuilder">
-      <span id="top">
-        <Upload
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            beforeUpload={beforeUpload}
-        >
-            {Image !== undefined ? <img src={Image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-        </Upload>
-        <div className="title">
-            <h1>{props.nodeName ? props.nodeName : "Loading..."}</h1>
-            <span>
-                <h1>Title</h1><Input id="title" />
-            </span>
-        </div>
-      </span>
+      <div className="title">
+          <h1>{props.nodeName ? props.nodeName : "Loading..."}</h1>
+      </div>
       {ReRender && Information.map(info => {
         return <InformationField 
         key={info.key} 

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import { XYCoord } from 'dnd-core'
@@ -10,6 +10,18 @@ import './NodeDrag.less'
 import {selected} from './../../Types'
 
 const style = {
+  padding: '0.5rem 1rem',
+  marginBottom: '.5rem',
+  backgroundColor: 'white',
+}
+
+const styletwo = {
+  padding: '0.5rem 1rem',
+  backgroundColor: 'white',
+}
+
+const quizstyle = {
+  width: '90%',
   padding: '0.5rem 1rem',
   marginBottom: '.5rem',
   backgroundColor: 'white',
@@ -29,6 +41,8 @@ interface DragItem {
   type: string
 }
 const Card: React.FC<CardProps> = ({ id, text, index, moveCard, setSelected }) => {
+  const [Quiz, setQuiz] = useState(false);
+
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop({
     accept: ItemTypes.CARD,
@@ -93,15 +107,25 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard, setSelected }) =
     setSelected({index: id + 1, type: 0});
   }
 
+  const setquiz = () => {
+    setQuiz(true);
+  }
+
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
   return (
-    <div ref={ref} style={{ ...style, opacity }}>
-      <span>
-      {text}
-      <Button onClick={editPage} className={"Selector"}>></Button>
-      <Button className={"Selector"}>+</Button>
-      </span>
+    <div ref={ref}>
+      <div style={Quiz ? {...styletwo, opacity }: { ...style, opacity }}>
+        <span>
+          {Quiz && true}
+          {text}
+          <Button onClick={editPage} className={"Selector"}>></Button>
+          <Button onClick={setquiz} className={"Selector"}>+</Button>
+        </span>
+      </div>
+      {Quiz && <div style={{...quizstyle}}>
+        {text} Quiz
+      </div>}
     </div>
   )
 }

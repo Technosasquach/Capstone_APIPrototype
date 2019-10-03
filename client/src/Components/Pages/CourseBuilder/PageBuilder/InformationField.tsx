@@ -54,8 +54,7 @@ const InformationField = (props: any) => {
     return (
         <div className="fieldContainer">
             <div id="image">
-                <TextArea onChange={change} className={'none'} id={'text' + props.id} rows={8} autosize={{minRows: 8, maxRows: 8}} />
-                
+                <TextArea onChange={change} className={'none'} id={'text' + props.id} rows={12} autosize={{minRows: 12, maxRows: 12}} />             
             </div>
             <div id='imagediv'>
                 <Upload name="avatar" listType="picture-card" className="avatar-uploader imagediv" showUploadList={false} beforeUpload={beforeUpload}>
