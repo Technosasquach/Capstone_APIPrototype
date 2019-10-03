@@ -76,7 +76,7 @@ const SearchResult = () => {
             </div>);
     } else {
         return (
-            <div>
+            <div style={{overflow: "auto", height: "100%"}}>
                 Courses
                 <Table
                     rowKey={record => record.id} 

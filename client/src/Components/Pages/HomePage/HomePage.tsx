@@ -11,14 +11,11 @@ const HomePage = () => {
 
   return (
     <div className="HomePage">
-      <h1>Name</h1>
+      <h1>Username</h1>
       <div id="homeTop">
         <div id="coursedisplay">
           <h2>Courses</h2>
           <CourseDisplay/>
-        </div>
-        <div id="nothing">
-          Complete Cources
         </div>
       </div>
       <div id="homeBottom">
