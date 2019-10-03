@@ -16,9 +16,28 @@ routes.get("/api/", function(req: Request, res: Response) {
     });
 });
 
-import {Course} from './../database/courses'
-routes.post("/CourseCreate/", function(req: Request, res: Response) {
+import {Course, Information} from './../database/index'
+routes.post("/coursebuilder/", function(req: Request, res: Response) {
     const data = req.body;
+    new Course({
+        name: data.coursename,
+        nodes: data.nodes
+    }).save();
+
+    let node = 0;
+    data.data.forEach((element: any) => {
+        let order = 0;
+        element.forEach((items: any) => {
+            new Information({
+                text: items.content,
+                image: items.imageData,
+                nodeId: data.nodes[node],
+                order: order++,
+            }).save();
+        })
+        node++;
+    });
+
     res.end();
 })
 

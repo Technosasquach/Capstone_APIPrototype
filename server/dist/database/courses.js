@@ -14,7 +14,7 @@ exports.CourseSchema = new mongoose.Schema({
         required: true
     },
     nodes: [{
-            type: String,
+            type: [mongoose.Schema.Types.ObjectId],
             unique: false,
             required: true
         }],

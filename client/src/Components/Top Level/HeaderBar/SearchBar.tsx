@@ -30,10 +30,11 @@ const SearchBar = (props: any) => {
 
     return (
         <div className="searcharea">
-            <Form layout="inline" className="form" onSubmit={onSubmit}>
-                <Form.Item>
-                    <Input placeholder="Search" value={text} onChange={onChange} />
+            <Form style={{width: "100%"}} layout="inline" className="form" onSubmit={onSubmit}>
+                <Form.Item style={{width: "80%"}}>
+                    <Input style={{width: "100%"}} placeholder="Search" value={text} onChange={onChange} />
                 </Form.Item>
+                
                 <Form.Item>
                     <Button type="primary" shape="circle" icon="search" onClick={onSubmit} />
                 </Form.Item>

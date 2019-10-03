@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 
 export interface CourseModel extends mongoose.Document {
     name: string;
-    nodes: [string];
+    nodes: mongoose.Types.ObjectId[];
 }
 
 export interface TSCourseModel extends CourseModel {
@@ -23,7 +23,7 @@ export const CourseSchema: mongoose.Schema = new mongoose.Schema({
         required: true
     },
     nodes: [{
-        type: String,
+        type: [mongoose.Schema.Types.ObjectId],
         unique: false,
         required: true
     }],

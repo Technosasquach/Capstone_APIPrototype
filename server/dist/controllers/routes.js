@@ -14,8 +14,26 @@ routes.get("/api/", function (req, res) {
         message: "Scraping Database."
     });
 });
-routes.post("/CourseCreate/", function (req, res) {
+const index_1 = require("./../database/index");
+routes.post("/coursebuilder/", function (req, res) {
     const data = req.body;
+    new index_1.Course({
+        name: data.coursename,
+        nodes: data.nodes
+    }).save();
+    let node = 0;
+    data.data.forEach((element) => {
+        let order = 0;
+        element.forEach((items) => {
+            new index_1.Information({
+                text: items.content,
+                image: items.imageData,
+                nodeId: data.nodes[node],
+                order: order++,
+            }).save();
+        });
+        node++;
+    });
     res.end();
 });
 routes.post("/graph/", function (req, res) {

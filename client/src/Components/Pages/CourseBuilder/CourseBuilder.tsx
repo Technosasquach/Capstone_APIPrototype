@@ -12,13 +12,23 @@ import {card, content, structure, selected, quiz} from './Types'
 
 const CourseBuilderPage = (props: any) => {
   const [Parent, setParent] = useState({} as card);
-  const [Structure, setStructure] = useState({index: ([] as number[]), treeIndex: ([] as string[]), cards: ([] as card[])} as structure);
   const [Children, setChildren] = useState([] as string[]);
+  const [Loading, fetchedData] = useRequest({query:  "query{node(id:\"" + props.match.params.id + "\"){id name children { id name }}}"}, [props.match.params.id]);
+
+  const [Structure, setStructure] = useState({index: ([] as number[]), treeIndex: ([] as string[]), cards: ([] as card[])} as structure);
   const [Content, setContent] = useState([[{key: 0, content: "", removeable: false, imageData: ""}]] as content[][]);
   const [, ] = useState([] as quiz[]);
+
   const [Selected, setSelected] = useState({index: 0, type: 0} as selected);
-  
-  const [Loading, fetchedData] = useRequest({query:  "query{node(id:\"" + props.match.params.id + "\"){id name children { id name }}}"}, [props.match.params.id]);
+  const [Name, setName] = useState(undefined as any);
+
+  useEffect(() => {
+    if(Selected.index == 0) {
+      setName(Parent.name);
+    } else {
+      setName(Structure.cards[Selected.index-1].name);
+    }
+  }, [Selected]);
 
   useEffect(() => {
     if(!Loading && fetchedData) {
@@ -29,17 +39,18 @@ const CourseBuilderPage = (props: any) => {
       }
       setParent({id: parsed.id, name: parsed.name});
       setChildren(parsed.children);
+      setName(parsed.name);
     }
   }, [fetchedData]);
 
-  useEffect(() => {
-    Content.forEach(item => {
-      console.log(...item);
-    })
-  }, [Content])
+  // useEffect(() => {
+  //   Content.forEach(item => {
+  //     console.log(...item);
+  //   })
+  // }, [Content])
 
   return (
-    <Loader loading={false}>
+    <Loader loading={Loading}>
         <div className="coursepage">
             <div className="stuctureregion">
               <CourseStructure 
@@ -58,7 +69,7 @@ const CourseBuilderPage = (props: any) => {
                 Selected={Selected.index}/>
                   :
                 <PageBuilder 
-                nodeName={Parent.name} 
+                nodeName={Name} 
                 Content={Content} 
                 setContent={setContent} 
                 Selected={Selected.index} />
