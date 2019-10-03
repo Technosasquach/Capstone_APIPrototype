@@ -83,7 +83,7 @@ export default class LearningPage extends React.Component<iProps, iState> {
         })
     }).then(
             () => this.state.myInfoNode
-                ? this.loadCommentData(this.state.myInfoNode[0].id)
+                ? this.loadCommentData(this.props.location.state.nodeID)
                 : console.log("No InfoNode to display")
         );
     }
@@ -138,7 +138,7 @@ export default class LearningPage extends React.Component<iProps, iState> {
                             ?
                             <div style={{ overflowWrap: 'break-word' }}>
                                 <div className="right">
-                                    {this.state.myInfoNode && <MakePost infoNodeId={this.state.myInfoNode[0].id} triggerUpdate={this.loadCommentData} />}
+                                    {this.state.myInfoNode && <MakePost infoNodeId={this.props.location.state.nodeID} triggerUpdate={this.loadCommentData} />}
                                 </div>
                                 {this.state.myNode && <Title level={2}>{this.state.myNode.name}</Title>}
                                 <div>
