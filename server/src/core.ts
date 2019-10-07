@@ -45,8 +45,11 @@ app.use(compression());
 // URL/URI and HTTP content decoding and parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 // Cookie content decoding and parsing
-app.use(cookieParser());
+import { AuthenticationConfig } from "./config/autentication.config";
+app.use(cookieParser(AuthenticationConfig.cookieSecret));
+
 // Mounts the session store with an auto loader into MongooseDB
 // const MongoStore = require("connect-mongo")(session);
 // Allows the session storage to be put into mongoose

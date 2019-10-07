@@ -87,9 +87,13 @@ export class AuthenticationController {
      */
     public static authenticateUsernamePassword(username: string, password: string, callback: Function) {
         // Check if username or password is authentic to the database
-        User.findOne({ username, password: this.cryptoPassword(password)}, (err: any, res: any) => {
+        User.findOne({ username }, (err: any, res: UserModel) => {
             if(err) console.log(err);
-            if(res) callback(true, res.data); else callback(false, res.data);
+            // Check that the password is in fact fine
+            if(res) {
+                if(AuthenticationController.cryptoComparePassword(password, res.password)) { callback(true, res); }
+                else { callback(false); }
+            } else { callback(false); }
         })
     }
 
@@ -135,7 +139,11 @@ export class AuthenticationController {
      * @memberof AuthenticationController
      */
     public static cryptoPassword(password: string): string {
-        return bcrypt.hashSync(password, AuthenticationConfig.saltIterations);
+        return bcrypt.hashSync(password, AuthenticationConfig.salt);
+    }
+
+    public static cryptoComparePassword(password: string, hash: string): boolean {
+        return bcrypt.compareSync(password, hash);
     }
 
     /**
