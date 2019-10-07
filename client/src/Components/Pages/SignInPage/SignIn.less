@@ -9,12 +9,16 @@
     justify-content: center;
     align-items: center;
 
+    background: rgb(2,0,36);
+    background: linear-gradient(225deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+
     .SignIn {
+
         border-radius: 20px;
-        border: solid 1px @colour-light;
         -webkit-box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
         -moz-box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
         box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
+        background-color: white;
 
         display: flex;
         align-items: stretch;
@@ -40,6 +44,10 @@
 
             input {
                 margin-bottom: 8px !important;
+            }
+
+            .errorMsg {
+                color: #AA0404;
             }
         }
     }

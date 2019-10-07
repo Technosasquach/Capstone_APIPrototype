@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import * as fs from "fs";
 import * as path from "path";
 import { AuthenticationController } from "./authentication";
@@ -10,7 +10,7 @@ routes.post("/", (req: Request, res: Response) => {
 });
 
 import {scrape} from './../controllers/scraper';
-routes.get("/api/", function(req: Request, res: Response) {
+routes.get("/api/", authenticateConnection, function(req: Request, res: Response) {
     console.log("Test");
     //scrape.scrapeWholeAPI();
     res.json({
@@ -51,8 +51,9 @@ routes.post("/coursebuilder/", function(req: Request, res: Response) {
 
 
 routes.post("/auth/verifyUser/", function(req: Request, res: Response){
-    const username = req.body.username || "";
-    const password = req.body.password || "";
+    const username = req.body["username"] || "";
+    const password = req.body["password"] || "";
+    console.log("[Routes:Auth] Req: " + JSON.stringify(req.body));
     console.log("[Routes:Auth] VerifyUser | Username: " + username + ", Password: " + password);
     AuthenticationController.authenticateUsernamePassword(username, password, (isValid: boolean, user: UserModel) => {
         console.log("[Routes:Auth] isValid: " + isValid + ", user: " + user || "");
@@ -61,7 +62,7 @@ routes.post("/auth/verifyUser/", function(req: Request, res: Response){
             const token = AuthenticationController.generateJWT(user.username, user.accessLevel);
             const auth = AuthenticationController.authenticateJWT(token);
             // Set all JWT cookies
-            res.cookie("jwt", token, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) , httpOnly: true, signed: true })
+            res.cookie("jwt", token, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30), signed: true })
             res.cookie("username", user.username, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
             res.cookie("accessLevel", user.accessLevel, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
             // Return success
@@ -74,7 +75,7 @@ routes.post("/auth/verifyUser/", function(req: Request, res: Response){
             })
         } else {
             // Wipe jwt cookie for user, just incase its malicious attempts
-            res.cookie("jwt", "", { httpOnly: true, signed: true })
+            res.cookie("jwt", "", { signed: true })
             res.cookie("username", "", { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
             res.cookie("accessLevel", "", { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
             // Return failure
@@ -101,7 +102,7 @@ routes.post("/auth/verifyToken/", function(req: Request, res: Response){
     if(auth.valid) {
         // Generate a new cookie for the user
         const token = AuthenticationController.generateJWT(auth.username, auth.accessLevel);
-        res.cookie("jwt", token, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) , httpOnly: true, signed: true })
+        res.cookie("jwt", token, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30), signed: true })
         res.cookie("username", auth.username, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
         res.cookie("accessLevel", auth.accessLevel, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
         res.json({
@@ -135,7 +136,7 @@ routes.post("/auth/users/create", function(req: Request, res: Response){
 });
 
 
-routes.post("/graph/", function(req: Request, res: Response) {
+routes.post("/graph/", authenticateConnection, function(req: Request, res: Response) {
     console.log("[Routes] API Triggered: MassiveGraphDefFile");
     fs.readFile(path.join(__dirname, "./../../../graph.json"), (err, buff: Buffer) => {
         res.json(JSON.parse(buff.toString())); // Rehydrate the JSON and send to client
@@ -143,3 +144,16 @@ routes.post("/graph/", function(req: Request, res: Response) {
 })
 
 export default routes;
+
+
+
+function authenticateConnection (req: Request, res: Response, next: NextFunction) {
+    const token = req.signedCookies["jwt"];
+    const auth = AuthenticationController.authenticateJWT(token);
+    if(auth.valid) {
+        next();
+    } else {
+        res.status(401).json({ status: 'Access Denied, Invalid JWT Token'});
+    }
+    
+}

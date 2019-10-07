@@ -43,8 +43,8 @@ app.set("port", process.env.PORT || 3000);
 // Static content delivery compression
 app.use(compression());
 // URL/URI and HTTP content decoding and parsing
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Cookie content decoding and parsing
 import { AuthenticationConfig } from "./config/autentication.config";

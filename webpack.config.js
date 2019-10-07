@@ -30,7 +30,7 @@ module.exports = {
         new webpack.LoaderOptionsPlugin({}),
         new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks 
         new HtmlWebpackPlugin({
-            title: "OSIPiPrototype",
+            title: "SynLERN",
             meta: {viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no'},
             template: path.join(__dirname, 'client/src/template.html'),
         }),
