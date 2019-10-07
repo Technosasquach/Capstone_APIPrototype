@@ -43,7 +43,7 @@ export const JWTPayloadStandard: JWTPayloadStandard = {
 }
 
 export interface JWTPayloadVerification extends JWTPayload { 
-    valid?: boolean
+    valid: boolean
 }
 
 /**
@@ -89,7 +89,7 @@ export class AuthenticationController {
         // Check if username or password is authentic to the database
         User.findOne({ username, password: this.cryptoPassword(password)}, (err: any, res: any) => {
             if(err) console.log(err);
-            if(res) callback(true); else callback(false);
+            if(res) callback(true, res.data); else callback(false, res.data);
         })
     }
 
@@ -157,6 +157,10 @@ export class AuthenticationController {
         user.password = this.cryptoPassword(password);
         user.accessLevel = authLevel;
         user.save();
+    }
+
+    public static DaysFromNowInMilliseconds(days: number): number {
+        return Date.now() + days * 24 * 60 * 60 * 1000;
     }
 
 }

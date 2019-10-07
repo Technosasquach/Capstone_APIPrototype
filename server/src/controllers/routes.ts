@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import * as fs from "fs";
 import * as path from "path";
+import { AuthenticationController } from "./authentication";
+import { UserModel } from "./../database"
 const routes = Router();
 
 routes.post("/", (req: Request, res: Response) => {
@@ -45,6 +47,66 @@ routes.post("/coursebuilder/", function(req: Request, res: Response) {
 
     res.end("" + temp._id);
 })
+
+
+routes.post("/auth/verifyUser/", function(req: Request, res: Response){
+    const username = req.body.username;
+    const password = req.body.password;
+    AuthenticationController.authenticateUsernamePassword(username, password, (isValid: boolean, user: UserModel) => {
+        if(isValid) {
+            // Return with a JWT token, set cookies too
+            const token = AuthenticationController.generateJWT(user.username, user.accessLevel);
+            const auth = AuthenticationController.authenticateJWT(token);
+            res.cookie("jwt", token, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) , httpOnly: true })
+            res.cookie("username", user.username, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
+            res.cookie("accessLevel", user.accessLevel, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
+            res.json({
+                isValid: true,
+                status: "Success",
+                token,
+                tokenInformation: auth,
+                time: Date.now()
+            })
+        } else {
+            // Return failure
+            res.json({
+                isValid: false,
+                status: "Failure",
+                time: Date.now()
+            })
+        }
+    })
+});
+
+routes.post("/auth/verifyToken/", function(req: Request, res: Response){
+    const token = req.cookies["jwt"];
+    const auth = AuthenticationController.authenticateJWT(token);
+    if(auth.valid) {
+        // Generate a new cookie for the user
+        const token = AuthenticationController.generateJWT(auth.username, auth.accessLevel);
+        res.cookie("jwt", token, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) , httpOnly: true })
+        res.cookie("username", auth.username, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
+        res.cookie("accessLevel", auth.accessLevel, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
+        res.json({
+            isValid: true,
+            status: "Success",
+            token,
+            tokenInformation: auth,
+            time: Date.now()
+        })
+    } else {
+        // Wipe jwt cookie for user, just incase its malicious attempts
+        res.cookie("jwt", "", { httpOnly: true })
+        res.cookie("username", "", { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
+        res.cookie("accessLevel", "", { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
+        res.json({
+            isValid: false,
+            status: "Failure",
+            time: Date.now()
+        })
+    }
+});
+
 
 routes.post("/graph/", function(req: Request, res: Response) {
     console.log("[Routes] API Triggered: MassiveGraphDefFile");
