@@ -5,11 +5,13 @@ import SearchReducer from './searchReducer';
 import {
     SEARCH_NODES,
     SET_LOADING,
+    SEARCH_COURSES,
 } from '../types';
 
 const SearchState = (props: any) => {
     const initialState = {
         nodes: [],
+        courses: [],
         loading: false
     }
 
@@ -26,10 +28,27 @@ const SearchState = (props: any) => {
             .then((res) => res.data.data.everyNode.filter((name: any) => {
                 return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
             }));
-            
         //console.log("Sending search to reducer from SearchState");
         dispatch({
             type: SEARCH_NODES,
+            payload: res
+        });
+    }
+
+    const searchCourses = async (text: any) => {
+        setLoading();
+
+        let data: any = {};
+        data['query'] = "query{everyCourse{ id name nodes }}\n\n";
+        
+        const res = await axios.post("http://localhost:3000/graphql/", data)
+            .then((res) => res.data.data.everyCourse.filter((name: any) => {
+                return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
+            }));
+            
+        //console.log("Sending search to reducer from SearchState");
+        dispatch({
+            type: SEARCH_COURSES,
             payload: res
         });
     }
@@ -38,8 +57,10 @@ const SearchState = (props: any) => {
         //makes it available to components below this in index.tsx
         value={{
             nodes: state.nodes,
+            courses: state.courses,
             loading: state.loading,
             searchNodes,
+            searchCourses,
         }}
     >
         {props.children}

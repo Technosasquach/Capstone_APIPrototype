@@ -1,6 +1,7 @@
 import {
     SEARCH_NODES,
     SET_LOADING,
+    SEARCH_COURSES,
     // CLEAR_USERS,
     // GET_USER,
     // GET_REPOS
@@ -9,15 +10,20 @@ import {
 export default (state : any, action : any) => {
     switch(action.type){
         case SEARCH_NODES:
-        return{
-            ...state,
-            nodes: action.payload,
-            loading: false
-        }
+            return{
+                ...state,
+                nodes: action.payload,
+            }
         case SET_LOADING:
             return{
                 ...state,
                 loading: true
+            }
+        case SEARCH_COURSES:
+            return{
+                ...state,
+                courses: action.payload,
+                loading: false
             }
         // case CLEAR_USERS:
         //     return{

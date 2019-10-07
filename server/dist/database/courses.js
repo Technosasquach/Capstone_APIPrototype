@@ -13,9 +13,8 @@ exports.CourseSchema = new mongoose.Schema({
         unique: false,
         required: true
     },
-    pages: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Pages',
+    nodes: [{
+            type: [mongoose.Schema.Types.ObjectId],
             unique: false,
             required: true
         }],

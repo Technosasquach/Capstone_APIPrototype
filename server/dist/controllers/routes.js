@@ -14,32 +14,33 @@ routes.get("/api/", function (req, res) {
         message: "Scraping Database."
     });
 });
-const courses_1 = require("./../database/courses");
-const pages_1 = require("./../database/pages");
-routes.post("/CourseCreate/", function (req, res) {
+const index_1 = require("./../database/index");
+routes.post("/coursebuilder/", function (req, res) {
     const data = req.body;
-    let pages = [];
-    console.log(data);
-    for (let i = 0; i < data.amount; i++) {
-        let temp = data.data["" + i];
-        let image = temp['image'];
-        delete temp['image'];
-        pages.push(new pages_1.Page({
-            name: data.data["" + i]['title'],
-            content: JSON.stringify(temp)
-        }));
-        if (image) {
-            pages[i].image = image;
-        }
-    }
-    pages.forEach(element => {
-        element.save();
-    });
-    new courses_1.Course({
+    const temp = new index_1.Course({
         name: data.coursename,
-        pages: pages,
-    }).save();
-    res.end();
+        nodes: data.nodes
+    });
+    temp.save();
+    try {
+        let node = 0;
+        data.data.forEach((element) => {
+            let order = 0;
+            element.forEach((items) => {
+                new index_1.Information({
+                    text: items.content,
+                    image: items.imageData,
+                    nodeId: data.nodes[node],
+                    order: order++,
+                }).save();
+            });
+            node++;
+        });
+    }
+    catch (e) {
+        console.log(e);
+    }
+    res.end("" + temp._id);
 });
 routes.post("/graph/", function (req, res) {
     console.log("[Routes] API Triggered: MassiveGraphDefFile");

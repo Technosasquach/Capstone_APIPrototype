@@ -8,7 +8,9 @@ export const InformationType = new GraphQLObjectType({
         createdAt: { type: new GraphQLNonNull(GraphQLString) },
         related: { type: new GraphQLNonNull(new GraphQLList(GraphQLID)) },
         text: { type: new GraphQLNonNull(GraphQLString) },
-        nodeId: {type: GraphQLString }
+        nodeId: {type: GraphQLString },
+        order: {type: GraphQLInt},
+        image: {type: GraphQLString}
     })
 });
 
@@ -27,10 +29,10 @@ export const InformationQueries = {
         }
     },
     informationByNodeId: {
-        type: InformationType,
+        type: new GraphQLList(InformationType),
         args: { nodeId: { type: GraphQLString }},
         resolve(parent: any, args: any) {
-            return Information.findOne({nodeId: args.nodeId});
+            return Information.find({nodeId: args.nodeId});
         }
     }
 };

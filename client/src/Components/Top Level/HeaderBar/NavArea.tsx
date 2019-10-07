@@ -9,8 +9,7 @@ export default class NavArea extends React.Component<any, any> {
         return (
             <div className="navarea">
                 <Button type="primary" size="large" href="/">Home</Button>
-                <Button type="primary" size="large" href="/">Home</Button>
-                <Button type="primary" size="large" href="/">Home</Button>
+                <Button type="primary" size="large" href="/">Courses</Button>
             </div>
         );
     }

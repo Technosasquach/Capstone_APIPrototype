@@ -1,34 +1,12 @@
 import * as mongoose from "mongoose";
 
-/**
- * EUserAuthLevel
- * 
- * Enumerator is built to contain the 3 levels of access that a user can have:
- * USER = A normal user,
- * OPERATOR = Someone who can edit courses and content on demand, may be removed in the future
- * ADMIN = Can do all of the above, but also can see other users
- * 
- * @export
- * @enum {number}
- */
-export enum EUserAuthLevel {
-    USER = "USER",
-    OPERATOR = "OPERATOR",
-    ADMIN = "ADMIN"
-}
-
-/**
- * IUserModel
- *
- * @export
- * @interface IUserModel
- * @extends {Document}
- */
-export interface IUserModel extends mongoose.Document {
-    createdAt: Date;
+export interface UserModel extends mongoose.Document {
     username: string;
     password: string;
-    accessLevel: EUserAuthLevel
+    coursesTaken: string[];
+    coursesComplete: string[];
+    history: string[];
+    createdAt: Date;
 }
 
 export const UserSchema: mongoose.Schema = new mongoose.Schema({
@@ -39,14 +17,30 @@ export const UserSchema: mongoose.Schema = new mongoose.Schema({
         default: Date.now
     },
     username: {
-        type: String
+        type: String,
+        unique: true,
+        required: true
     },
     password: {
-        type: String
+        type: String,
+        unique: false,
+        required: true
     },
-    accessLevel: {
-        type: String
-    }
+    coursesTaken: [{
+        type: String,
+        unique: false,
+        required: false
+    }],
+    coursesComplete: [{
+        type: String,
+        unique: false,
+        required: false
+    }],
+    history: [{
+        type: String,
+        unique: false,
+        required: false
+    }]
 });
 
-export const User: mongoose.Model<IUserModel> = mongoose.model<IUserModel>("User", UserSchema);
+export const Course: mongoose.Model<UserModel> = mongoose.model<UserModel>("Courses", UserSchema);

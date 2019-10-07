@@ -15,10 +15,10 @@ import CourseBuilder from "./Components/Pages/CourseBuilder/CourseBuilder";
 import HomePage from './Components/Pages/HomePage/HomePage';
 import SearchResultPage from "./Components/Pages/Search/SearchResult";
 
+import CourseDisplayPage from "./Components/Pages/CourseDisplayPage/CourseDisplayPage";
+
 import SearchState from './Context/Search/SearchState'
 import AuthProvider from "./Components/Utility/AuthProvider"
-
-import test from './Components/Pages/CourseBuilder/PageBuilder/PageBuilder'
 
 export default class Root extends React.Component<any, any> {
     constructor(props: any) {
@@ -52,10 +52,10 @@ export default class Root extends React.Component<any, any> {
                                 <SideBar sidestate={this.state.sidestate} />
                                 <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                                     <Switch>
-                                        <Route path="/test" component={test} />
                                         <Route path="/searchresults" component={SearchResultPage} />
                                         <Route path="/learning" component={LearningPage} />
                                         <Route path="/learning/:nodeID" component={LearningPage} />
+                                        <Route path="/course/:id" component={CourseDisplayPage} />
                                         <Route path="/exam" component={ExamPage} />
                                         <Route path="/account" component={AccountPage} />
                                         <Route path="/node/:id/builder" component={CourseBuilder} />

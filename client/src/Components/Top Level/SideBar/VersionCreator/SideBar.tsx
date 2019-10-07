@@ -44,7 +44,7 @@ export default class SideBar extends React.Component<any, any> {
                     <SubMenu key="sub2" title={
                         <span>
                         <Icon type="unordered-list" />
-                        <span>Directory</span>
+                        <span>Courses</span>
                         </span>
                     }>
                     <Menu.Item key="5">Option 5</Menu.Item>
@@ -53,7 +53,7 @@ export default class SideBar extends React.Component<any, any> {
                     <SubMenu key="sub4" title={
                         <span>
                         <Icon type="experiment" />
-                        <span>Exam</span>
+                        <span>Quizzes</span>
                         </span>
                     }>
                     <Menu.Item key="9">Option 9</Menu.Item>

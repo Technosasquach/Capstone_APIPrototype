@@ -13,6 +13,8 @@ export interface IInformationModel extends mongoose.Document {
     text: string;
     keywords: string[];
     nodeId: mongoose.Schema.Types.ObjectId;
+    order: number;
+    image: Buffer;
 }
 
 export const InformationSchema: mongoose.Schema = new mongoose.Schema({
@@ -25,7 +27,7 @@ export const InformationSchema: mongoose.Schema = new mongoose.Schema({
     related: [{
         type: [mongoose.Schema.Types.ObjectId],
         unique: false,
-        required: true
+        required: false
     }],
     text: {
         type: String,
@@ -39,8 +41,19 @@ export const InformationSchema: mongoose.Schema = new mongoose.Schema({
     },
     nodeId: {
         type: String,
-        unique: true,
+        unique: false,
         required: true
+    },
+    order: {
+        type: Number,
+        unique: false,
+        required: true
+    },
+    image: {
+        type: String,
+        unique: false,
+        required: false,
+        index: false
     }
 });
 

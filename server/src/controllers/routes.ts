@@ -16,34 +16,34 @@ routes.get("/api/", function(req: Request, res: Response) {
     });
 });
 
-import {Course} from './../database/courses'
-import {Page} from './../database/pages'
-routes.post("/CourseCreate/", function(req: Request, res: Response) {
+import {Course, Information} from './../database/index'
+routes.post("/coursebuilder/", function(req: Request, res: Response) {
     const data = req.body;
-    let pages = [];
-    console.log(data);
-    for(let i = 0; i < data.amount; i++) {
-        let temp = data.data["" + i];
-        let image = temp['image'];
-        delete temp['image'];
-        pages.push(new Page({
-            name: data.data["" + i]['title'],
-            content: JSON.stringify(temp)
-        }));
-        if(image) {
-            pages[i].image = image;
-        }
-    }
-    pages.forEach(element => {
-        element.save();
-    });
-    
-    new Course({
+    const temp = new Course({
         name: data.coursename,
-        pages: pages,
-    }).save();
+        nodes: data.nodes
+    });
+    temp.save();
+    try {
+        let node = 0;
+        data.data.forEach((element: any) => {
+            let order = 0;
+            element.forEach((items: any) => {
+                new Information({
+                    text: items.content,
+                    image: items.imageData,
+                    nodeId: data.nodes[node],
+                    order: order++,
+                }).save();
+            })
+            node++;
+        });
+    } catch (e) {
+        console.log(e);
+    }
 
-    res.end();
+
+    res.end("" + temp._id);
 })
 
 routes.post("/graph/", function(req: Request, res: Response) {

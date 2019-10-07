@@ -19,6 +19,7 @@ const SearchBar = (props: any) => {
         } else {
             //passes the text up to the app level
             searchContext.searchNodes(text);
+            searchContext.searchCourses(text);
             setText('');
             props.history.push('/searchresults');
         }
@@ -30,10 +31,8 @@ const SearchBar = (props: any) => {
 
     return (
         <div className="searcharea">
-            <Form layout="inline" className="form" onSubmit={onSubmit}>
-                <Form.Item>
-                    <Input placeholder="Search" value={text} onChange={onChange} />
-                </Form.Item>
+            <Form style={{width: "100%"}} layout="inline" className="form" onSubmit={onSubmit}>
+            <Input style={{width: "80%"}} placeholder="Search" value={text} onChange={onChange} />
                 <Form.Item>
                     <Button type="primary" shape="circle" icon="search" onClick={onSubmit} />
                 </Form.Item>
