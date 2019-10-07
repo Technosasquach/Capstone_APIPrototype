@@ -11,7 +11,7 @@ export default class AuthProvider extends React.Component<any, { isAuthorized: b
         super(props);
 
         this.state = {
-            isAuthorized: false,
+            isAuthorized: true,
             errorMsg: ""
         }
 
