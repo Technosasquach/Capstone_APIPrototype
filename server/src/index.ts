@@ -4,6 +4,9 @@ import { scrape } from "./controllers/scraper";
 import { NodalMemory } from "./controllers/nodal";
 import { SystemSearch } from "./controllers/search";
 import { KeyWordEngine } from "./controllers/keywords";
+import { AuthenticationController, JWTPayload, JWTPayloadStandard } from "./controllers/authentication";
+import { EUserAuthLevel } from "./database/users";
+import * as jwt from "jsonwebtoken";
 
 // Start Express server.
 // ----------------------------------------------------------------------------
@@ -22,6 +25,12 @@ Server.listen(3000, () => {
 
     // Generates searchable set
     // 
+
+    // const token = AuthenticationController.generateJWT("test", EUserAuthLevel.ADMIN);
+    // console.log("JWT TOKEN: " + token)
+    // console.log("AUTH JWT TOKEN: " + JSON.stringify(AuthenticationController.authenticateJWT(token)));
+
+    // console.log("PASSWORD CRYPTO: password: helloWorld -> crypto: " + AuthenticationController.cryptoPassword("helloWorld"));
 
     // console.log("[Debug] Outputting all mounted routes");
     // App._router.stack.forEach(print.bind(undefined, []));

@@ -2,7 +2,7 @@
 'use strict';
 
 module.exports = {
-    "recurseDepth": 10,
+    "recurseDepth": 20,
     "source": {
         "includePattern": ".+\\.js(doc|x)?$",
         "excludePattern": ".+\\.(test|spec).ts",
