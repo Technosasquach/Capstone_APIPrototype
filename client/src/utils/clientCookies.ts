@@ -1,5 +1,6 @@
-export default {
-    getCookie(cname: String): string {
+export default class CookieHandler {
+
+    public static getCookie(cname: String): string {
         const name = cname + "=";
         const decodedCookie = decodeURIComponent(document.cookie);
         const ca = decodedCookie.split(";");
@@ -13,9 +14,9 @@ export default {
             }
         }
         return "";
-    },
+    }
 
-    setCookie(cookieName: string, cookieValue: string, nDays: number) {
+    public static setCookie(cookieName: string, cookieValue: string, nDays: number) {
         const today = new Date();
         const expire = new Date();
         if (nDays == undefined || nDays == 0) nDays = 1;
