@@ -1,7 +1,7 @@
 
 import * as jwt from "jsonwebtoken";
 import { AuthenticationConfig } from "./../config/autentication.config";
-import { EUserAuthLevel, IUserModel, UserSchema, User } from "./../database/"
+import { EUserAuthLevel, UserModel, UserSchema, User } from "./../database/"
 import * as bcrypt from "bcrypt"
 
 /**
@@ -65,6 +65,8 @@ export class AuthenticationController {
      * @memberof AuthenticationController
      */
     public static authenticateJWT(token: string, authKey = AuthenticationConfig.authKey): JWTPayloadVerification {
+        // The jwt.verify function exports the JSON of the payload, or an error
+        // Using try and catch for the error, then populating the JSON structure with a valid clause
         try {
             return { ...jwt.verify(token, authKey) as JWTPayloadVerification, valid: true };
         } catch {

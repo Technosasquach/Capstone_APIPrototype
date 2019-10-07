@@ -1,5 +1,11 @@
 import * as mongoose from "mongoose";
 
+export enum EUserAuthLevel {
+    USER = "USER",
+    OPERATOR = "OPERATOR",
+    ADMIN = "ADMIN"
+}
+
 export interface UserModel extends mongoose.Document {
     username: string;
     password: string;
@@ -7,6 +13,7 @@ export interface UserModel extends mongoose.Document {
     coursesComplete: string[];
     history: string[];
     createdAt: Date;
+    accessLevel: EUserAuthLevel
 }
 
 export const UserSchema: mongoose.Schema = new mongoose.Schema({
@@ -22,6 +29,11 @@ export const UserSchema: mongoose.Schema = new mongoose.Schema({
         required: true
     },
     password: {
+        type: String,
+        unique: false,
+        required: true
+    },
+    accessLevel: {
         type: String,
         unique: false,
         required: true
@@ -43,4 +55,4 @@ export const UserSchema: mongoose.Schema = new mongoose.Schema({
     }]
 });
 
-export const Course: mongoose.Model<UserModel> = mongoose.model<UserModel>("Courses", UserSchema);
+export const User: mongoose.Model<UserModel> = mongoose.model<UserModel>("User", UserSchema);
