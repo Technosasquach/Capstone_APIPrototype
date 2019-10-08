@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 import { Icon, Button, Upload } from 'antd';
 import './InformationField.less';
 
-import { convertToRaw, EditorState, RichUtils, Editor, DraftHandleValue } from 'draft-js';
-import Buttonr from './button';
-import BlockStyleToolBar, { getBlockStyle } from './BlockStyles/BlockStyleToolBar';
+import { convertToRaw, EditorState } from 'draft-js';
+
+import { Editor } from 'react-draft-wysiwyg';
+import './../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 let updater = false;
 
@@ -16,16 +17,6 @@ const InformationField = (props: any) => {
     const onChange = (editorState: any) => {
         setEditorState(editorState);
         setData(convertToRaw(editorState.getCurrentContent()).blocks);
-    }
-
-    const handleKeyCommand = (command: any, editorState: any) => {
-        let newState: EditorState | null;
-        newState = RichUtils.handleKeyCommand(editorState, command);
-        if (newState) {
-            onChange(newState);
-            return "handled" as DraftHandleValue;
-        }
-        return "not-handled" as DraftHandleValue;
     }
 
     const uploadButton = (
@@ -65,37 +56,12 @@ const InformationField = (props: any) => {
         }
     }
 
-
-    const setStyle = (input: any) => {
-        const newState = RichUtils.toggleInlineStyle(editorState, input);
-        if (newState) {
-          onChange(newState);
-          return 'handled';
-        }
-        return 'not-handled';
-    }
-
-    const toggleBlockType = (blockType: any) => {
-        onChange(RichUtils.toggleBlockType(editorState, blockType));
-    };
-
     return (
         <div className="fieldContainer">
             <div id="editor">
-                <div style={{display: "flex"}}>
-                <BlockStyleToolBar
-                    editorState={editorState}
-                    onToggle={toggleBlockType}
-                />
-                <Buttonr clicker={setStyle} type="BOLD">B</Buttonr>
-                <Buttonr clicker={setStyle} type="ITALIC">I</Buttonr>
-                <Buttonr clicker={setStyle} type="UNDERLINE">U</Buttonr>
-                </div>
                 <Editor 
-                    blockStyleFn={getBlockStyle}
                     editorState={editorState}
-                    onChange={onChange}
-                    handleKeyCommand={handleKeyCommand}
+                    onEditorStateChange={onChange}
                 />
             </div>
             <div id='imagediv'>
