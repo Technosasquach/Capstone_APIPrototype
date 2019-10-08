@@ -75,7 +75,7 @@ const PageBuilderPage = (props: any) => {
   }
 
   const save = () => {
-
+    console.log(Information);
   }
 
   return (

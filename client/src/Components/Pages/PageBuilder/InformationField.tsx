@@ -3,7 +3,7 @@ import { Icon, Button, Upload } from 'antd';
 import './InformationField.less';
 
 import { convertToRaw, EditorState } from 'draft-js';
-
+import draftToMarkdown from './../../../../../node_modules/draftjs-to-markdown/lib/draftjs-to-markdown.js';
 import { Editor } from 'react-draft-wysiwyg';
 import './../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -16,7 +16,7 @@ const InformationField = (props: any) => {
 
     const onChange = (editorState: any) => {
         setEditorState(editorState);
-        setData(convertToRaw(editorState.getCurrentContent()).blocks);
+        setData(draftToMarkdown(convertToRaw(editorState.getCurrentContent())));
     }
 
     const uploadButton = (
