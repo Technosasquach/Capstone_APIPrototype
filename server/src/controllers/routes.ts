@@ -18,6 +18,11 @@ routes.get("/api/", authenticateConnection, function(req: Request, res: Response
     });
 });
 
+routes.get('/node/:id/builder/Draft.css/Draft.css', (req: Request, res: Response) => {
+    console.log("here");
+    res.sendFile(path.resolve(__dirname, "./../../node_modules/draft-js/dist/Draft.css"));
+});
+
 import {Course, Information} from './../database/index'
 import { AuthenticationConfig } from "src/config/autentication.config";
 routes.post("/coursebuilder/", function(req: Request, res: Response) {
@@ -129,6 +134,10 @@ routes.post("/auth/users/create", function(req: Request, res: Response){
     const username = req.body.username || "";
     const password = req.body.password || "";
     const accessLevel = req.body.accessLevel || "";
+
+    console.log(username);
+    console.log(req.body);
+
     AuthenticationController.createUser(username, password, accessLevel);
     res.json({
         status: "Did Accept new user"
@@ -144,7 +153,6 @@ routes.post("/graph/", authenticateConnection, function(req: Request, res: Respo
 })
 
 export default routes;
-
 
 
 function authenticateConnection (req: Request, res: Response, next: NextFunction) {

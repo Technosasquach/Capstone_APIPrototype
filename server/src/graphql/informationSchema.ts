@@ -31,7 +31,7 @@ export const InformationQueries = {
     informationByNodeId: {
         type: new GraphQLList(InformationType),
         args: { nodeId: { type: GraphQLString }},
-        resolve(parent: any, args: any) {
+        resolve(_parent: any, args: any) {
             return Information.find({nodeId: args.nodeId});
         }
     }

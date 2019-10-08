@@ -92,6 +92,7 @@ app.use("/", routes);
 import graphRoutes from "./controllers/graphql";
 app.use("/", graphRoutes);
 
+
 // The last route run
 import { Request, Response } from "express";
 app.get("/**/", (req: Request, res: Response) => {

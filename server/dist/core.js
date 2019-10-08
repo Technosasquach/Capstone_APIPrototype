@@ -38,10 +38,11 @@ app.set("port", process.env.PORT || 3000);
 // Static content delivery compression
 app.use(compression());
 // URL/URI and HTTP content decoding and parsing
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 // Cookie content decoding and parsing
-app.use(cookieParser());
+const autentication_config_1 = require("./config/autentication.config");
+app.use(cookieParser(autentication_config_1.AuthenticationConfig.cookieSecret));
 // Mounts the session store with an auto loader into MongooseDB
 // const MongoStore = require("connect-mongo")(session);
 // Allows the session storage to be put into mongoose

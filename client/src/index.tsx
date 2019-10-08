@@ -16,6 +16,7 @@ import HomePage from './Components/Pages/HomePage/HomePage';
 import SearchResultPage from "./Components/Pages/Search/SearchResult";
 
 import CourseDisplayPage from "./Components/Pages/CourseDisplayPage/CourseDisplayPage";
+import PageBuilder from "./Components/Pages/PageBuilder/PageBuilder";
 
 import SearchState from './Context/Search/SearchState'
 import AuthProvider from "./Components/Utility/AuthProvider"
@@ -58,7 +59,9 @@ export default class Root extends React.Component<any, any> {
                                         <Route path="/course/:id" component={CourseDisplayPage} />
                                         <Route path="/exam" component={ExamPage} />
                                         <Route path="/account" component={AccountPage} />
-                                        <Route path="/node/:id/builder" component={CourseBuilder} />
+                                        <Route path="/node/:id/coursebuilder" component={CourseBuilder} />
+                                        <Route path="/node/:id/builder/Draft.css" component={PageBuilder} />
+                                        <Route path="/node/:id/builder" component={PageBuilder} />
                                         <Route path="/node/:id" component={NodeDisplay} />
                                         <Route path="/node/" component={NodeDisplay} />
                                         <Route path="/" exact component={HomePage} />

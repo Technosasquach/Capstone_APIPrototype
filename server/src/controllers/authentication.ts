@@ -139,7 +139,7 @@ export class AuthenticationController {
      * @memberof AuthenticationController
      */
     public static cryptoPassword(password: string): string {
-        return bcrypt.hashSync(password, AuthenticationConfig.salt);
+        return bcrypt.hashSync(password, AuthenticationConfig.saltIterations);
     }
 
     public static cryptoComparePassword(password: string, hash: string): boolean {
@@ -164,6 +164,7 @@ export class AuthenticationController {
         user.username = username;
         user.password = this.cryptoPassword(password);
         user.accessLevel = authLevel;
+        console.log(user);
         user.save();
     }
 
