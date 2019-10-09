@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Icon, Button, Upload } from 'antd';
 import './InformationField.less';
 
-import { convertToRaw, EditorState } from 'draft-js';
+import { convertToRaw, EditorState, AtomicBlockUtils } from 'draft-js';
 import draftToMarkdown from './../../../../../node_modules/draftjs-to-markdown/lib/draftjs-to-markdown.js';
 import { Editor } from 'react-draft-wysiwyg';
 import './../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -16,8 +16,24 @@ const InformationField = (props: any) => {
 
     const onChange = (editorState: any) => {
         setEditorState(editorState);
+        console.log(convertToRaw(editorState.getCurrentContent()))
         setData(draftToMarkdown(convertToRaw(editorState.getCurrentContent())));
     }
+
+    const insertImage = (editorState: any, base64: any) => {
+        const contentState = editorState.getCurrentContent();
+        const contentStateWithEntity = contentState.createEntity(
+          'image',
+          'IMMUTABLE',
+          { src: base64 },
+        );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const newEditorState = EditorState.set(
+          editorState,
+          { currentContent: contentStateWithEntity },
+        );
+        return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+      };
 
     const uploadButton = (
         <div>
@@ -31,8 +47,12 @@ const InformationField = (props: any) => {
     }, []);
 
     useEffect(() => {
+        insertImage(editorState, Image);
+    }, [Image]);
+
+    useEffect(() => {
         update();
-    }, [Data, Image]);
+    }, [Data]);
     
     const beforeUpload = (file: any) => {
         var reader = new FileReader();
