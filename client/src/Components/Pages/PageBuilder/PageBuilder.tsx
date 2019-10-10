@@ -6,15 +6,20 @@ import axios from 'axios';
 
 import Loader from './../../Utility/Loader';
 
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 
-const draftjstomarkdown = require('./../../../../../node_modules/draftjs-to-markdown/lib/draftjs-to-markdown.js');
+//const draftjstomarkdown = require('./../../../../../node_modules/draftjs-to-markdown/lib/draftjs-to-markdown.js');
+//const draftmd = require('./../../../../../node_modules/draftjs-md-converter/dist/index.js');
+
+const draftandmark = require('./markdownDraftjs/index');
+
 
 const PageBuilderPage = (props: any) => {
   const [Information, setInformation] = useState(EditorState.createEmpty());
   const [Images, setImages] = useState([] as string[]);
   const [Name, setName] = useState("Loading Data");
   const [Loading, setLoading] = useState(false);
+  const [IDS, setIDS] = useState([] as {}[]);
 
   useEffect(() => {
     loadData();
@@ -26,23 +31,24 @@ const PageBuilderPage = (props: any) => {
     let data:any = {query:  "query{node(id: \"" + props.match.params.id + "\"){name}}"};
     axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
       setName(res.data.data.node.name);
-      setLoading(false);
     })
-    // data = {query:  "query{informationByNodeId(nodeId: \"" + props.match.params.id + "\"){text image order}}"};
-    // axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
-    //   return ([...res.data.data.informationByNodeId]);
-    // }).then((json: any) => {
-    //   const data: content[] = [];
-    //   for(let i = 0; i < json.length; i++) {
-    //     for(let j = 0; j < json.length; j++) {
-    //       if(json[j].order === i) {
-    //         data.push({key: i, content: json[j].text, imageData: json[j].image, removeable: (i === 0 ? false : true)} as content)
-    //       }
-    //     }
-    //   }
-    //   data.length > 0 ? setInformation(data) : setInformation([{key: 0, content: "", removeable: false, imageData: ""}] as content[]);
-    //   setLoading(false);
-    // });
+    data = {query:  "query{informationByNodeId(nodeId: \"" + props.match.params.id + "\"){data type id}}"};
+    axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
+      return ([...res.data.data.informationByNodeId]);
+    }).then((json: any) => {
+      const IDS = [] as any[];
+      json.forEach((element: any) => {
+        if(element.type === "text") {
+          setInformation(EditorState.createWithContent(convertFromRaw(draftandmark.markdownToDraft(element.data))));
+        } else {
+          const data = JSON.parse(element.data);
+          setImages([...data]);
+        }
+        IDS.push({id: element.id, type: element.type});
+      });
+      setIDS(IDS);
+      setLoading(false);
+    });
   }
 
   const updateContent = (data: any) => {
@@ -50,8 +56,22 @@ const PageBuilderPage = (props: any) => {
   }
 
   const save = () => {
-    console.log(draftjstomarkdown.default(convertToRaw(Information.getCurrentContent())));
-    console.log(Images);
+    if(!Loading) {
+      setLoading(true);
+      let temp: string = draftandmark.draftToMarkdown(convertToRaw(Information.getCurrentContent()));
+      let data = {text: temp, images: JSON.stringify(Images), ids: IDS, id: props.match.params.id};
+      axios.post("http://localhost:3000/pagebuilder/", data);
+  
+      const data2 = {query:  "query{informationByNodeId(nodeId: \"" + props.match.params.id + "\"){id type}}"};
+      axios.post("http://localhost:3000/graphql/", data2).then((res: any) => {
+        const temp: any[] = [];
+        res.data.data.informationByNodeId.forEach((element: any) => {
+          temp.push({id: element.id, type: element.type});
+        });
+        setIDS(temp);
+        setLoading(false);
+      })
+    }
   }
 
   return (
@@ -60,13 +80,12 @@ const PageBuilderPage = (props: any) => {
         <div className="title">
             <h1>{Name}</h1>
         </div>
-        {Information !== undefined && <InformationField 
-          content={Information}
-          images={Images}
-          update={updateContent}
-          updateImages={setImages}
-        />}
-        
+        <InformationField 
+          Information={Information}
+          Images={Images}
+          setInformation={updateContent}
+          setImages={setImages}
+        />
         <Button onClick={save} className="SaveButton"><Icon type="save"/>Save</Button>
       </div>
     </Loader>

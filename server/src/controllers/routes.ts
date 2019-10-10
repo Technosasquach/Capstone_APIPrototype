@@ -48,6 +48,82 @@ routes.post("/coursebuilder/", function(req: Request, res: Response) {
 
 
     res.end("" + temp._id);
+});
+
+interface idtype {
+    id: string;
+    type: string;
+}
+
+const checkType = (types: idtype[], type: string) => {
+    for(let i = 0; i < types.length; i++) {
+        if(types[i].type === type) {
+            return true;
+        }
+    }
+    return false;
+}
+
+const getType = (types: idtype[], type: string) => {
+    for(let i = 0; i < types.length; i++) {
+        if(types[i].type === type) {
+            return types[i].id;
+        }
+    }
+}
+
+const getIndex = (types: idtype[], type: string) => {
+    for(let i = 0; i < types.length; i++) {
+        if(types[i].type === type) {
+            return i;
+        }
+    }
+}
+
+routes.post("/pagebuilder/", authenticateConnection, function(req: Request, res: Response) {
+    const data = req.body;
+    if(data.auth.accessLevel === "ADMIN") {
+        if(data.text !== "" && data.text !== undefined) {
+            if(!checkType(data.ids, "text")) {
+                console.log("new");
+                new Information({
+                    nodeId: data.id,
+                    type: "text",
+                    data: data.text
+                }).save();
+            }
+        } else {
+            if(checkType(data.ids, "text")) {
+                Information.findByIdAndDelete(getType(data.ids, "text")).catch(res => console.log(res));
+                data.ids.splice(getIndex(data.ids, "text"), 1);
+            }
+        }
+        if(JSON.parse(data.images).length > 0 && data.images !== undefined) {
+            if(!checkType(data.ids, "images")) {
+                new Information({
+                    nodeId: data.id,
+                    type: "images",
+                    data: data.images
+                }).save();
+            }
+        } else {
+            if(checkType(data.ids, "images")) {
+                Information.findByIdAndDelete(getType(data.ids, "images")).catch(res => console.log(res));
+                data.ids.splice(getIndex(data.ids, "images"), 1);
+            }
+        }
+        data.ids.forEach((element: idtype) => {
+            console.log("update");
+            Information.findByIdAndUpdate(element.id, {
+                id: element.id,
+                type: element.type,
+                data: (element.type === "text" ? data.text : data.images)
+            }).catch(res => console.log(res));
+        });
+        res.end();
+    } else {
+        res.status(401).json({ status: 'Access Denied, Invalid Access'});
+    }
 })
 
 
@@ -155,9 +231,9 @@ function authenticateConnection (req: Request, res: Response, next: NextFunction
     const token = req.signedCookies["jwt"];
     const auth = AuthenticationController.authenticateJWT(token);
     if(auth.valid) {
+        req.body = {...req.body, auth: auth};
         next();
     } else {
         res.status(401).json({ status: 'Access Denied, Invalid JWT Token'});
     }
-    
 }

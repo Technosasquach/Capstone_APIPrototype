@@ -1,41 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Icon, Upload } from 'antd';
 import './InformationField.less';
 
-import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import './../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { Button } from 'antd/es/radio';
 
-let updating = false;
 
 const InformationField = (props: any) => {
-    const [Images, setImages] = useState([] as string[]);
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const onChange = (editorState: any) => {
-        setEditorState(editorState);
+        props.setInformation(editorState);
     }
-
-    useEffect(() => {
-        if(updating) {
-            updating = false;
-        } else {
-            onChange(props.content);
-            setImages(props.images);
-        }
-    }, [props.content, props.images]);
-
-    useEffect(() => {
-        updating = true;
-        props.update(editorState);
-    }, [editorState]);
     
-    useEffect(() => {
-        updating = true;
-        props.updateImages(Images);
-    }, [Images])
-
     const uploadButton = (
         <div>
             <Icon type='plus' />
@@ -46,33 +23,36 @@ const InformationField = (props: any) => {
     const beforeUpload = (file: any) => {
         var reader = new FileReader();
         reader.onload = (e: any) => {
-            setImages([...Images,e.target.result]);
+            props.setImages([...props.Images,e.target.result]);
         };
         reader.readAsDataURL(file);
         return false;
     }
 
     const deleteImage = (key: number) => {
-        const temp = [...Images];
+        const temp = [...props.Images];
         temp.splice(key, 1);
-        setImages(temp);
+        props.setImages(temp);
     }
 
     return (
         <div className="fieldContainer">
             <div id="editor">
                 <Editor 
-                    editorState={editorState}
+                    editorState={props.Information}
                     onEditorStateChange={onChange}
                     toolbar={{
-                        options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'history']
+                        options: ['inline', 'blockType', 'fontSize', 'list', 'history'],
+                        inline: {
+                            options: ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript']
+                        },
                     }}
                 />
             </div>
-            {Images.length > 0 && 
+            {props.Images.length > 0 && 
                 <div className="imagecontainer">
                     <div className="centerr">
-                        {Images.map((Image: any, key: number) => {
+                        {props.Images.map((Image: any, key: number) => {
                             return <div key={key} className="iamge"><img src={Image}/><Button onClick={deleteImage.bind(null, key)} className="delete">X</Button></div>
                         })} 
                     </div>

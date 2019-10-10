@@ -7,10 +7,9 @@ export const InformationType = new GraphQLObjectType({
         id: { type: GraphQLString },
         createdAt: { type: new GraphQLNonNull(GraphQLString) },
         related: { type: new GraphQLNonNull(new GraphQLList(GraphQLID)) },
-        text: { type: new GraphQLNonNull(GraphQLString) },
+        data: { type: new GraphQLNonNull(GraphQLString) },
         nodeId: {type: GraphQLString },
-        order: {type: GraphQLInt},
-        image: {type: GraphQLString}
+        type: {type: GraphQLString},
     })
 });
 
@@ -41,9 +40,8 @@ export const InformationMutations = {
     addInformation: {
         type: InformationType,
         args: { // dont have id in here, doesnt work from axios.
-            createdAt: { type: new GraphQLNonNull(GraphQLString) },
-            related: { type: new GraphQLNonNull(new GraphQLList(GraphQLID)) },
-            text: { type: new GraphQLNonNull(GraphQLString) }
+            data: { type: new GraphQLNonNull(GraphQLString) },
+            type: { type: new GraphQLNonNull(GraphQLString) }
         },
         resolve(parent: any, args: any) {
             const information = new Information(args);
@@ -54,9 +52,8 @@ export const InformationMutations = {
         type: InformationType,
         args: {
             id: { type: GraphQLString },
-            createdAt: { type: new GraphQLNonNull(GraphQLString) },
-            related: { type: new GraphQLNonNull(new GraphQLList(GraphQLID)) },
-            text: { type: new GraphQLNonNull(GraphQLString) }
+            data: { type: new GraphQLNonNull(GraphQLString) },
+            type: { type: new GraphQLNonNull(GraphQLString) }
         },
         resolve(parent: any, args: any) {
             return Information.findByIdAndUpdate(args.id, args);
@@ -72,7 +69,8 @@ export const InformationMutations = {
     addInformationNode: {
         type: InformationType,
         args: {
-            text: { type: new GraphQLNonNull(GraphQLString) },
+            data: { type: new GraphQLNonNull(GraphQLString) },
+            type: { type: new GraphQLNonNull(GraphQLString) },
             nodeId: { type: new GraphQLNonNull(GraphQLString) }
         },
         resolve(parent: any, args: any) {
