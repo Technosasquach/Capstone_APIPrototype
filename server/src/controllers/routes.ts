@@ -85,7 +85,6 @@ routes.post("/pagebuilder/", authenticateConnection, function(req: Request, res:
     if(data.auth.accessLevel === "ADMIN") {
         if(data.text !== "" && data.text !== undefined) {
             if(!checkType(data.ids, "text")) {
-                console.log("new");
                 new Information({
                     nodeId: data.id,
                     type: "text",

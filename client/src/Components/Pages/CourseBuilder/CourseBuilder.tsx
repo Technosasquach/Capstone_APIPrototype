@@ -8,15 +8,21 @@ import {useRequest} from './Hooks/Request';
 
 import "./CourseBuilder.less";
 
-import {card, content, structure, selected, quiz} from './Types'
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+const draftandmark = require('./PageBuilder/markdownDraftjs/index');
+
+import {card, structure, selected, quiz} from './Types'
 
 const CourseBuilderPage = (props: any) => {
   const [Parent, setParent] = useState({} as card);
   const [Children, setChildren] = useState([] as string[]);
   const [Loading, fetchedData] = useRequest({query:  "query{node(id:\"" + props.match.params.id + "\"){id name children { id name }}}"}, [props.match.params.id]);
+  const [LoadingPage, fetchedPageData] = useRequest({query:  "query{informationByNodeId(nodeId: \"" + props.match.params.id + "\"){data type id}}"}, [props.match.params.id]);
 
   const [Structure, setStructure] = useState({index: ([] as number[]), treeIndex: ([] as string[]), cards: ([] as card[])} as structure);
-  const [Content, setContent] = useState([[{key: 0, content: "", removeable: false, imageData: ""}]] as content[][]);
+  const [Content, setContent] = useState([EditorState.createEmpty()] as EditorState[]);
+  const [Images, setImages] = useState([[]] as string[][]);
+  const [IDS, setIDS] = useState([] as string[][]);
   const [, ] = useState([] as quiz[]);
 
   const [Selected, setSelected] = useState({index: 0, type: 0} as selected);
@@ -43,14 +49,43 @@ const CourseBuilderPage = (props: any) => {
     }
   }, [fetchedData]);
 
-  // useEffect(() => {
-  //   Content.forEach(item => {
-  //     console.log(...item);
-  //   })
-  // }, [Content])
+  useEffect(() => {
+    if(!LoadingPage && fetchedPageData) {
+      const ids = [] as any[];
+      fetchedPageData.data.informationByNodeId.forEach((element:any) => {
+        ids.push({id: element.id, type: element.type});
+        if(element.type === "text") {
+          setContent([EditorState.createWithContent(convertFromRaw(draftandmark.markdownToDraft(element.data)))])
+        } else {
+          const data = JSON.parse(element.data);
+          setImages([[...data]]);
+        }
+      });
+      setIDS([[...ids]]);
+    }
+  }, [fetchedPageData])
+
+  useEffect(() => {
+    Content.forEach(item => {
+      console.log(convertToRaw(item.getCurrentContent()));
+    })
+    console.log(Images, IDS);
+  }, [Content])
+
+  const setContentIndex = (data: any) => {
+    const temp = [...Content];
+    temp[Selected.index] = data;
+    setContent(temp);
+  }
+
+  const setImagesIndex = (data: any) => {
+    const temp = [...Images];
+    temp[Selected.index] = data;
+    setImages(temp);
+  }
 
   return (
-    <Loader loading={Loading}>
+    <Loader loading={Loading || LoadingPage}>
         <div className="coursepage">
             <div className="stuctureregion">
               <CourseStructure 
@@ -60,8 +95,13 @@ const CourseBuilderPage = (props: any) => {
               Children={Children} 
               Content={Content} 
               setContent={setContent} 
+              Images={Images}
+              setImages={setImages}
               Selected={Selected.index} 
-              setSelected={setSelected}/>
+              setSelected={setSelected}
+              IDS={IDS}
+              setIDS={setIDS}
+              />
             </div>
             <div className="selectregion">
               {Selected.type ?
@@ -70,8 +110,10 @@ const CourseBuilderPage = (props: any) => {
                   :
                 <PageBuilder 
                 nodeName={Name} 
-                Content={Content} 
-                setContent={setContent} 
+                Content={Content[Selected.index]} 
+                setContent={setContentIndex}
+                Images={Images[Selected.index]}
+                setImages={setImagesIndex} 
                 Selected={Selected.index} />
               }
 

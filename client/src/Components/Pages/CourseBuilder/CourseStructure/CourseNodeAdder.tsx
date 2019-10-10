@@ -4,7 +4,11 @@ import { Tree } from 'antd';
 
 const { TreeNode } = Tree;
 
-import { content, structure } from './../Types';
+import { structure } from './../Types';
+
+
+import { EditorState, convertFromRaw } from 'draft-js';
+const draftandmark = require('./../PageBuilder/markdownDraftjs/index');
 
 const CourseNodeAdder = (props: any) => {
   const [CheckedKeys, setCheckedKeys] = useState({checked: []} as any);
@@ -72,6 +76,35 @@ const CourseNodeAdder = (props: any) => {
     return diff[0];
 }
 
+  const loadData = (id: string) => {
+    let data = {query:  "query{informationByNodeId(nodeId: \"" + id + "\"){data type id}}"};
+    axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
+      return ([...res.data.data.informationByNodeId]);
+    }).then((json: any) => {
+      const IDS = [] as any[];
+      const tempContent = [...props.Content];
+      const tempImages = [...props.Images]
+      const tempIDS = [...props.IDS]
+      tempContent.push(EditorState.createEmpty());
+      tempImages.push([]);
+      tempIDS.push([]);
+
+      json.forEach((element: any) => {
+        if(element.type === "text") {
+          tempContent[tempContent.length-1] = (EditorState.createWithContent(convertFromRaw(draftandmark.markdownToDraft(element.data))));
+        } else {
+          const data = JSON.parse(element.data);
+          tempImages[tempImages.length-1] = ([...data]);
+        }
+        IDS.push({id: element.id, type: element.type});
+      });
+      tempIDS[tempIDS.length-1] = (IDS);
+      props.setContent(tempContent);
+      props.setImages(tempImages);
+      props.setIDS(tempIDS);
+    });
+  }
+
   const onCheck = (CheckedKeysNew: any, e: any) => {
     const change = changed(CheckedKeysNew.checked, CheckedKeys.checked);
     const structure = {cards: props.Structure.cards, index: props.Structure.index, treeIndex: props.Structure.treeIndex} as structure;
@@ -88,9 +121,7 @@ const CourseNodeAdder = (props: any) => {
           structure.treeIndex.push(change);
           props.setStructure(structure);
 
-          const temp = [...props.Content];
-          temp.push([{key: 0, content: "", removeable: false, imageData: ""}] as content[]);
-          props.setContent(temp);
+          loadData(element.props.nodeID);
         }
       });
     } else if (CheckedKeysNew.checked.length < CheckedKeys.checked.length) {
@@ -108,12 +139,12 @@ const CourseNodeAdder = (props: any) => {
       structure.index.splice(findIndex, 1);
       props.setStructure(structure);
 
+      if(props.Selected === remove + 1) {
+        props.setSelected({index: 0, type: 0});
+      }
       const temp2 = [...props.Content];
       temp2.splice(remove + 1, 1);
       props.setContent(temp2);
-      if(props.Selected === remove + 1) {
-        props.setSelected(0);
-      }
     }
   };
 

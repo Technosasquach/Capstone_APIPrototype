@@ -8,11 +8,7 @@ import Loader from './../../Utility/Loader';
 
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 
-//const draftjstomarkdown = require('./../../../../../node_modules/draftjs-to-markdown/lib/draftjs-to-markdown.js');
-//const draftmd = require('./../../../../../node_modules/draftjs-md-converter/dist/index.js');
-
 const draftandmark = require('./markdownDraftjs/index');
-
 
 const PageBuilderPage = (props: any) => {
   const [Information, setInformation] = useState(EditorState.createEmpty());

@@ -84,6 +84,10 @@ const CourseStructure = (props: any) => {
           Children={props.Children} 
           Content={props.Content}
           setContent={props.setContent}
+          Images={props.Images}
+          setImages={props.setImages}
+          IDS={props.IDS}
+          setIDS={props.setIDS}
           Selected={props.Selected} 
           setSelected={props.setSelected}/>
         </Modal>
