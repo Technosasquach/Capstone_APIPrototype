@@ -15,10 +15,6 @@ routes.get("/api/", authenticateConnection, function (req, res) {
         message: "Scraping Database."
     });
 });
-routes.get('/node/:id/builder/Draft.css/Draft.css', (req, res) => {
-    console.log("here");
-    res.sendFile(path.resolve(__dirname, "./../../node_modules/draft-js/dist/Draft.css"));
-});
 const index_1 = require("./../database/index");
 routes.post("/coursebuilder/", function (req, res) {
     const data = req.body;

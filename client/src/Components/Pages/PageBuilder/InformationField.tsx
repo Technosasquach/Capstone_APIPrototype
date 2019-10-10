@@ -1,39 +1,40 @@
 import React, {useState, useEffect} from 'react';
-import { Icon, Button, Upload } from 'antd';
+import { Icon, Upload } from 'antd';
 import './InformationField.less';
 
-import { convertToRaw, EditorState, AtomicBlockUtils } from 'draft-js';
-import draftToMarkdown from './../../../../../node_modules/draftjs-to-markdown/lib/draftjs-to-markdown.js';
+import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import './../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { Button } from 'antd/es/radio';
 
-let updater = false;
+let updating = false;
 
 const InformationField = (props: any) => {
-    const [Image, setImage] = useState(props.imageData);
-    const [Data, setData] = useState([] as any[]);
+    const [Images, setImages] = useState([] as string[]);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     const onChange = (editorState: any) => {
         setEditorState(editorState);
-        console.log(convertToRaw(editorState.getCurrentContent()))
-        setData(draftToMarkdown(convertToRaw(editorState.getCurrentContent())));
     }
 
-    const insertImage = (editorState: any, base64: any) => {
-        const contentState = editorState.getCurrentContent();
-        const contentStateWithEntity = contentState.createEntity(
-          'image',
-          'IMMUTABLE',
-          { src: base64 },
-        );
-        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-        const newEditorState = EditorState.set(
-          editorState,
-          { currentContent: contentStateWithEntity },
-        );
-        return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
-      };
+    useEffect(() => {
+        if(updating) {
+            updating = false;
+        } else {
+            onChange(props.content);
+            setImages(props.images);
+        }
+    }, [props.content, props.images]);
+
+    useEffect(() => {
+        updating = true;
+        props.update(editorState);
+    }, [editorState]);
+    
+    useEffect(() => {
+        updating = true;
+        props.updateImages(Images);
+    }, [Images])
 
     const uploadButton = (
         <div>
@@ -42,38 +43,19 @@ const InformationField = (props: any) => {
         </div>
     );
 
-    useEffect(() => {
-        updater = true;
-    }, []);
-
-    useEffect(() => {
-        insertImage(editorState, Image);
-    }, [Image]);
-
-    useEffect(() => {
-        update();
-    }, [Data]);
-    
     const beforeUpload = (file: any) => {
         var reader = new FileReader();
         reader.onload = (e: any) => {
-            setImage(e.target.result);
+            setImages([...Images,e.target.result]);
         };
         reader.readAsDataURL(file);
         return false;
     }
-    
 
-    const remover = () => {
-        props.remover(props.id);
-    }
-
-    const update = () => {
-        if(!updater) {
-            props.update({key: props.id, content: Data, removeable: props.removeable, imageData: Image});
-        } else {
-            updater = false;
-        }
+    const deleteImage = (key: number) => {
+        const temp = [...Images];
+        temp.splice(key, 1);
+        setImages(temp);
     }
 
     return (
@@ -82,14 +64,27 @@ const InformationField = (props: any) => {
                 <Editor 
                     editorState={editorState}
                     onEditorStateChange={onChange}
+                    toolbar={{
+                        options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'textAlign', 'history']
+                    }}
                 />
             </div>
-            <div id='imagediv'>
-                <Upload name="avatar" listType="picture-card" className="avatar-uploader imagediv" showUploadList={false} beforeUpload={beforeUpload}>
-                    {Image !== "" ? <img src={Image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                </Upload>
+            {Images.length > 0 && 
+                <div className="imagecontainer">
+                    <div className="centerr">
+                        {Images.map((Image: any, key: number) => {
+                            return <div key={key} className="iamge"><img src={Image}/><Button onClick={deleteImage.bind(null, key)} className="delete">X</Button></div>
+                        })} 
+                    </div>
+                </div>
+             }
+            <div id="imagecenter">
+                <div id='imagediv'>
+                    <Upload name="avatar" listType="picture-card" className="avatar-uploader" showUploadList={false} beforeUpload={beforeUpload}>
+                        {uploadButton}
+                    </Upload>
+                </div>
             </div>
-            {props.removeable && <Button onClick={remover}><Icon type="close"/></Button>}
         </div>
     )
 }

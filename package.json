@@ -84,6 +84,7 @@
     "cytoscape-dagre": "^2.2.2",
     "dagre": "^0.8.4",
     "draft-js": "^0.11.1",
+    "draftjs-md-converter": "^1.2.0",
     "draftjs-to-markdown": "^0.5.1",
     "elasticlunr": "^0.9.5",
     "errorhandler": "^1.5.0",

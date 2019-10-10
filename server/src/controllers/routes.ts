@@ -18,10 +18,6 @@ routes.get("/api/", authenticateConnection, function(req: Request, res: Response
     });
 });
 
-routes.get('/node/:id/builder/Draft.css/Draft.css', (req: Request, res: Response) => {
-    console.log("here");
-    res.sendFile(path.resolve(__dirname, "./../../node_modules/draft-js/dist/Draft.css"));
-});
 
 import {Course, Information} from './../database/index'
 import { AuthenticationConfig } from "src/config/autentication.config";
