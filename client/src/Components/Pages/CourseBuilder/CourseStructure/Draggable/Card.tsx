@@ -8,7 +8,6 @@ const style = {
     backgroundColor: 'white',
   }
 
-
   const quizstyle = {
     border: '1px solid grey',
     width: '90%',

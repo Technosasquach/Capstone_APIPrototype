@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { DndProvider } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import Draggable from './Draggable/DragContainer'
@@ -7,11 +7,20 @@ import CourseNodeAdder from "./CourseNodeAdder";
 import { withRouter } from 'react-router-dom'
 import axios from 'axios';
 
+import {StructureContext} from './../Context/StructureContext';
+import {ContentContext} from './../Context/ContentContext';
+
+const draftandmark = require('./../PageBuilder/markdownDraftjs/index.js');
+import {convertToRaw} from 'draft-js';
+
 import "./CourseStructure.less";
 
 const CourseStructure = (props: any) => {
   const [CourseName, setCourseName] = useState("");
   const [Visible, setVisible] = useState(false);
+
+  const structureContext = useContext(StructureContext);
+  const contentContext = useContext(ContentContext);
 
   const updateName = (e: any) => {
     setCourseName(e.target.value);
@@ -29,27 +38,29 @@ const CourseStructure = (props: any) => {
     setVisible(false);
   };
 
-  const extractData = (input: any) => {
-    const data = [] as any;
-    input.forEach((element: any) => {
-      data.push({content: element.content, imageData: element.imageData});
-    });
-    return data;
+  const extractData = (data: any) => {
+    return draftandmark.draftToMarkdown(convertToRaw(data.getCurrentContent()));
   }
 
   const submitCourse = () => {
     const query = {} as any;
-    const order = props.Structure.index;
-    let nodes = [props.Parent.id] as any;
-    let data = [extractData(props.Content[0])] as any;
-    for(let i = 0; i < props.Structure.cards.length; i++){
-      nodes.push(props.Structure.cards[order[i]].id);
-      data.push(extractData(props.Content[order[i]+1]));
+    const order = structureContext.Structure.index;
+    let nodes = [structureContext.Parent.id] as any;
+    let data = [extractData(contentContext.Content[0])] as any;
+    let images = [JSON.stringify(contentContext.Images[0])] as any;
+    let ids = [contentContext.IDS[0]];
+    for(let i = 0; i < structureContext.Structure.cards.length; i++){
+      nodes.push(structureContext.Structure.cards[order[i]].id);
+      data.push(extractData(contentContext.Content[order[i]+1]));
+      images.push(JSON.stringify(contentContext.Images[order[i]+1]));
+      ids.push(contentContext.IDS[order[i]+1]);
     }
-
     query.coursename = CourseName;
     query.nodes = nodes;
     query.data = data;
+    query.images = images;
+    query.ids = ids;
+    console.log(query);
     axios.post("http://localhost:3000/coursebuilder/", query).then(res => {
         props.history.push('/course/' + res.data);
     });
@@ -61,7 +72,7 @@ const CourseStructure = (props: any) => {
       <span style={{display: "flex"}}><h5>Course Name</h5><Input onChange={updateName} /></span>
       <div id="adder">
         <DndProvider backend={HTML5Backend}>
-          <Draggable Parent={props.Parent} Structure={props.Structure} setSelected={props.setSelected}/>
+          <Draggable />
           <div id={"AddButton"}>
             <Button onClick={showModal} type="dashed" style={{ width: '100%', height: '100%' }}>
               <Icon type="plus" /> Add Page
@@ -78,18 +89,7 @@ const CourseStructure = (props: any) => {
         onCancel={handleCancel}
         >
           <CourseNodeAdder 
-          enabled={true} 
-          Structure={props.Structure} 
-          setStructure={props.setStructure} 
-          Children={props.Children} 
-          Content={props.Content}
-          setContent={props.setContent}
-          Images={props.Images}
-          setImages={props.setImages}
-          IDS={props.IDS}
-          setIDS={props.setIDS}
-          Selected={props.Selected} 
-          setSelected={props.setSelected}/>
+          enabled={true} />
         </Modal>
       </div>
     </div>

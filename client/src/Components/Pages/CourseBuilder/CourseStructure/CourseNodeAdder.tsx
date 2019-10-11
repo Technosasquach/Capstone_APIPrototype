@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { Tree } from 'antd';
 
@@ -6,6 +6,8 @@ const { TreeNode } = Tree;
 
 import { structure } from './../Types';
 
+import {StructureContext} from './../Context/StructureContext';
+import {ContentContext} from './../Context/ContentContext';
 
 import { EditorState, convertFromRaw } from 'draft-js';
 const draftandmark = require('./../PageBuilder/markdownDraftjs/index');
@@ -13,14 +15,16 @@ const draftandmark = require('./../PageBuilder/markdownDraftjs/index');
 const CourseNodeAdder = (props: any) => {
   const [CheckedKeys, setCheckedKeys] = useState({checked: []} as any);
   const [TreeData, setTreeData] = useState([] as any);
+  const structureContext = useContext(StructureContext);
+  const contentContext = useContext(ContentContext);
 
   useEffect(() => {
-    if(props.Children.length > 0) {
-      setUpTree(props.Children);
+    if(structureContext.Children.length > 0) {
+      setUpTree(structureContext.Children);
     } else {
       setTreeData([]);
     }
-  }, [props.Children]);
+  }, [structureContext.Children]);
 
   const setUpTree = (data: any[]) => {
     let treeData = [] as any[];
@@ -82,9 +86,9 @@ const CourseNodeAdder = (props: any) => {
       return ([...res.data.data.informationByNodeId]);
     }).then((json: any) => {
       const IDS = [] as any[];
-      const tempContent = [...props.Content];
-      const tempImages = [...props.Images]
-      const tempIDS = [...props.IDS]
+      const tempContent = [...contentContext.Content];
+      const tempImages = [...contentContext.Images]
+      const tempIDS = [...contentContext.IDS]
       tempContent.push(EditorState.createEmpty());
       tempImages.push([]);
       tempIDS.push([]);
@@ -99,18 +103,18 @@ const CourseNodeAdder = (props: any) => {
         IDS.push({id: element.id, type: element.type});
       });
       tempIDS[tempIDS.length-1] = (IDS);
-      props.setContent(tempContent);
-      props.setImages(tempImages);
-      props.setIDS(tempIDS);
+      contentContext.setContent(tempContent);
+      contentContext.setImages(tempImages);
+      contentContext.setIDS(tempIDS);
     });
   }
 
   const onCheck = (CheckedKeysNew: any, e: any) => {
     const change = changed(CheckedKeysNew.checked, CheckedKeys.checked);
-    const structure = {cards: props.Structure.cards, index: props.Structure.index, treeIndex: props.Structure.treeIndex} as structure;
+    const structure = {cards: structureContext.Structure.cards, index: structureContext.Structure.index, treeIndex: structureContext.Structure.treeIndex} as structure;
     if(CheckedKeysNew.checked.length > CheckedKeys.checked.length) {
       setCheckedKeys(CheckedKeysNew);
-      const index = props.Structure.index.length;
+      const index = structureContext.Structure.index.length;
       e.checkedNodes.forEach((element: any) => {
         if(element.key === change) {
           structure.cards.push({
@@ -119,7 +123,7 @@ const CourseNodeAdder = (props: any) => {
           });
           structure.index.push(index);
           structure.treeIndex.push(change);
-          props.setStructure(structure);
+          structureContext.setStructure(structure);
 
           loadData(element.props.nodeID);
         }
@@ -137,14 +141,14 @@ const CourseNodeAdder = (props: any) => {
       structure.treeIndex.splice(remove, 1);
       const findIndex = structure.index.indexOf(remove);
       structure.index.splice(findIndex, 1);
-      props.setStructure(structure);
+      structureContext.setStructure(structure);
 
-      if(props.Selected === remove + 1) {
-        props.setSelected({index: 0, type: 0});
+      if(structureContext.Selected.index === remove + 1) {
+        structureContext.setSelected({index: 0, type: 0});
       }
-      const temp2 = [...props.Content];
+      const temp2 = [...contentContext.Content];
       temp2.splice(remove + 1, 1);
-      props.setContent(temp2);
+      contentContext.setContent(temp2);
     }
   };
 

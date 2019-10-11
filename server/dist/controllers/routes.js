@@ -15,97 +15,22 @@ routes.get("/api/", authenticateConnection, function (req, res) {
         message: "Scraping Database."
     });
 });
-const index_1 = require("./../database/index");
-routes.post("/coursebuilder/", function (req, res) {
+const ContentBuilder_1 = require("./ContentBuilder");
+routes.post("/coursebuilder/", authenticateConnection, function (req, res) {
     const data = req.body;
-    const temp = new index_1.Course({
-        name: data.coursename,
-        nodes: data.nodes
-    });
-    temp.save();
-    try {
-        let node = 0;
-        data.data.forEach((element) => {
-            let order = 0;
-            element.forEach((items) => {
-                new index_1.Information({
-                    text: items.content,
-                    image: items.imageData,
-                    nodeId: data.nodes[node],
-                    order: order++,
-                }).save();
-            });
-            node++;
+    if (data.auth.accessLevel === "ADMIN") {
+        ContentBuilder_1.ContentController.BuildCourse(data.coursename, data.nodes, data.data, data.images, data.ids).then(response => {
+            res.end(res.json(response._id));
         });
     }
-    catch (e) {
-        console.log(e);
+    else {
+        res.status(401).json({ status: 'Access Denied, Invalid Access' });
     }
-    res.end("" + temp._id);
 });
-const checkType = (types, type) => {
-    for (let i = 0; i < types.length; i++) {
-        if (types[i].type === type) {
-            return true;
-        }
-    }
-    return false;
-};
-const getType = (types, type) => {
-    for (let i = 0; i < types.length; i++) {
-        if (types[i].type === type) {
-            return types[i].id;
-        }
-    }
-};
-const getIndex = (types, type) => {
-    for (let i = 0; i < types.length; i++) {
-        if (types[i].type === type) {
-            return i;
-        }
-    }
-};
 routes.post("/pagebuilder/", authenticateConnection, function (req, res) {
     const data = req.body;
     if (data.auth.accessLevel === "ADMIN") {
-        if (data.text !== "" && data.text !== undefined) {
-            if (!checkType(data.ids, "text")) {
-                new index_1.Information({
-                    nodeId: data.id,
-                    type: "text",
-                    data: data.text
-                }).save();
-            }
-        }
-        else {
-            if (checkType(data.ids, "text")) {
-                index_1.Information.findByIdAndDelete(getType(data.ids, "text")).catch(res => console.log(res));
-                data.ids.splice(getIndex(data.ids, "text"), 1);
-            }
-        }
-        if (JSON.parse(data.images).length > 0 && data.images !== undefined) {
-            if (!checkType(data.ids, "images")) {
-                new index_1.Information({
-                    nodeId: data.id,
-                    type: "images",
-                    data: data.images
-                }).save();
-            }
-        }
-        else {
-            if (checkType(data.ids, "images")) {
-                index_1.Information.findByIdAndDelete(getType(data.ids, "images")).catch(res => console.log(res));
-                data.ids.splice(getIndex(data.ids, "images"), 1);
-            }
-        }
-        data.ids.forEach((element) => {
-            console.log("update");
-            index_1.Information.findByIdAndUpdate(element.id, {
-                id: element.id,
-                type: element.type,
-                data: (element.type === "text" ? data.text : data.images)
-            }).catch(res => console.log(res));
-        });
+        ContentBuilder_1.ContentController.BuildPage(data.text, data.images, data.ids, data.id);
         res.end();
     }
     else {

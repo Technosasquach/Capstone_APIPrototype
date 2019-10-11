@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from 'react'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import { XYCoord } from 'dnd-core'
@@ -7,7 +7,7 @@ import { Button } from 'antd'
 
 import './NodeDrag.less'
 
-import {selected} from './../../Types'
+import {StructureContext} from './../../Context/StructureContext';
 
 const style = {
   padding: '0.5rem 1rem',
@@ -32,7 +32,6 @@ export interface CardProps {
   text: string
   index: number
   moveCard: (dragIndex: number, hoverIndex: number) => void,
-  setSelected: (input: selected) => void;
 }
 
 interface DragItem {
@@ -40,7 +39,8 @@ interface DragItem {
   id: string
   type: string
 }
-const Card: React.FC<CardProps> = ({ id, text, index, moveCard, setSelected }) => {
+const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
+  const structureContext = useContext(StructureContext);
   const [Quiz, setQuiz] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null)
@@ -104,7 +104,7 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard, setSelected }) =
   })
 
   const editPage = () => {
-    setSelected({index: id + 1, type: 0});
+    structureContext.setSelected({index: id + 1, type: 0});
   }
 
   const setquiz = () => {
