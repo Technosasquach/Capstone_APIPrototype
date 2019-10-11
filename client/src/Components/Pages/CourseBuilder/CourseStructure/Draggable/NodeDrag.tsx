@@ -9,24 +9,6 @@ import './NodeDrag.less'
 
 import {StructureContext} from './../../Context/StructureContext';
 
-const style = {
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-}
-
-const styletwo = {
-  padding: '0.5rem 1rem',
-  backgroundColor: 'white',
-}
-
-const quizstyle = {
-  width: '90%',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-}
-
 export interface CardProps {
   id: any
   text: string
@@ -107,24 +89,28 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
     structureContext.setSelected({index: id + 1, type: 0});
   }
 
+  const editQuiz = () => {
+    structureContext.setSelected({index: id + 1, type: 1});
+  }
+
   const setquiz = () => {
-    setQuiz(true);
+    setQuiz(!Quiz);
   }
 
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
   return (
     <div ref={ref}>
-      <div style={Quiz ? {...styletwo, opacity }: { ...style, opacity }}>
+      <div className="card" style={{ opacity }}>
         <span>
-          {Quiz && true}
           {text}
           <Button onClick={editPage} className={"Selector"}>></Button>
-          <Button onClick={setquiz} className={"Selector"}>+</Button>
+          <Button onClick={setquiz} className={"Selector"}>{Quiz ? 'x' : '+'}</Button>
         </span>
       </div>
-      {Quiz && <div style={{...quizstyle}}>
+      {Quiz && <div className="quizcard">
         {text} Quiz
+        <Button onClick={editQuiz} className={"Selector"}>></Button>
       </div>}
     </div>
   )

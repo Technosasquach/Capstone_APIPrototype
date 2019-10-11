@@ -1,20 +1,6 @@
 import React, {useState} from 'react';
 import { Button } from 'antd';
-
-const style = {
-    border: '1px solid grey',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-  }
-
-  const quizstyle = {
-    border: '1px solid grey',
-    width: '90%',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-  }
+import './card.less';
 
 const Carder = (props: any) => {
   const [Quiz, setQuiz] = useState(false);
@@ -22,21 +8,26 @@ const Carder = (props: any) => {
       props.setSelected({index: 0, type: 0});
     }
 
+    const selectquiz = () => {
+      props.setSelected({index: 0, type: 1});
+    }
+
     const updatequiz = () => {
-      setQuiz(true);
+      setQuiz(!Quiz);
     }
 
     return (
       <div>
-        <div style={{ ...style }}>
+        <div className="cardMain">
           <span>
             {props.name}
             <Button onClick={select} className={"Selector"}>></Button>
-            <Button onClick={updatequiz} className={"Selector"}>+</Button>
+            <Button onClick={updatequiz} className={"Selector"}>{Quiz ? 'x' : '+'}</Button>
           </span>
         </div>
-        {Quiz && <div style={{...quizstyle}}>
+        {Quiz && <div className="quizcardMain">
           {props.name} Quiz
+          <Button onClick={selectquiz} className={"Selector"}>></Button>
         </div>}
       </div>
     );

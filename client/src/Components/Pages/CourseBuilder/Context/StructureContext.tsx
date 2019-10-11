@@ -14,9 +14,7 @@ const initialState = {
     setName(_data: any): any {}
 };
 
-const StructureContext = React.createContext(initialState);
-
-export {StructureContext};
+export const StructureContext = React.createContext(initialState);
 
 const structureProvider = (props:any) => {
     const [Parent, setParent] = useState({} as card);

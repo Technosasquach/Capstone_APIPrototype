@@ -28,10 +28,9 @@ interface iInfoNode {
     id: string,
     createdAt: Date,
     nodeId: string,
-    text: string,
+    data: string,
     keywords: string[],
-    order: number,
-    image: string
+    type: string,
 }
 
 // interface iPageNode {
@@ -69,14 +68,12 @@ export default class LearningPage extends React.Component<iProps, iState> {
         if (this.props.location.state != undefined) {
             const { nodeID } = this.props.location.state;
             this.loadInformationNodeData(nodeID);
-            //this.loadPageNodeData(nodeID);
-            //this.loadNodeData(nodeID);
         }
     }
 
     loadInformationNodeData = async (id: string) => {
         let data2: any = {};
-        data2['query'] = "query{informationByNodeId(nodeId: \"" + id + "\"){ id createdAt text nodeId image order }}\n\n";
+        data2['query'] = "query{informationByNodeId(nodeId: \"" + id + "\"){ id createdAt data nodeId type }}\n\n";
         await axios.post("http://localhost:3000/graphql/", data2).then(res => {
             this.setState({
             myInfoNode: res.data['data']['informationByNodeId']
@@ -88,23 +85,6 @@ export default class LearningPage extends React.Component<iProps, iState> {
         );
     }
 
-    // loadPageNodeData = async (id: string) => {
-    //     let data2: any = {};
-    //     data2['query'] = "query{pageForNodeId(NodeId: \"" + id + "\"){ content }}\n\n";
-    //     await axios.post("http://localhost:3000/graphql/", data2).then(res => this.setState({
-    //         myPageNode: res.data['data']['pageForNodeId']['content']
-    //     })).then(()=> console.log(JSON.parse(this.state.myPageNode))
-    //     );
-    // }
-
-    // loadNodeData = async (id: string) => {
-    //     let data: any = {};
-    //     data['query'] = "query{node(id: \"" + id + "\"){ id createdAt depth name json keywords parents children }}\n\n";
-    //     await axios.post("http://localhost:3000/graphql/", data).then(res => this.setState({
-    //         myNode: res.data['data']['node']
-    //     }));
-    // }
-
     loadCommentData = async (infoNodeid: string) => {
         let data: any = {};
         data['query'] = "query{commentsForNode(infoNodeId: \"" + infoNodeid + "\"){ id createdAt contents infoNodeId }}\n\n";
@@ -113,23 +93,49 @@ export default class LearningPage extends React.Component<iProps, iState> {
         }));
     }
 
-
-    generateinfo = () => {
-        const temp = [] as any[];
+    generateText = () => {
         for(let i = 0; i < this.state.myInfoNode.length; i++) {
-            for(let j = 0; j < this.state.myInfoNode.length; j++) {
-                if(this.state.myInfoNode[j].order == i) {
-                    const item = this.state.myInfoNode[j];
-                    temp.push(<div key={j} style={{display: "flex"}}><ReactMarkdown source={(item)['text']} />{item['image'] ? <img src={item['image']} style={{width: "100px", height: "100px"}}/> : ""}</div>)
-                }
+            if(this.state.myInfoNode[i].type === "text") {
+                return <ReactMarkdown source={this.state.myInfoNode[i].data} />
             }
         }
-        return temp;
+        return undefined;
+    }
+
+    generateImages = () => {
+        for(let i = 0; i < this.state.myInfoNode.length; i++) {
+            if(this.state.myInfoNode[i].type === "images") {
+                const images = JSON.parse(this.state.myInfoNode[i].data) as string[];
+                return images.map((image: string, index: number) => {
+                    return <img key={index} src={image}/>
+                })
+            }
+        }
+        return undefined;
+    }
+
+    returner = () => {
+        const text = this.generateText();
+        const images = this.generateImages();
+        const temp = (
+            <div className="content">
+                {text && <div className="textregion">{text}</div>}
+                {images && <div className="imageregion">{images}</div>}
+            </div>
+        )
+        if(text || images) {
+            return temp;
+        } else {
+            return (<Alert
+                message="No information has been entered for this node"
+                description="Please contact your supervisor."
+                type="info"
+                showIcon
+            />)
+        }
     }
 
     render() {
-        //let convertedText : string;
-        //{this.state ? (convertedText = this.state.myPageNode.content.stringify.toString()):(convertedText = " no data ") } 
         return (
             <div className="learningpage">
                 <div className="contentregion">
@@ -144,7 +150,7 @@ export default class LearningPage extends React.Component<iProps, iState> {
                                 <div>
                                     {this.state.myInfoNode
                                         ? (
-                                            this.generateinfo()
+                                            this.returner()
                                         )
                                         : (<Alert
                                             message="No information has been entered for this nodes"
@@ -153,7 +159,7 @@ export default class LearningPage extends React.Component<iProps, iState> {
                                             showIcon
                                         />)}
                                 </div>
-                                {this.state.myInfoNode && <Title level={4}>Comment Section</Title>}
+                                {this.state.myInfoNode && <Title style={{marginTop: "5px"}} level={4}>Comment Section</Title>}
                                 <hr />
                                 {this.state.myComments && <CommentList userComments={this.state.myComments} />}
                                 <Rate />
