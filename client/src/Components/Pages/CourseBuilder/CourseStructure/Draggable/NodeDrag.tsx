@@ -8,6 +8,7 @@ import { Button } from 'antd'
 import './NodeDrag.less'
 
 import {StructureContext} from './../../Context/StructureContext';
+import {QuizContext} from './../../Context/QuizContext';
 
 export interface CardProps {
   id: any
@@ -23,6 +24,8 @@ interface DragItem {
 }
 const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
   const structureContext = useContext(StructureContext);
+  const quizContext = useContext(QuizContext);
+
   const [Quiz, setQuiz] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null)
@@ -94,6 +97,11 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
   }
 
   const setquiz = () => {
+    if(!Quiz) {
+      quizContext.AddQuiz(id+1);
+    } else {
+      quizContext.DeleteQuiz(id+1);
+    }
     setQuiz(!Quiz);
   }
 

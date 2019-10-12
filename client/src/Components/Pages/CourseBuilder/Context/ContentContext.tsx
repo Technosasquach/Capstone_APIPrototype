@@ -9,9 +9,7 @@ const initialState = {
     setIDS(_data: any): any {},
 };
 
-const ContentContext = React.createContext(initialState);
-
-export {ContentContext};
+export const ContentContext = React.createContext(initialState);
 
 const contentProvider = (props:any) => {
   const [Content, setContent] = useState([EditorState.createEmpty()])
@@ -23,9 +21,9 @@ const contentProvider = (props:any) => {
       Content: Content,
       Images: Images,
       IDS: IDS,
-      setContent: setContent,
-      setImages: setImages,
-      setIDS: setIDS
+      setContent,
+      setImages,
+      setIDS
     }}>
       {props.children}
     </ContentContext.Provider>

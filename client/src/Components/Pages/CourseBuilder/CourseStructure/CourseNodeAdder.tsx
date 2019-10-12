@@ -8,6 +8,7 @@ import { structure } from './../Types';
 
 import {StructureContext} from './../Context/StructureContext';
 import {ContentContext} from './../Context/ContentContext';
+import {QuizContext} from './../Context/QuizContext';
 
 import { EditorState, convertFromRaw } from 'draft-js';
 const draftandmark = require('./../PageBuilder/markdownDraftjs/index');
@@ -17,6 +18,7 @@ const CourseNodeAdder = (props: any) => {
   const [TreeData, setTreeData] = useState([] as any);
   const structureContext = useContext(StructureContext);
   const contentContext = useContext(ContentContext);
+  const quizContext = useContext(QuizContext);
 
   useEffect(() => {
     if(structureContext.Children.length > 0) {
@@ -149,6 +151,7 @@ const CourseNodeAdder = (props: any) => {
       const temp2 = [...contentContext.Content];
       temp2.splice(remove + 1, 1);
       contentContext.setContent(temp2);
+      quizContext.checkIfRemove(remove+1);
     }
   };
 

@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import {StructureContext} from './../Context/StructureContext';
 import {ContentContext} from './../Context/ContentContext';
+import {QuizContext} from './../Context/QuizContext';
 
 const draftandmark = require('./../PageBuilder/markdownDraftjs/index.js');
 import {convertToRaw} from 'draft-js';
@@ -21,6 +22,7 @@ const CourseStructure = (props: any) => {
 
   const structureContext = useContext(StructureContext);
   const contentContext = useContext(ContentContext);
+  const quizContext = useContext(QuizContext);
 
   const updateName = (e: any) => {
     setCourseName(e.target.value);
@@ -49,20 +51,35 @@ const CourseStructure = (props: any) => {
     let data = [extractData(contentContext.Content[0])] as any;
     let images = [JSON.stringify(contentContext.Images[0])] as any;
     let ids = [contentContext.IDS[0]];
+    let quizzes = [quizContext.getQuiz(0)];
     for(let i = 0; i < structureContext.Structure.cards.length; i++){
       nodes.push(structureContext.Structure.cards[order[i]].id);
       data.push(extractData(contentContext.Content[order[i]+1]));
       images.push(JSON.stringify(contentContext.Images[order[i]+1]));
       ids.push(contentContext.IDS[order[i]+1]);
+      quizzes.push(quizContext.getQuiz(order[i]+1));
     }
     query.coursename = CourseName;
     query.nodes = nodes;
     query.data = data;
     query.images = images;
     query.ids = ids;
-    console.log(query);
+    query.quizzes = quizzes;
     axios.post("http://localhost:3000/coursebuilder/", query).then(res => {
-        props.history.push('/course/' + res.data);
+      switch(res.data) {
+        case -1:
+            window.alert("Issue with Page submission");
+            break;
+        case -2:
+            window.alert("Issue with Quiz submission");
+            break;
+        case -3:
+            window.alert("Issue with Course submission");
+            break;
+        default:
+            props.history.push('/course/' + res.data);
+            break;
+      }
     });
   }
 

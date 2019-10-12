@@ -1,20 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Button } from 'antd';
 import './card.less';
 
+import {QuizContext} from './../../Context/QuizContext';
+
 const Carder = (props: any) => {
   const [Quiz, setQuiz] = useState(false);
-    const select = () => {
-      props.setSelected({index: 0, type: 0});
-    }
 
-    const selectquiz = () => {
-      props.setSelected({index: 0, type: 1});
-    }
+  const quizContext = useContext(QuizContext);
+  const select = () => {
+    props.setSelected({index: 0, type: 0});
+  }
 
-    const updatequiz = () => {
-      setQuiz(!Quiz);
+  const selectquiz = () => {
+    props.setSelected({index: 0, type: 1});
+  }
+
+  const updatequiz = () => {
+    if(!Quiz) {
+      quizContext.AddQuiz(0);
+    } else {
+      quizContext.DeleteQuiz(0);
     }
+    setQuiz(!Quiz);
+  }
 
     return (
       <div>

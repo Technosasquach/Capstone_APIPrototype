@@ -38,11 +38,11 @@ const structureProvider = (props:any) => {
         Structure: Structure,
         Selected: Selected,
         Name: Name,
-        setParent: setParent,
-        setChildren: setChildren,
-        setStructure: setStructure,
-        setSelected: setSelected,
-        setName: setName
+        setParent,
+        setChildren,
+        setStructure,
+        setSelected,
+        setName
         }}>
         {props.children}
         </StructureContext.Provider>

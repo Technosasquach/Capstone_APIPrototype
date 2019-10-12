@@ -15,4 +15,7 @@ var users_1 = require("./users");
 exports.EUserAuthLevel = users_1.EUserAuthLevel;
 exports.UserSchema = users_1.UserSchema;
 exports.User = users_1.User;
+var quiz_1 = require("./quiz");
+exports.QuizSchema = quiz_1.QuizSchema;
+exports.Quiz = quiz_1.Quiz;
 //# sourceMappingURL=index.js.map

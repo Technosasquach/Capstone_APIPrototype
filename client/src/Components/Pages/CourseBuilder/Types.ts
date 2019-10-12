@@ -16,13 +16,6 @@ export interface content {
     imageData: string;
 }
 
-export interface quiz {
-  index: number;
-  questions: string[];
-  options: string[][];
-  answer: number;
-}
-
 export interface selected {
   index: number;
   type: number;

@@ -1,24 +1,40 @@
-import React, {useState} from "react";
+import React, { useState, useContext } from "react";
 
 import {Input, Radio, Button} from 'antd';
 
 import "./Question.less";
-import {Answer} from './QuizBuilder';
+import {QuizContext, Answer} from './../Context/QuizContext';
 
 const Question = (props: any) => {
-    const [Question, setQuestion] = useState("");
-    const [Answer, ] = useState("NULL" as Answer);
-    const [AnswerA, setAnswerA] = useState("");
-    const [AnswerB, setAnswerB] = useState("");
-    const [AnswerC, setAnswerC] = useState("");
-    const [AnswerD, setAnswerD] = useState("");
+    const [Question, setQuestion] = useState(props.Question);
+    const [AnswerState, setAnswerState] = useState(Answer.NULL);
+    const [Checked, setChecked] = useState([false, false, false, false]);
+    const [AnswerA, setAnswerA] = useState(props.Answers[0]);
+    const [AnswerB, setAnswerB] = useState(props.Answers[1]);
+    const [AnswerC, setAnswerC] = useState(props.Answers[2]);
+    const [AnswerD, setAnswerD] = useState(props.Answers[3]);
+
+    const quizContext = useContext(QuizContext);
     
     const Save = () => {
-        props.Save(props.id, Question, Answer, [AnswerA, AnswerB, AnswerC, AnswerD]);
+        quizContext.Save(props.id, Question, AnswerState, [AnswerA, AnswerB, AnswerC, AnswerD], props.Removeable);
     }
 
     const Delete = () => {
-        props.Delete(props.id);
+        quizContext.Delete(props.id);
+    }
+
+    const radioUpdate = (e: any) => {
+        enum IDTOINDEX{
+            A = 0,
+            B = 1,
+            C = 2,
+            D = 3
+        }
+        const temp = [false, false, false, false];
+        temp[+IDTOINDEX[e.target.id]] = true;
+        setChecked(temp);
+        setAnswerState(e.target.id);
     }
 
     return (
@@ -32,21 +48,21 @@ const Question = (props: any) => {
                     <span className="topanswers">
                         <span className="answercontainer">
                             A:<Input defaultValue={props.Answers[0]} onChange={res => setAnswerA(res.target.value)}/>
-                            <Radio />
+                            <Radio checked={Checked[0]} onChange={radioUpdate} id="A" />
                         </span>
                         <span className="answercontainer">
                             B:<Input defaultValue={props.Answers[1]} onChange={res => setAnswerB(res.target.value)}/>
-                            <Radio />
+                            <Radio checked={Checked[1]} onChange={radioUpdate} id="B" />
                         </span>
                     </span>
                     <span className="bottomanswers">
                         <span className="answercontainer">
                             C:<Input defaultValue={props.Answers[2]} onChange={res => setAnswerC(res.target.value)}/>
-                            <Radio />
+                            <Radio checked={Checked[2]} onChange={radioUpdate} id="C" />
                         </span>
                         <span className="answercontainer">
                             D:<Input defaultValue={props.Answers[3]} onChange={res => setAnswerD(res.target.value)}/>
-                            <Radio />
+                            <Radio checked={Checked[3]} onChange={radioUpdate} id="D" />
                         </span>
                     </span>
                 </div>

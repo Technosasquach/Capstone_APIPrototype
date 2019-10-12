@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const fs = require("fs");
@@ -17,25 +25,38 @@ routes.get("/api/", authenticateConnection, function (req, res) {
 });
 const ContentBuilder_1 = require("./ContentBuilder");
 routes.post("/coursebuilder/", authenticateConnection, function (req, res) {
-    const data = req.body;
-    if (data.auth.accessLevel === "ADMIN") {
-        ContentBuilder_1.ContentController.BuildCourse(data.coursename, data.nodes, data.data, data.images, data.ids).then(response => {
-            res.end(res.json(response._id));
-        });
-    }
-    else {
-        res.status(401).json({ status: 'Access Denied, Invalid Access' });
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        const data = req.body;
+        if (data.auth.accessLevel === "ADMIN") {
+            const response = yield ContentBuilder_1.ContentController.BuildCourse(data.coursename, data.nodes, data.data, data.quizzes, data.images, data.ids);
+            if (typeof (response) == "object") {
+                res.end(res.json(response._id));
+            }
+            else {
+                res.end("" + response);
+            }
+        }
+        else {
+            res.status(401).json({ status: 'Access Denied, Invalid Access' });
+        }
+    });
 });
 routes.post("/pagebuilder/", authenticateConnection, function (req, res) {
-    const data = req.body;
-    if (data.auth.accessLevel === "ADMIN") {
-        ContentBuilder_1.ContentController.BuildPage(data.text, data.images, data.ids, data.id);
-        res.end();
-    }
-    else {
-        res.status(401).json({ status: 'Access Denied, Invalid Access' });
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        const data = req.body;
+        if (data.auth.accessLevel === "ADMIN") {
+            const response = yield ContentBuilder_1.ContentController.BuildPage(data.text, data.images, data.ids, data.id);
+            if (response == -1) {
+                res.end("-1");
+            }
+            else {
+                res.end();
+            }
+        }
+        else {
+            res.status(401).json({ status: 'Access Denied, Invalid Access' });
+        }
+    });
 });
 routes.post("/auth/verifyUser/", function (req, res) {
     const username = req.body["username"] || "";
