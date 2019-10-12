@@ -14,7 +14,7 @@ export enum Answer {
   NULL = "NULL"
 }
 
-interface IQuestion {
+export interface IQuestion {
   question: string;
   answer: Answer;
   answers: string[];
