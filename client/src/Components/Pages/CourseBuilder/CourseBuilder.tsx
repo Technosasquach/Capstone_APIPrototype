@@ -51,8 +51,10 @@ const CourseBuilderPage = (props: any) => {
     }
   }, [fetchedPageData])
 
-  return (
-    <Loader loading={Loading || LoadingPage}>
+  if(Loading || LoadingPage) {
+    return <Loader/>
+  } else {
+    return (
         <div className="coursepage">
             <div className="stuctureregion">
               <CourseStructure />
@@ -65,8 +67,8 @@ const CourseBuilderPage = (props: any) => {
               }
             </div>
         </div>
-    </Loader>
-  );
+    );
+  }
 }
 
 const CourseBuilderWrapper = (props: any) => {

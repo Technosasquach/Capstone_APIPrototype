@@ -5,13 +5,6 @@ import "./CommentList.less";
 
 import { List } from "antd";
 
-// interface iProps {
-//     infoNodeId: string;
-// };
-// interface iComments {
-//     id: string;
-//     contents: string;
-// }
 interface iProps {
     userComments: iComment[];
 };
@@ -23,27 +16,13 @@ interface iComment {
     createdAt: Date;
 }
 
-// interface iState {
-//     userComments: iComments[];
-// };
 
-export default class CommentList extends React.Component<iProps, {}> {
+export default class CommentList extends React.Component<any, {}> {
     constructor(props: iProps) {
         super(props);
         // this.state = { userComments: [] };
     }
 
-    // componentDidMount() {
-    //     this.loadCommentData(this.props.infoNodeId);
-    // }
-
-    // loadCommentData = async (id: string) => {
-    //     let data: any = {};
-    //     data['query'] = "query{commentsForNode(infoNodeId: \"" + id + "\"){ id createdAt contents infoNodeId }}\n\n";
-    //     await axios.post("http://localhost:3000/graphql/", data).then(res => this.setState({
-    //         userComments: res.data['data']['commentsForNode']
-    //     }));
-    // }
 
     render() {
         return (
@@ -53,9 +32,9 @@ export default class CommentList extends React.Component<iProps, {}> {
                     header={`${this.props.userComments.length} replies`}
                     itemLayout="horizontal"
                     dataSource={this.props.userComments}
-                    renderItem={item => (
-                        <List.Item key={item.id}>
-                            <Post comment={item.contents} />
+                    renderItem={(item: any) => (
+                        <List.Item key={item.key}>
+                            <Post comment={item.name} />
                         </List.Item>
                     )}
                 />}

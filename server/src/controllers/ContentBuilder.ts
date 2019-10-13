@@ -123,7 +123,10 @@ export class ContentController {
                 return -1;
             }
             try {
-                Quizzes.push(await this.BuildQuiz(quizzes[i], nodes[i]));
+                const quiz = await this.BuildQuiz(quizzes[i], nodes[i]);
+                if(quiz != null) {
+                    Quizzes.push(quiz);
+                }
             } catch {
                 return -2;
             }

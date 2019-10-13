@@ -74,8 +74,10 @@ const PageBuilderPage = (props: any) => {
     }
   }
 
-  return (
-    <Loader loading={Loading}>
+  if(Loading) {
+    return <Loader />
+  } else {
+    return (
       <div className="pageBuilder">
         <div className="title">
             <h1>{Name}</h1>
@@ -88,8 +90,8 @@ const PageBuilderPage = (props: any) => {
         />
         <Button onClick={save} className="SaveButton"><Icon type="save"/>Save</Button>
       </div>
-    </Loader>
-  );
+    );
+  }
 }
 
 

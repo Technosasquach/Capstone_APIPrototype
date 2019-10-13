@@ -84,7 +84,10 @@ class ContentController {
                     return -1;
                 }
                 try {
-                    Quizzes.push(yield this.BuildQuiz(quizzes[i], nodes[i]));
+                    const quiz = yield this.BuildQuiz(quizzes[i], nodes[i]);
+                    if (quiz != null) {
+                        Quizzes.push(quiz);
+                    }
                 }
                 catch (_a) {
                     return -2;

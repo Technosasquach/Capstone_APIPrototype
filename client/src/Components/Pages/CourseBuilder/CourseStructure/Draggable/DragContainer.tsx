@@ -72,7 +72,7 @@ const Container: React.FC = (props: any) => {
     }
     return (
       <>
-        {structureContext.Parent.name !== undefined && <Carder name={structureContext.Parent.name} id={structureContext.Parent.id} setSelected={structureContext.setSelected}/>}
+        {structureContext.Parent.name !== undefined && <Carder name={structureContext.Parent.name} id={structureContext.Parent.id} setSelected={structureContext.setSelected} Selected={structureContext.Selected}/>}
         <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
       </>
     )
