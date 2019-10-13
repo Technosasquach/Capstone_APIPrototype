@@ -2,12 +2,11 @@ import React from 'react';
 import ContentDisplay from './ContentDisplay';
 import CommentList from './Comments/CommentList';
 import CommentCreator from './Comments/CommentCreator';
-import {Button, Typography} from 'antd';
+import { Typography} from 'antd';
 const { Title } = Typography;
 import './InfoDisplay.less'
 
 const InfoDisplay = (props: any) => {
-
     return props.Content ? 
         (
         <div className="infoContainer">
@@ -26,7 +25,6 @@ const InfoDisplay = (props: any) => {
                  : 
                 <></>
             }
-            <Button className="nextButton" >Next</Button>
         </div>
         )
             : 

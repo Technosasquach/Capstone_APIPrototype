@@ -50,7 +50,7 @@ const CommentCreator = (props: any) => {
 
     return (
         <>
-        <Button onClick={showModal} >Make Post</Button>
+        <Button type="primary" onClick={showModal} >Make Post</Button>
         <Modal
         visible={Visible}
         onOk={handleOk}

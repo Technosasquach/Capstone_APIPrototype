@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_1 = require("graphql");
 const index_1 = require("../database/index");
 const nodeSchema_1 = require("./nodeSchema");
-const informationSchema_1 = require("./informationSchema");
-const commentSchema_1 = require("./commentSchema");
 exports.QuizType = new graphql_1.GraphQLObjectType({
     name: 'Quiz',
     fields: () => ({
@@ -35,22 +33,6 @@ exports.CourseType = new graphql_1.GraphQLObjectType({
             resolve(parent, args) {
                 return parent.quizzes.map((id) => {
                     return index_1.Quiz.findById(id);
-                });
-            }
-        },
-        info: {
-            type: new graphql_1.GraphQLList(new graphql_1.GraphQLList(informationSchema_1.InformationType)),
-            resolve(parent, args) {
-                return parent.nodes.map((id) => {
-                    return index_1.Information.find({ nodeId: id });
-                });
-            }
-        },
-        comments: {
-            type: new graphql_1.GraphQLList(new graphql_1.GraphQLList(commentSchema_1.CommentType)),
-            resolve(parent, args) {
-                return parent.nodes.map((id) => {
-                    return index_1.Comment.find({ infoNodeId: id });
                 });
             }
         }

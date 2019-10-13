@@ -86,7 +86,7 @@ const CourseDisplayPage = (props: any) => {
       }
     }
     for(let i = 0; i < index.length; i++) {
-      cards.push({id: i, name: index[i].type == 0 ? findName(content[index[i].index].nodeID, nodes) : findName(quizzes[index[i].index].nodeID, nodes) + " Quiz" , type: index[i].type });
+      cards.push({id: i, name: index[i].type == 0 ? content[index[i].index].name : content[index[i-1].index].name + " Quiz" , type: index[i].type });
     }
     setIndexMap(index);
     setCards(cards);
@@ -95,60 +95,33 @@ const CourseDisplayPage = (props: any) => {
     setQuizzes(quizzes);
   }
 
-  const findName = (nodeID: string, nodes: any[]) => {
-    for(let i = 0; i < nodes.length; i++) {
-      if(nodes[i].id == nodeID) {
-        return nodes[i].name;
-      }
-    }
-    return "";
-  }
-
-  const findInfoForNodeID = (nodeID: string, info: any) => {
-    const temp = ["", []];
+  const getInfo = (info: any) => {
+    const data = ["", []];
     for(let i = 0; i < info.length; i++) {
-      let done = false;
-      for(let j = 0; j < info[i].length; j++) {
-        if(info[i][j].nodeId == nodeID) {
-          if(info[i][j].type == "text") {
-            temp[0] = info[i][j].data;
-          } else {
-            temp[1] = JSON.parse(info[i][j].data);
-          }
-          done = true;
-        } else {
-          break;
-        }
-      }
-      if (done) {
-        break;
+      if(info[i].type == "text") {
+        data[0] = info[i].data;
+      } else {
+        data[1] = JSON.parse(info[i].data);
       }
     }
-    return temp;
+    return data;
   }
 
-  const findCommentForNode = (nodeID: string, comment: any): string[] => {
-    const temp = [] as string[];
+  const getComments = (comment: any) => {
+    const data = [] as string[];
     for (let i = 0; i < comment.length; i++) {
-      for(let j = 0; j < comment[i].length; j++) {
-        if (comment[i][j].infoNodeId == nodeID) {
-          temp.push(comment[i][j].contents);
-        } else {
-          break;
-        }
-      }
+      data.push(comment[i].contents);
     }
-    return temp;
+    return data;
   }
 
-  const setUpContent = (nodes: any, info: any, comments: any) => {
+  const setUpContent = (nodes: any) => {
     const content = [] as content[];
     const comment = [] as comment[];
     for(let i = 0; i < nodes.length; i++) {
-      const info4node = findInfoForNodeID(nodes[i].id, info);
-      content.push({id: i, nodeID: nodes[i].id, text: (info4node[0] as string), images: (info4node[1] as string[]), name: nodes[i].name})
-      const comment4node = findCommentForNode(nodes[i].id, comments);
-      comment.push({id: i, nodeID: nodes[i].id, text: comment4node} as comment);
+      const info = getInfo(nodes[i].info);
+      content.push({id: i, nodeID: nodes[i].id, text: (info[0] as string), images: (info[1] as string[]), name: nodes[i].name})
+      comment.push({id: i, nodeID: nodes[i].id, text: getComments(nodes[i].comments)} as comment);
     }
     return [content, comment];
   }
@@ -168,18 +141,17 @@ const CourseDisplayPage = (props: any) => {
   const getData = () => {
     setLoading(true);
     setCourseName("Loading Data");
-    let data:any = {query:  "query{course(id: \"" + props.match.params.id + "\"){name nodes {id name} quizzes {nodeID questions answers answer} info { nodeId type data } comments {infoNodeId contents}}}\n\n"};
+    let data:any = {query:  "query{course(id: \"" + props.match.params.id + "\"){name nodes {id name info { type data } comments { contents } } quizzes { nodeID questions answers answer }}}\n\n"};
     axios.post("http://localhost:3000/graphql/", data).then(res => {
+      console.log(res.data.data.course);
       return {
         name: res.data.data.course.name,
         nodes: res.data.data.course.nodes,
         quizzes: res.data.data.course.quizzes,
-        info: res.data.data.course.info,
-        comments: res.data.data.course.comments
       };
     }).then(json => {
       setCourseName(json.name);
-      setUpCards(json.nodes, setUpContent(json.nodes, json.info, json.comments), setUpQuizzes(json.quizzes));
+      setUpCards(json.nodes, setUpContent(json.nodes), setUpQuizzes(json.quizzes));
       setUpProgress();
       setLoading(false);
     })
@@ -220,7 +192,9 @@ const CourseDisplayPage = (props: any) => {
           {Selected.type ? 
             <QuizDisplay Quiz={Quizzes[IndexMap[Selected.id].index]} setProgress={setProgress} Progress={Progress}/>
             :
-            <InfoDisplay Content={Content[IndexMap[Selected.id].index]} Comments={Comments[IndexMap[Selected.id].index]} addComment={addComment} setProgress={setProgress} Progress={Progress}/> }
+            <><InfoDisplay Content={Content[IndexMap[Selected.id].index]} Comments={Comments[IndexMap[Selected.id].index]} addComment={addComment} setProgress={setProgress} Progress={Progress}/> 
+            <Button className="nextButton" >Next</Button></>
+            }
         </div>
       </div>
     );

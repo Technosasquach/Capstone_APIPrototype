@@ -1,8 +1,6 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
-import { Course, Quiz, Node, Information, Comment } from '../database/index'
+import { Course, Quiz, Node } from '../database/index'
 import {NodeType} from './nodeSchema';
-import {InformationType} from './informationSchema';
-import {CommentType} from './commentSchema';
 
 export const QuizType = new GraphQLObjectType({
     name: 'Quiz',
@@ -35,22 +33,6 @@ export const CourseType = new GraphQLObjectType({
             resolve(parent, args) {
                 return parent.quizzes.map((id: string) => {
                     return Quiz.findById(id);
-                });
-            }
-        },
-        info: {
-            type: new GraphQLList(new GraphQLList(InformationType)),
-            resolve(parent, args) {
-                return parent.nodes.map((id: string) => {
-                    return Information.find({nodeId: id});
-                });
-            }
-        },
-        comments: {
-            type: new GraphQLList(new GraphQLList(CommentType)),
-            resolve(parent, args) {
-                return parent.nodes.map((id: string) => {
-                    return Comment.find({infoNodeId: id});
                 });
             }
         }

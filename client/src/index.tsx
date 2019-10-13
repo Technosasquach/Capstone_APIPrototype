@@ -53,8 +53,7 @@ export default class Root extends React.Component<any, any> {
                                 <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                                     <Switch>
                                         <Route path="/searchresults" component={SearchResultPage} />
-                                        <Route path="/learning" component={LearningPage} />
-                                        <Route path="/learning/:nodeID" component={LearningPage} />
+                                        <Route path="/learning/:id" component={LearningPage} />
                                         <Route path="/course/:id" component={CourseDisplayPage} />
                                         <Route path="/account" component={AccountPage} />
                                         <Route path="/node/:id/coursebuilder" component={CourseBuilder} />
