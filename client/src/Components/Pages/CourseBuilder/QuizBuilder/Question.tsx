@@ -1,18 +1,31 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import {Input, Radio, Button} from 'antd';
 
 import "./Question.less";
-import {QuizContext, Answer} from './../Context/QuizContext';
+import {QuizContext} from './../Context/QuizContext';
+
+enum IDTOINDEX{
+    A = 0,
+    B = 1,
+    C = 2,
+    D = 3
+}
 
 const Question = (props: any) => {
     const [Question, setQuestion] = useState(props.Question);
-    const [AnswerState, setAnswerState] = useState(Answer.NULL);
+    const [AnswerState, setAnswerState] = useState(props.Answer);
     const [Checked, setChecked] = useState([false, false, false, false]);
     const [AnswerA, setAnswerA] = useState(props.Answers[0]);
     const [AnswerB, setAnswerB] = useState(props.Answers[1]);
     const [AnswerC, setAnswerC] = useState(props.Answers[2]);
     const [AnswerD, setAnswerD] = useState(props.Answers[3]);
+
+    useEffect(() => {
+        const temp = [...Checked];
+        temp[+IDTOINDEX[props.Answer as IDTOINDEX]] = true;
+        setChecked(temp);
+    }, []);
 
     const quizContext = useContext(QuizContext);
     
@@ -25,12 +38,6 @@ const Question = (props: any) => {
     }
 
     const radioUpdate = (e: any) => {
-        enum IDTOINDEX{
-            A = 0,
-            B = 1,
-            C = 2,
-            D = 3
-        }
         const temp = [false, false, false, false];
         temp[+IDTOINDEX[e.target.id]] = true;
         setChecked(temp);

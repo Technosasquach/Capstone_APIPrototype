@@ -51,11 +51,14 @@ interface map {
 const CourseDisplayPage = (props: any) => {
   const [Loading, setLoading] = useState(false);
   const [CourseName, setCourseName] = useState("");
+  
   const [IndexMap, setIndexMap] = useState([{index: 0, type: 0}] as map[]);
   const [Cards, setCards] = useState([] as card[]);
+
   const [Content, setContent] = useState([] as content[]);
   const [Comments, setComments] = useState([] as comment[]);
   const [Quizzes, setQuizzes] = useState([] as quiz[]);
+
   const [Selected, setSelected] = useState({id: 0, type: 0});
   const [Progress, setProgress] = useState();
 
@@ -143,7 +146,6 @@ const CourseDisplayPage = (props: any) => {
     setCourseName("Loading Data");
     let data:any = {query:  "query{course(id: \"" + props.match.params.id + "\"){name nodes {id name info { type data } comments { contents } } quizzes { nodeID questions answers answer }}}\n\n"};
     axios.post("http://localhost:3000/graphql/", data).then(res => {
-      console.log(res.data.data.course);
       return {
         name: res.data.data.course.name,
         nodes: res.data.data.course.nodes,
