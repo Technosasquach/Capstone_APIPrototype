@@ -1,0 +1,89 @@
+import * as React from "react";
+
+import "./SignIn.less";
+import 'antd/dist/antd.css';
+
+import { Icon, Input, Button } from 'antd';
+import Loader from "./../../Utility/Loader"
+
+export class SignUpPage extends React.Component<{ submitFunc: Function, errorMsg: string, signUpBtn: Function }, { username: string, password: string, phoneNumber: string, isWaiting: boolean }> {
+
+    constructor(props: any) {
+        super(props);
+
+        this.state = {
+            username: "",
+            password: "",
+            phoneNumber: "",
+            isWaiting: false,
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.handleSignUp = this.handleSignUp.bind(this);
+    }
+
+    componentWillReceiveProps() {
+        this.setState({
+            isWaiting: false
+        })
+    }
+
+    handleSubmit(event: any) {
+        event.preventDefault();
+        this.props.submitFunc(this.state.username, this.state.password);
+        this.setState({
+            isWaiting: true
+        })
+    }
+
+    handleUsernameChange(event: any) {
+        this.setState({ username: event.target.value })
+    }
+
+    handlePasswordChange(event: any) {
+        this.setState({ password: event.target.value })
+    }
+
+    handleSignUp(event: any) {
+        event.preventDefault();
+        this.props.signUpBtn();
+    }
+
+    render() {
+        return (
+            <div className="SignInContainer">
+                <div className="SignIn">
+                    <div className="SignInLeft">
+                        <span>Syn|LERN</span>
+                    </div>
+                    <div className="SignInRight">
+                        <Loader loading={this.state.isWaiting}>
+                            <span>SignUp!</span>
+                            <hr/>
+                            <Input 
+                                prefix={
+                                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                                }
+                                onChange={this.handleUsernameChange}
+                                value={this.state.username}
+                                placeholder="Username"
+                            />
+                            <Input
+                                prefix={
+                                    <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                                }
+                                onChange={this.handlePasswordChange}
+                                value={this.state.password}
+                                placeholder="Password"
+                            />
+                            { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span className="errorMsg">{this.props.errorMsg}</span><br/></div> : undefined}
+                            <Button type="primary" onClick={this.handleSubmit}>SignUp</Button> Or <a onClick={this.handleSignUp}>Sign In</a>
+                        </Loader>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}

@@ -9,7 +9,7 @@ import Loader from "./../../Utility/Loader"
 
 import * as CookieHandler from "./../../../utils/clientCookies";
 
-export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg: string }, { username: string, password: string, isWaiting: boolean, hasAcceptedCookies: boolean }> {
+export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg: string, signUpBtn: Function }, { username: string, password: string, isWaiting: boolean, hasAcceptedCookies: boolean }> {
 
     constructor(props: any) {
         super(props);
@@ -25,6 +25,7 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleCookieAcceptance = this.handleCookieAcceptance.bind(this);
+        this.handleSignUp = this.handleSignUp.bind(this);
     }
 
     componentWillReceiveProps() {
@@ -58,12 +59,17 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
         })
     }
 
+    handleSignUp(event: any) {
+        event.preventDefault();
+        this.props.signUpBtn();
+    }
+
     render() {
         return (
             <div className="SignInContainer">
                 <div className="SignIn">
                     <div className="SignInLeft">
-                        <span>SynLERN</span>
+                        <span>Syn|LERN</span>
                     </div>
                     { this.state.hasAcceptedCookies ? 
                         <div className="SignInRight">
@@ -85,7 +91,7 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
                                     placeholder="Password"
                                 />
                                 { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span className="errorMsg">{this.props.errorMsg}</span><br/></div> : undefined}
-                                <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a href="">register now!</a>
+                                <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a onClick={this.handleSignUp}>register now!</a>
                             </Loader>
                         </div>
                     :

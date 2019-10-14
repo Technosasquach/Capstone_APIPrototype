@@ -130,9 +130,20 @@ routes.post("/auth/users/create", function(req: Request, res: Response){
     const password = req.body.password || "";
     const accessLevel = req.body.accessLevel || "";
     AuthenticationController.createUser(username, password, accessLevel);
-    res.json({
-        status: "Did Accept new user"
-    })
+    setTimeout(() => {
+        const token = AuthenticationController.generateJWT(username, accessLevel);
+        const auth = AuthenticationController.authenticateJWT(token);
+        res.cookie("jwt", token, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30), signed: true })
+        res.cookie("username", auth.username, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
+        res.cookie("accessLevel", auth.accessLevel, { maxAge: AuthenticationController.DaysFromNowInMilliseconds(30) })
+        res.json({
+            isValid: true,
+            status: "Success",
+            token,
+            tokenInformation: auth,
+            time: Date.now()
+        })
+    }, 1000);
 });
 
 

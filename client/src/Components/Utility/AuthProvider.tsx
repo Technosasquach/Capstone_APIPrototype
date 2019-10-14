@@ -1,16 +1,20 @@
 import * as React from 'react'
 
 import { SignInPage } from "./../Pages/SignInPage/SignIn";
+import { SignUpPage } from "./../Pages/SignInPage/SignUp";
 import Axios from 'axios';
 import * as qs from "querystring";
 import CookieHandler from '../../utils/clientCookies';
+import { EUserAuthLevel } from "./../../../../server/src/database/users"
 
-export default class AuthProvider extends React.Component<any, { isAuthorized: boolean, errorMsg: string }> {
+
+export default class AuthProvider extends React.Component<any, { isSignUp: boolean, isAuthorized: boolean, errorMsg: string }> {
 
     constructor(props: any) {
         super(props);
 
         this.state = {
+            isSignUp: false,
             isAuthorized: true,
             errorMsg: ""
         }
@@ -46,66 +50,94 @@ export default class AuthProvider extends React.Component<any, { isAuthorized: b
                 console.log("[AuthProvider] No JWT Exists, forcing login");
                 this.state = {
                     isAuthorized: false,
-                    errorMsg: ""
+                    errorMsg: "",
+                    isSignUp: false
                 }
             }
         } catch {
             console.log("[AuthProvider] Bad JWT Exists, forcing login");
             this.state = {
                 isAuthorized: false,
-                errorMsg: ""
+                errorMsg: "",
+                isSignUp: false
             }
         }
 
         this.userSubmission = this.userSubmission.bind(this);
-    }
-
-    componentDidMount() {
-        
+        this.userSignUp = this.userSignUp.bind(this);
+        this.switchSignIn = this.switchSignIn.bind(this);
     }
 
     userSubmission(username: string, password: string) {
         console.log("[AuthProvider] User has submitted auth request with credentials: ", username, password);
 
-        setTimeout(() => {
-
-            Axios({
-                url: "/auth/verifyUser", 
-                method: "post",
-                data: qs.stringify({ username, password }), 
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then((result: any) => {
-                if(result.data.isValid == false) {
-                    console.log("[AuthProvider] Username / Password not valid, forcing login login");
-                    this.setState({
-                        errorMsg: "Something is wrong with your credentials"
-                    })
-                } else {
-                    console.log("[AuthProvider] Username / Password valid, authorizing");
-                    this.setState({
-                        isAuthorized: true
-                    })
-                }
-                
-            }).catch((err: any) => {
-                console.log("[AuthProvider] Username / Password Axios request failed");
-                console.log(err);
-            })
-        }, Math.random() * 500);
-
+        Axios({
+            url: "/auth/verifyUser", 
+            method: "post",
+            data: qs.stringify({ username, password }), 
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then((result: any) => {
+            if(result.data.isValid == false) {
+                console.log("[AuthProvider] Username / Password not valid, forcing login login");
+                this.setState({
+                    errorMsg: "Something is wrong with your credentials"
+                })
+            } else {
+                console.log("[AuthProvider] Username / Password valid, authorizing");
+                this.setState({
+                    isAuthorized: true
+                })
+            }
+        }).catch((err: any) => {
+            console.log("[AuthProvider] Username / Password Axios request failed");
+            console.log(err);
+        })
     }
 
-    onCookieChange() {
+    userSignUp(username: string, password: string) {
+        console.log("[AuthProvider] Registering User: ", username, password);
+        Axios({
+            url: "/auth/users/create", 
+            method: "post",
+            data: qs.stringify({ username, password, accessLevel: EUserAuthLevel.USER }), 
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then((result: any) => {
+            if(result.data.isValid == false) {
+                console.log("[AuthProvider] Creation of user failed: " + JSON.stringify(result.data));
+                this.setState({
+                    errorMsg: "Something is wrong with your credentials"
+                });
+            } else {
+                console.log("[AuthProvider] Creation of user valid");
+                this.setState({
+                    isAuthorized: true
+                });
+            }
+        }).catch((err: any) => {
+            console.log("[AuthProvider] Creation of user errored");
+            console.log(err);
+        })
+    }
 
+    switchSignIn() {
+        this.setState({
+            isSignUp: !this.state.isSignUp
+        })
     }
 
     render() {
         if (this.state.isAuthorized) {
             return this.props.children
         } else {
-            return <SignInPage submitFunc={this.userSubmission} errorMsg={this.state.errorMsg}/>
+            if (this.state.isSignUp) {
+                return <SignUpPage submitFunc={this.userSignUp} errorMsg={this.state.errorMsg} signUpBtn={this.switchSignIn} />
+            } else {
+                return <SignInPage submitFunc={this.userSubmission} errorMsg={this.state.errorMsg} signUpBtn={this.switchSignIn} />
+            }
         }
     }
 }
