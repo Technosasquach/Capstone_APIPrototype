@@ -59,6 +59,9 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
     }
 
     render() {
+        if(this.state.isWaiting) {
+            return <Loader />
+        }
         return (
             <div className="SignInContainer">
                 <div className="SignIn">
@@ -67,7 +70,6 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
                     </div>
                     { this.state.hasAcceptedCookies ? 
                         <div className="SignInRight">
-                            <Loader loading={this.state.isWaiting}>
                                 <Input 
                                     prefix={
                                         <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
@@ -86,7 +88,6 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
                                 />
                                 { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span className="errorMsg">{this.props.errorMsg}</span><br/></div> : undefined}
                                 <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a href="">register now!</a>
-                            </Loader>
                         </div>
                     :
                         <div className="SignInRight">

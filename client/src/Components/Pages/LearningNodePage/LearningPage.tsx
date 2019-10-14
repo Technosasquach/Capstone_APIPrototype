@@ -22,8 +22,10 @@ const LearningPage = (props: any) => {
     const [Comments, setComments] = useState({id: 0, nodeID: "", text: []} as comment);
     const [Loading, setLoading] = useState(false);
 
-    const addComment = () => {
-
+    const addComment = (Comment: string) => {
+        const temp = {id: 0, nodeID: Comments.nodeID, text: Comments.text};
+        temp.text.push(Comment);
+        setComments(temp);
     }
 
     const setUpContent = (name: string, info: any, comments: any) => {
@@ -66,7 +68,7 @@ const LearningPage = (props: any) => {
     if(Loading) {
         return <Loader/>
     } else {
-        return <InfoDisplay Content={Content} Comments={Comments} addComment={addComment}/>
+        return <div style={{height: "100%", width: "100%", overflow: "auto"}}><InfoDisplay Content={Content} Comments={Comments} addComment={addComment}/></div>
     }
 }
 
