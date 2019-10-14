@@ -39,13 +39,12 @@ const SearchState = (props: any) => {
         setLoading();
 
         let data: any = {};
-        data['query'] = "query{everyCourse{ id name nodes }}\n\n";
+        data['query'] = "query{everyCourse{ id name nodes {id}}}\n\n";
         
         const res = await axios.post("http://localhost:3000/graphql/", data)
             .then((res) => res.data.data.everyCourse.filter((name: any) => {
                 return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
             }));
-            
         //console.log("Sending search to reducer from SearchState");
         dispatch({
             type: SEARCH_COURSES,

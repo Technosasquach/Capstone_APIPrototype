@@ -13,10 +13,11 @@ exports.InformationSchema = new mongoose.Schema({
             unique: false,
             required: false
         }],
-    text: {
+    data: {
         type: String,
         unique: false,
-        required: true
+        required: true,
+        index: false
     },
     keywords: {
         type: [String],
@@ -28,17 +29,11 @@ exports.InformationSchema = new mongoose.Schema({
         unique: false,
         required: true
     },
-    order: {
-        type: Number,
+    type: {
+        type: String,
         unique: false,
         required: true
     },
-    image: {
-        type: String,
-        unique: false,
-        required: false,
-        index: false
-    }
 });
 exports.Information = mongoose.model("Information", exports.InformationSchema);
 //# sourceMappingURL=information.js.map

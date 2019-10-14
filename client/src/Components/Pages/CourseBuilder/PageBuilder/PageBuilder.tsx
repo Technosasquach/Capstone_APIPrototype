@@ -1,74 +1,86 @@
-import React, {useState, useEffect} from "react";
-import InformationField from './InformationField'
-import { Icon, Button } from 'antd';
-import "./PageBuilder.less";
+import React, {useContext} from 'react';
+import { Icon, Upload } from 'antd';
+import './PageBuilder.less';
+import { ContentContext } from './../Context/ContentContext';
+import { StructureContext } from './../Context/StructureContext';
+import { Editor } from 'react-draft-wysiwyg';
+import './../../../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { Button } from 'antd';
 
-import {content} from '../Types'
+const InformationField = (props: any) => {
+    const contentContext = useContext(ContentContext);
+    const structureContext = useContext(StructureContext);
 
-const PageBuilderPage = (props: any) => {
-  const [Information, setInformation] = useState([{key: 0, content: "", removeable: false, imageData: ""}] as content[]);
-  const [ReRender, setReRender] = useState(true);
-
-  useEffect(() => {
-    setReRender(false);
-    setInformation([...props.Content[props.Selected]]);
-  }, [props.Selected, props.Content])
-
-  useEffect(() => {
-    setReRender(true);
-  }, [Information])
-
-  const updateContent = (data: any) => {
-    const temp = [...props.Content];
-    temp[props.Selected][data.key] = data;
-    props.setContent(temp);
-    setInformation([...temp[props.Selected]]);
-  }
-
-  const addInfo = () => {    
-    const temp = [...props.Content];
-    temp[props.Selected].push({key: Information.length, content: "", removeable: true, imageData: ""} as content);
-    props.setContent(temp);
-  }
-
-  const removeInfo = (id: number) => {
-    const temp = [] as content[];
-    Information.forEach(element => {
-      temp.push({key: element.key, content: element.content, removeable: element.removeable, imageData: element.imageData});
-    });
-    if(id < temp.length-1) {
-      for(let i = id+1; i < temp.length; i++) {
-        temp[i].key = temp[i].key - 1;
-      }
+    const onChange = (editorState: any) => {
+        const temp = [...contentContext.Content];
+        temp[structureContext.Selected.index] = editorState;
+        contentContext.setContent(temp);
     }
-    temp.splice(id, 1);
-    const temp2 = [...props.Content];
-    temp2[props.Selected] = temp;
-    props.setContent(temp2);
-  }
+    
+    const uploadButton = (
+        <div>
+            <Icon type='plus' />
+            <div className="ant-upload-text">Upload</div>
+        </div>
+    );
 
-  return (
-    <div className="pageBuilder">
-      <div className="title">
-          <h1>{props.nodeName ? props.nodeName : "Loading..."}</h1>
-      </div>
-      {ReRender && Information.map(info => {
-        return <InformationField 
-        key={info.key} 
-        id={info.key} 
-        content={info.content} 
-        imageData={info.imageData} 
-        removeable={info.removeable} 
-        remover={removeInfo} 
-        update={updateContent}/>
-      })}
-      
-      <div id="contentAdder">
-        <Button onClick={addInfo}><Icon type="plus"/>Add Content</Button>
-      </div>
-    </div>
-  );
+    const beforeUpload = (file: any) => {
+        var reader = new FileReader();
+        reader.onload = (e: any) => {
+            const temp = [...contentContext.Images];
+            const temp2 = temp[structureContext.Selected.index];
+            temp2.push(e.target.result);
+            temp[structureContext.Selected.index] = temp2;
+            contentContext.setImages(temp);
+        };
+        reader.readAsDataURL(file);
+        return false;
+    }
+
+    const deleteImage = (key: number) => {
+        const temp = [...contentContext.Images];
+        const temp2 = temp[structureContext.Selected.index];
+        temp2.splice(key, 1);
+        temp[structureContext.Selected.index] = temp2;
+        contentContext.setImages(temp);
+    }
+
+    return (
+        <div className="fieldContainer">
+            <div className="title">
+                <h1>{structureContext.Name}</h1>
+            </div>
+            <div id="editor">
+                <Editor 
+                    editorState={contentContext.Content[structureContext.Selected.index]}
+                    onEditorStateChange={onChange}
+                    toolbar={{
+                        options: ['inline', 'blockType', 'fontSize', 'list', 'history'],
+                        inline: {
+                            options: ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript']
+                        },
+                    }}
+                />
+            </div>
+            {contentContext.Images[structureContext.Selected.index].length > 0 && 
+                <div className="imagecontainer">
+                    <div className="centerr">
+                        {contentContext.Images[structureContext.Selected.index].map((Image: any, key: number) => {
+                            return <div key={key} className="iamge"><img src={Image}/><Button onClick={deleteImage.bind(null, key)} className="delete">X</Button></div>
+                        })} 
+                    </div>
+                </div>
+             }
+            <div id="imagecenter">
+                <div id='imagediv'>
+                    <Upload name="avatar" listType="picture-card" className="avatar-uploader" showUploadList={false} beforeUpload={beforeUpload}>
+                        {uploadButton}
+                    </Upload>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 
-export default PageBuilderPage;
+export default InformationField;

@@ -18,6 +18,12 @@ exports.CourseSchema = new mongoose.Schema({
             unique: false,
             required: true
         }],
+    quizzes: [{
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "Quizzes",
+            unique: false,
+            required: false,
+        }]
 });
 exports.Course = mongoose.model("Courses", exports.CourseSchema);
 //# sourceMappingURL=courses.js.map

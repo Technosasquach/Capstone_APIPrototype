@@ -104,7 +104,7 @@ export class SystemSearch {
         Information.find({}, (err, data: IInformationModel[]) => {
             if(err) throw err;
             data.forEach((elm: IInformationModel) => {
-                this.addToInformationSearch(elm.id, [...elm.keywords, elm.text].join(", "));
+                this.addToInformationSearch(elm.id, [...elm.keywords, elm.data].join(", "));
             })
         });
     }

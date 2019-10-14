@@ -36,6 +36,7 @@ mongoose.connection.on("error", () => {
     console.log("MongoDB connection error. Please make sure MongoDB is running.");
     process.exit();
 });
+mongoose.set('useFindAndModify', false);
 
 // Server Configuration
 // ----------------------------------------------------------------------------
@@ -44,7 +45,7 @@ app.set("port", process.env.PORT || 3000);
 app.use(compression());
 // URL/URI and HTTP content decoding and parsing
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 // Cookie content decoding and parsing
 import { AuthenticationConfig } from "./config/autentication.config";

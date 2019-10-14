@@ -52,6 +52,9 @@ export class SignUpPage extends React.Component<{ submitFunc: Function, errorMsg
     }
 
     render() {
+        if(this.state.isWaiting) {
+            return <Loader/>
+        }
         return (
             <div className="SignInContainer">
                 <div className="SignIn">
@@ -59,7 +62,6 @@ export class SignUpPage extends React.Component<{ submitFunc: Function, errorMsg
                         <span>Syn|LERN</span>
                     </div>
                     <div className="SignInRight">
-                        <Loader loading={this.state.isWaiting}>
                             <span>SignUp!</span>
                             <hr/>
                             <Input 
@@ -80,7 +82,6 @@ export class SignUpPage extends React.Component<{ submitFunc: Function, errorMsg
                             />
                             { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span className="errorMsg">{this.props.errorMsg}</span><br/></div> : undefined}
                             <Button type="primary" onClick={this.handleSubmit}>SignUp</Button> Or <a onClick={this.handleSignUp}>Sign In</a>
-                        </Loader>
                     </div>
                 </div>
             </div>

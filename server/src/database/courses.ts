@@ -3,6 +3,7 @@ import * as mongoose from "mongoose";
 export interface CourseModel extends mongoose.Document {
     name: string;
     nodes: mongoose.Types.ObjectId[];
+    quizzes: mongoose.Types.ObjectId[];
 }
 
 export interface TSCourseModel extends CourseModel {
@@ -27,6 +28,12 @@ export const CourseSchema: mongoose.Schema = new mongoose.Schema({
         unique: false,
         required: true
     }],
+    quizzes: [{
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Quizzes",
+        unique: false,
+        required: false,
+    }]
 });
 
 export const Course: mongoose.Model<CourseModel> = mongoose.model<CourseModel>("Courses", CourseSchema);

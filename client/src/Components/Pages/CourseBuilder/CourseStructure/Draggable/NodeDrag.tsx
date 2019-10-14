@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useContext } from 'react'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 import { XYCoord } from 'dnd-core'
@@ -7,32 +7,14 @@ import { Button } from 'antd'
 
 import './NodeDrag.less'
 
-import {selected} from './../../Types'
-
-const style = {
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-}
-
-const styletwo = {
-  padding: '0.5rem 1rem',
-  backgroundColor: 'white',
-}
-
-const quizstyle = {
-  width: '90%',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-}
+import {StructureContext} from './../../Context/StructureContext';
+import {QuizContext} from './../../Context/QuizContext';
 
 export interface CardProps {
   id: any
   text: string
   index: number
   moveCard: (dragIndex: number, hoverIndex: number) => void,
-  setSelected: (input: selected) => void;
 }
 
 interface DragItem {
@@ -40,7 +22,10 @@ interface DragItem {
   id: string
   type: string
 }
-const Card: React.FC<CardProps> = ({ id, text, index, moveCard, setSelected }) => {
+const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
+  const structureContext = useContext(StructureContext);
+  const quizContext = useContext(QuizContext);
+
   const [Quiz, setQuiz] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null)
@@ -104,27 +89,36 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard, setSelected }) =
   })
 
   const editPage = () => {
-    setSelected({index: id + 1, type: 0});
+    structureContext.setSelected({index: id + 1, type: 0});
+  }
+
+  const editQuiz = () => {
+    structureContext.setSelected({index: id + 1, type: 1});
   }
 
   const setquiz = () => {
-    setQuiz(true);
+    if(!Quiz) {
+      quizContext.AddQuiz(id+1);
+    } else {
+      quizContext.DeleteQuiz(id+1);
+    }
+    setQuiz(!Quiz);
   }
 
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
   return (
     <div ref={ref}>
-      <div style={Quiz ? {...styletwo, opacity }: { ...style, opacity }}>
+      <div className="card" style={{ opacity }}>
         <span>
-          {Quiz && true}
           {text}
-          <Button onClick={editPage} className={"Selector"}>></Button>
-          <Button onClick={setquiz} className={"Selector"}>+</Button>
+          <Button onClick={editPage} className={"Selector"} style={structureContext.Selected.index == id+1 && structureContext.Selected.type == 0 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
+          <Button onClick={setquiz} className={"Selector"}>{Quiz ? 'x' : '+'}</Button>
         </span>
       </div>
-      {Quiz && <div style={{...quizstyle}}>
+      {Quiz && <div className="quizcard">
         {text} Quiz
+        <Button onClick={editQuiz} className={"Selector"} style={structureContext.Selected.index == id+1 && structureContext.Selected.type == 1 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
       </div>}
     </div>
   )

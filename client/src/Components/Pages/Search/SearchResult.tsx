@@ -30,13 +30,13 @@ const SearchResult = () => {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            render: (text, record) => <Link to={{
-                pathname: 'learning',
-                state: {
-                    nodeID : record.id
-                }
-            }}>{text}</Link>
-            // render: (text, record) => <Link to={'learning/' + record.id}>{text}</Link>
+            // render: (text, record) => <Link to={{
+            //     pathname: 'learning',
+            //     state: {
+            //         nodeID : record.id
+            //     }
+            // }}>{text}</Link>
+            render: (text, record) => <Link to={'learning/' + record.id}>{text}</Link>
         },
         {
             title: 'Depth',

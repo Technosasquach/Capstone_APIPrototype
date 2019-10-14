@@ -164,6 +164,7 @@ export class AuthenticationController {
         user.username = username;
         user.password = this.cryptoPassword(password);
         user.accessLevel = authLevel;
+        console.log(user);
         user.save();
     }
 

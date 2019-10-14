@@ -74,7 +74,7 @@ class SystemSearch {
             if (err)
                 throw err;
             data.forEach((elm) => {
-                this.addToInformationSearch(elm.id, [...elm.keywords, elm.text].join(", "));
+                this.addToInformationSearch(elm.id, [...elm.keywords, elm.data].join(", "));
             });
         });
     }

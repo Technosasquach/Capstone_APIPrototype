@@ -8,10 +8,9 @@ exports.InformationType = new graphql_1.GraphQLObjectType({
         id: { type: graphql_1.GraphQLString },
         createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         related: { type: new graphql_1.GraphQLNonNull(new graphql_1.GraphQLList(graphql_1.GraphQLID)) },
-        text: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+        data: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
         nodeId: { type: graphql_1.GraphQLString },
-        order: { type: graphql_1.GraphQLInt },
-        image: { type: graphql_1.GraphQLString }
+        type: { type: graphql_1.GraphQLString },
     })
 });
 exports.InformationQueries = {
@@ -31,7 +30,7 @@ exports.InformationQueries = {
     informationByNodeId: {
         type: new graphql_1.GraphQLList(exports.InformationType),
         args: { nodeId: { type: graphql_1.GraphQLString } },
-        resolve(parent, args) {
+        resolve(_parent, args) {
             return information_js_1.Information.find({ nodeId: args.nodeId });
         }
     }
@@ -40,9 +39,8 @@ exports.InformationMutations = {
     addInformation: {
         type: exports.InformationType,
         args: {
-            createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-            related: { type: new graphql_1.GraphQLNonNull(new graphql_1.GraphQLList(graphql_1.GraphQLID)) },
-            text: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
+            data: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            type: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
         },
         resolve(parent, args) {
             const information = new information_js_1.Information(args);
@@ -53,9 +51,8 @@ exports.InformationMutations = {
         type: exports.InformationType,
         args: {
             id: { type: graphql_1.GraphQLString },
-            createdAt: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
-            related: { type: new graphql_1.GraphQLNonNull(new graphql_1.GraphQLList(graphql_1.GraphQLID)) },
-            text: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
+            data: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            type: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
         },
         resolve(parent, args) {
             return information_js_1.Information.findByIdAndUpdate(args.id, args);
@@ -71,7 +68,8 @@ exports.InformationMutations = {
     addInformationNode: {
         type: exports.InformationType,
         args: {
-            text: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            data: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
+            type: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
             nodeId: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) }
         },
         resolve(parent, args) {

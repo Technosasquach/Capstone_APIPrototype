@@ -1,6 +1,7 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
-import { Node } from '../database/nodes.js';
+import { Node, Information, Comment } from '../database/index';
 import { InformationType } from './informationSchema';
+import { CommentType } from './commentSchema';
 
 export const NodeType:any = new GraphQLObjectType({
     name: 'Node',
@@ -26,7 +27,19 @@ export const NodeType:any = new GraphQLObjectType({
                     return Node.findById(id);
                 });
             }
-         }
+        },
+        info: {
+            type: new GraphQLList(InformationType),
+            resolve(parent, args) {
+                return Information.find({nodeId: parent.id});
+            }
+        },
+        comments: {
+            type: new GraphQLList(CommentType),
+            resolve(parent, args) {
+                return Comment.find({infoNodeId: parent.id})
+            }
+        }
     })
 });
 

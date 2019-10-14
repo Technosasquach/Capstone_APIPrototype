@@ -10,11 +10,10 @@ import * as mongoose from "mongoose";
 export interface IInformationModel extends mongoose.Document {
     createdAt: Date;
     related: mongoose.Types.ObjectId[];
-    text: string;
+    data: string;
     keywords: string[];
     nodeId: mongoose.Schema.Types.ObjectId;
-    order: number;
-    image: Buffer;
+    type: string;
 }
 
 export const InformationSchema: mongoose.Schema = new mongoose.Schema({
@@ -29,10 +28,11 @@ export const InformationSchema: mongoose.Schema = new mongoose.Schema({
         unique: false,
         required: false
     }],
-    text: {
+    data: {
         type: String,
         unique: false,
-        required: true
+        required: true,
+        index: false
     },
     keywords: {
         type: [String],
@@ -44,17 +44,11 @@ export const InformationSchema: mongoose.Schema = new mongoose.Schema({
         unique: false,
         required: true
     },
-    order: {
-        type: Number,
+    type: {
+        type: String,
         unique: false,
         required: true
     },
-    image: {
-        type: String,
-        unique: false,
-        required: false,
-        index: false
-    }
 });
 
 export const Information: mongoose.Model<IInformationModel> = mongoose.model<IInformationModel>("Information", InformationSchema);

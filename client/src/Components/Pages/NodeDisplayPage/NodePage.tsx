@@ -99,22 +99,26 @@ const SearchPage = (props: any) => {
         }
       }
     
-
-  return (
-      <Loader loading={Loading}>
-          <div id="NodePage">
-              <h1>{Name}</h1>
-              <hr/>
-              <h2>Related Nodes</h2>
-              <h3>Parent</h3>
-              <Table columns={columns} pagination={false} dataSource={ParentData} />
-              <h3>Children</h3>
-              <Table columns={columns} pagination={false} dataSource={ChildData} />
-              <Link to={"/node/" + props.match.params.id + "/builder/"}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
-          </div>
-      </Loader>
-  );
     
+  if(Loading) {
+    return <Loader/>
+  } else {
+    return (
+      <div className="NodePage">
+          <h1>{Name}</h1>
+          <hr/>
+          <h2>Related Nodes</h2>
+          <h3>Parent</h3>
+          <Table columns={columns} pagination={false} dataSource={ParentData} />
+          <h3>Children</h3>
+          <Table columns={columns} pagination={false} dataSource={ChildData} />
+          <div style={{overflow: "auto", marginBottom: "50px"}}>
+            <Link to={"/node/" + props.match.params.id + "/coursebuilder/"}><Button type="primary" style={{float: "right"}}>Course Builder</Button></Link>
+            <Link to={"/node/" + props.match.params.id + "/builder/"}><Button type="primary" style={{float: "right", marginRight: "5px"}}>Page Builder</Button></Link>
+          </div>
+      </div>
+    );
+  }    
 }
 
 export default SearchPage;

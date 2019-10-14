@@ -9,13 +9,13 @@ import ContentArea from "./Components/Top Level/ContentArea/ContentArea";
 
 import NodeDisplay from "./Components/Pages/NodeDisplayPage/NodePage";
 import LearningPage from "./Components/Pages/LearningNodePage/LearningPage";
-import ExamPage from "./Components/Pages/ExamPage/ExamPage";
 import AccountPage from "./Components/Pages/AccountPage/AccountPage";
 import CourseBuilder from "./Components/Pages/CourseBuilder/CourseBuilder";
 import HomePage from './Components/Pages/HomePage/HomePage';
 import SearchResultPage from "./Components/Pages/Search/SearchResult";
 
 import CourseDisplayPage from "./Components/Pages/CourseDisplayPage/CourseDisplayPage";
+import PageBuilder from "./Components/Pages/PageBuilder/PageBuilder";
 
 import SearchState from './Context/Search/SearchState'
 import AuthProvider from "./Components/Utility/AuthProvider"
@@ -53,12 +53,12 @@ export default class Root extends React.Component<any, any> {
                                 <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
                                     <Switch>
                                         <Route path="/searchresults" component={SearchResultPage} />
-                                        <Route path="/learning" component={LearningPage} />
-                                        <Route path="/learning/:nodeID" component={LearningPage} />
+                                        <Route path="/learning/:id" component={LearningPage} />
                                         <Route path="/course/:id" component={CourseDisplayPage} />
-                                        <Route path="/exam" component={ExamPage} />
                                         <Route path="/account" component={AccountPage} />
-                                        <Route path="/node/:id/builder" component={CourseBuilder} />
+                                        <Route path="/node/:id/coursebuilder" component={CourseBuilder} />
+                                        <Route path="/node/:id/builder/Draft.css" component={PageBuilder} />
+                                        <Route path="/node/:id/builder" component={PageBuilder} />
                                         <Route path="/node/:id" component={NodeDisplay} />
                                         <Route path="/node/" component={NodeDisplay} />
                                         <Route path="/" exact component={HomePage} />

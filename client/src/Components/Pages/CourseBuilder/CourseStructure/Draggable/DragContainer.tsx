@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useContext } from 'react'
 import Card from './NodeDrag'
 import update from 'immutability-helper'
 
-import Carder from './Card'
+import {StructureContext} from './../../Context/StructureContext';
 
-import {selected} from './../../Types';
+import Carder from './Card'
 
 const style = {
   width: "100%",
@@ -19,45 +19,31 @@ export interface ContainerState {
   cards: Item[]
 }
 
-interface card {
-  id: string;
-  name: string;
-}
 
-interface structure {
-  index: [number];
-  cards: [card]
-}
 
-interface Props {
-  Structure: structure;
-  Parent: card;
-  setSelected: (input: selected) => void;
-}
-
-const Container: React.FC<Props> = ({Structure, Parent, setSelected}) => {
-  {
+const Container: React.FC = (props: any) => {
+    const structureContext = useContext(StructureContext);
     const [cards, setCards] = useState([] as Item[]);
 
     useEffect(() => {
-        if(Structure.cards !== undefined && Structure.cards.length > 0) {
+        if(structureContext.Structure.cards !== undefined && structureContext.Structure.cards.length > 0) {
           let arr: Item[] = [];
           let i = 0;
-          Structure.index.map((index) => {
-            const temp = Structure.cards[index];
+          structureContext.Structure.index.map((index) => {
+            const temp = structureContext.Structure.cards[index];
             arr.push({id: i++, text: temp.name});
           })
           setCards(arr);
         } else if (cards.length > 0) {
           setCards([]);
         }
-    }, [Structure]);
+    }, [structureContext.Structure]);
 
     const updateStructure = (dragger: number, where: number) => {
-      const temp = Structure.index[dragger];
-      const temper = Structure.index[where];
-      Structure.index[dragger] = temper;
-      Structure.index[where] = temp;
+      const temp = structureContext.Structure.index[dragger];
+      const temper = structureContext.Structure.index[where];
+      structureContext.Structure.index[dragger] = temper;
+      structureContext.Structure.index[where] = temp;
     }
 
     const moveCard = useCallback(
@@ -81,17 +67,16 @@ const Container: React.FC<Props> = ({Structure, Parent, setSelected}) => {
           id={card.id}
           text={card.text}
           moveCard={moveCard}
-          setSelected={setSelected}
         />
       )
     }
     return (
       <>
-        {Parent.name !== undefined && <Carder name={Parent.name} id={Parent.id} setSelected={setSelected}/>}
+        {structureContext.Parent.name !== undefined && <Carder name={structureContext.Parent.name} id={structureContext.Parent.id} setSelected={structureContext.setSelected} Selected={structureContext.Selected}/>}
         <div style={style}>{cards.map((card, i) => renderCard(card, i))}</div>
       </>
     )
-  }
+  
 }
 
 export default Container

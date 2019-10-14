@@ -1,43 +1,42 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { Button } from 'antd';
+import './card.less';
 
-const style = {
-    border: '1px solid grey',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-  }
-
-
-  const quizstyle = {
-    border: '1px solid grey',
-    width: '90%',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-  }
+import {QuizContext} from './../../Context/QuizContext';
 
 const Carder = (props: any) => {
   const [Quiz, setQuiz] = useState(false);
-    const select = () => {
-      props.setSelected({index: 0, type: 0});
-    }
 
-    const updatequiz = () => {
-      setQuiz(true);
+  const quizContext = useContext(QuizContext);
+  const select = () => {
+    props.setSelected({index: 0, type: 0});
+  }
+
+  const selectquiz = () => {
+    props.setSelected({index: 0, type: 1});
+  }
+
+  const updatequiz = () => {
+    if(!Quiz) {
+      quizContext.AddQuiz(0);
+    } else {
+      quizContext.DeleteQuiz(0);
     }
+    setQuiz(!Quiz);
+  }
 
     return (
       <div>
-        <div style={{ ...style }}>
+        <div className="cardMain">
           <span>
             {props.name}
-            <Button onClick={select} className={"Selector"}>></Button>
-            <Button onClick={updatequiz} className={"Selector"}>+</Button>
+            <Button onClick={select} className={"Selector"} style={props.Selected.index == 0 && props.Selected.type == 0 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
+            <Button onClick={updatequiz} className={"Selector"}>{Quiz ? 'x' : '+'}</Button>
           </span>
         </div>
-        {Quiz && <div style={{...quizstyle}}>
+        {Quiz && <div className="quizcardMain">
           {props.name} Quiz
+          <Button onClick={selectquiz} className={"Selector"} style={props.Selected.index == 0 && props.Selected.type == 1 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
         </div>}
       </div>
     );

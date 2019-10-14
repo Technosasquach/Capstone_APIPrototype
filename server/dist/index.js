@@ -15,6 +15,10 @@ core_1.Server.listen(3000, () => {
     // MUST FORCE QUIT, OR RUN ONCE
     // Generates searchable set
     // 
+    // const token = AuthenticationController.generateJWT("test", EUserAuthLevel.ADMIN);
+    // console.log("JWT TOKEN: " + token)
+    // console.log("AUTH JWT TOKEN: " + JSON.stringify(AuthenticationController.authenticateJWT(token)));
+    // console.log("PASSWORD CRYPTO: password: helloWorld -> crypto: " + AuthenticationController.cryptoPassword("helloWorld"));
     // console.log("[Debug] Outputting all mounted routes");
     // App._router.stack.forEach(print.bind(undefined, []));
 });

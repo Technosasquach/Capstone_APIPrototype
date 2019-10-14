@@ -1,22 +1,32 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { Tree } from 'antd';
 
 const { TreeNode } = Tree;
 
-import { content, structure } from './../Types';
+import { structure } from './../Types';
+
+import {StructureContext} from './../Context/StructureContext';
+import {ContentContext} from './../Context/ContentContext';
+import {QuizContext} from './../Context/QuizContext';
+
+import { EditorState, convertFromRaw } from 'draft-js';
+const draftandmark = require('./../PageBuilder/markdownDraftjs/index');
 
 const CourseNodeAdder = (props: any) => {
   const [CheckedKeys, setCheckedKeys] = useState({checked: []} as any);
   const [TreeData, setTreeData] = useState([] as any);
+  const structureContext = useContext(StructureContext);
+  const contentContext = useContext(ContentContext);
+  const quizContext = useContext(QuizContext);
 
   useEffect(() => {
-    if(props.Children.length > 0) {
-      setUpTree(props.Children);
+    if(structureContext.Children.length > 0) {
+      setUpTree(structureContext.Children);
     } else {
       setTreeData([]);
     }
-  }, [props.Children]);
+  }, [structureContext.Children]);
 
   const setUpTree = (data: any[]) => {
     let treeData = [] as any[];
@@ -72,12 +82,41 @@ const CourseNodeAdder = (props: any) => {
     return diff[0];
 }
 
+  const loadData = (id: string) => {
+    let data = {query:  "query{informationByNodeId(nodeId: \"" + id + "\"){data type id}}"};
+    axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
+      return ([...res.data.data.informationByNodeId]);
+    }).then((json: any) => {
+      const IDS = [] as any[];
+      const tempContent = [...contentContext.Content];
+      const tempImages = [...contentContext.Images]
+      const tempIDS = [...contentContext.IDS]
+      tempContent.push(EditorState.createEmpty());
+      tempImages.push([]);
+      tempIDS.push([]);
+
+      json.forEach((element: any) => {
+        if(element.type === "text") {
+          tempContent[tempContent.length-1] = (EditorState.createWithContent(convertFromRaw(draftandmark.markdownToDraft(element.data))));
+        } else {
+          const data = JSON.parse(element.data);
+          tempImages[tempImages.length-1] = ([...data]);
+        }
+        IDS.push({id: element.id, type: element.type});
+      });
+      tempIDS[tempIDS.length-1] = (IDS);
+      contentContext.setContent(tempContent);
+      contentContext.setImages(tempImages);
+      contentContext.setIDS(tempIDS);
+    });
+  }
+
   const onCheck = (CheckedKeysNew: any, e: any) => {
     const change = changed(CheckedKeysNew.checked, CheckedKeys.checked);
-    const structure = {cards: props.Structure.cards, index: props.Structure.index, treeIndex: props.Structure.treeIndex} as structure;
+    const structure = {cards: structureContext.Structure.cards, index: structureContext.Structure.index, treeIndex: structureContext.Structure.treeIndex} as structure;
     if(CheckedKeysNew.checked.length > CheckedKeys.checked.length) {
       setCheckedKeys(CheckedKeysNew);
-      const index = props.Structure.index.length;
+      const index = structureContext.Structure.index.length;
       e.checkedNodes.forEach((element: any) => {
         if(element.key === change) {
           structure.cards.push({
@@ -86,11 +125,9 @@ const CourseNodeAdder = (props: any) => {
           });
           structure.index.push(index);
           structure.treeIndex.push(change);
-          props.setStructure(structure);
+          structureContext.setStructure(structure);
 
-          const temp = [...props.Content];
-          temp.push([{key: 0, content: "", removeable: false, imageData: ""}] as content[]);
-          props.setContent(temp);
+          loadData(element.props.nodeID);
         }
       });
     } else if (CheckedKeysNew.checked.length < CheckedKeys.checked.length) {
@@ -106,14 +143,15 @@ const CourseNodeAdder = (props: any) => {
       structure.treeIndex.splice(remove, 1);
       const findIndex = structure.index.indexOf(remove);
       structure.index.splice(findIndex, 1);
-      props.setStructure(structure);
+      structureContext.setStructure(structure);
 
-      const temp2 = [...props.Content];
-      temp2.splice(remove + 1, 1);
-      props.setContent(temp2);
-      if(props.Selected === remove + 1) {
-        props.setSelected(0);
+      if(structureContext.Selected.index === remove + 1) {
+        structureContext.setSelected({index: 0, type: 0});
       }
+      const temp2 = [...contentContext.Content];
+      temp2.splice(remove + 1, 1);
+      contentContext.setContent(temp2);
+      quizContext.checkIfRemove(remove+1);
     }
   };
 

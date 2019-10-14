@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import * as fs from "fs";
 import * as path from "path";
 import { AuthenticationController } from "./authentication";
-import { UserModel } from "./../database"
+import { UserModel, CourseModel } from "./../database"
 const routes = Router();
 
 routes.post("/", (req: Request, res: Response) => {
@@ -18,35 +18,35 @@ routes.get("/api/", authenticateConnection, function(req: Request, res: Response
     });
 });
 
-import {Course, Information} from './../database/index'
-import { AuthenticationConfig } from "src/config/autentication.config";
-routes.post("/coursebuilder/", function(req: Request, res: Response) {
+
+import {ContentController} from './ContentBuilder';
+routes.post("/coursebuilder/", authenticateConnection, async function(req: Request, res: Response) {
     const data = req.body;
-    const temp = new Course({
-        name: data.coursename,
-        nodes: data.nodes
-    });
-    temp.save();
-    try {
-        let node = 0;
-        data.data.forEach((element: any) => {
-            let order = 0;
-            element.forEach((items: any) => {
-                new Information({
-                    text: items.content,
-                    image: items.imageData,
-                    nodeId: data.nodes[node],
-                    order: order++,
-                }).save();
-            })
-            node++;
-        });
-    } catch (e) {
-        console.log(e);
+    if(data.auth.accessLevel === "ADMIN") {
+        const response = await ContentController.BuildCourse(data.coursename, data.nodes, data.data, data.quizzes, data.images, data.ids);
+        if (typeof(response) == "object") {
+            res.end(res.json(response._id));
+        } else {
+            res.end("" + response);
+        }
+    } else {
+        res.status(401).json({ status: 'Access Denied, Invalid Access'});
     }
+});
 
 
-    res.end("" + temp._id);
+routes.post("/pagebuilder/", authenticateConnection, async function(req: Request, res: Response) {
+    const data = req.body;
+    if(data.auth.accessLevel === "ADMIN") {
+        const response = await ContentController.BuildPage(data.text, data.images, data.ids, data.id);
+        if(response == -1) {
+            res.end("-1");
+        } else {
+            res.end();
+        }
+    } else {
+        res.status(401).json({ status: 'Access Denied, Invalid Access'});
+    }
 })
 
 
@@ -129,6 +129,10 @@ routes.post("/auth/users/create", function(req: Request, res: Response){
     const username = req.body.username || "";
     const password = req.body.password || "";
     const accessLevel = req.body.accessLevel || "";
+
+    console.log(username);
+    console.log(req.body);
+
     AuthenticationController.createUser(username, password, accessLevel);
     setTimeout(() => {
         const token = AuthenticationController.generateJWT(username, accessLevel);
@@ -157,14 +161,13 @@ routes.post("/graph/", authenticateConnection, function(req: Request, res: Respo
 export default routes;
 
 
-
 function authenticateConnection (req: Request, res: Response, next: NextFunction) {
     const token = req.signedCookies["jwt"];
     const auth = AuthenticationController.authenticateJWT(token);
     if(auth.valid) {
+        req.body = {...req.body, auth: auth};
         next();
     } else {
         res.status(401).json({ status: 'Access Denied, Invalid JWT Token'});
     }
-    
 }
