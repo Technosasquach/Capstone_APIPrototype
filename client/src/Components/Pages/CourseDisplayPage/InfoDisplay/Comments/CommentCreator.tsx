@@ -6,6 +6,8 @@ const {TextArea} = Input;
 const CommentCreator = (props: any) => {
     const [Visible, setVisible] = useState(false);
     const [Ref, setRef] = useState();
+
+
     const submitComment = async (nodeID: string, comment: string) => {
         return await axios({
             url: 'http://localhost:3000/graphql',
@@ -14,19 +16,28 @@ const CommentCreator = (props: any) => {
                 query: `
                 mutation CreateCommentForNode($infoNodeId: String!, $comment: String!){
                     addComment(infoNodeId: $infoNodeId, contents: $comment) {
-                        infoNodeId
+                        id
                         contents
+                        userID {
+                            id
+                            username
+                        }
                       }
                   }`,
                 variables: {
                     infoNodeId: nodeID,
-                    comment: comment
+                    comment: comment,
                 }
             }
-        }).then(() => {
-            return 1;
+        }).then((res: any) => {
+            return {
+                id: res.data.data.addComment.id,
+                text: res.data.data.addComment.contents,
+                userID: res.data.data.addComment.userID.id,
+                username: res.data.data.addComment.userID.username
+            };
         }).catch(() => {
-            return -1;
+            return null;
         });
     }
 
@@ -34,11 +45,15 @@ const CommentCreator = (props: any) => {
         setVisible(true);
     };
     
-    const handleOk = (e: any) => {
+    const handleOk = async (e: any) => {
         if(Ref.textAreaRef.value) {
-            const temp = submitComment(props.nodeID, Ref.textAreaRef.value);
+            const temp = await submitComment(props.nodeID, Ref.textAreaRef.value);
             if (temp) {
-                props.addComment(Ref.textAreaRef.value);
+                props.addComment(temp.id, temp.text, temp.userID, temp.username);
+                Ref.textAreaRef.value = "";
+            } else {
+                window.alert("Invalid Comment");
+                Ref.textAreaRef.value = "";
             }
         }
         setVisible(false);

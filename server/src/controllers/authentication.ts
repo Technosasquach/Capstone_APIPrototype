@@ -32,6 +32,7 @@ export interface JWTPayloadStandard {
 export interface JWTPayload extends JWTPayloadStandard {
     username: string, // Username of the user
     accessLevel: EUserAuthLevel // Auth level of the user
+    userID: string //ID of the user
 }
 
 export const JWTPayloadStandard: JWTPayloadStandard = {
@@ -70,7 +71,7 @@ export class AuthenticationController {
         try {
             return { ...jwt.verify(token, authKey) as JWTPayloadVerification, valid: true };
         } catch {
-            return { ...JWTPayloadStandard, username: "bad", accessLevel: EUserAuthLevel.USER, valid: false };
+            return { ...JWTPayloadStandard, username: "bad", accessLevel: EUserAuthLevel.USER, valid: false, userID: "bad" };
         }
     }
 
@@ -108,11 +109,12 @@ export class AuthenticationController {
      * @returns {string} Returned JWT token
      * @memberof AuthenticationController
      */
-    public static generateJWT(username: string, accessLevel: EUserAuthLevel): string {
+    public static generateJWT(username: string, accessLevel: EUserAuthLevel, userID: string): string {
         const token = jwt.sign(
             { 
                 username, 
                 accessLevel,
+                userID,
                 iat: JWTPayloadStandard.iat
             }, 
             AuthenticationConfig.authKey, 
@@ -166,6 +168,7 @@ export class AuthenticationController {
         user.accessLevel = authLevel;
         console.log(user);
         user.save();
+        return user._id;
     }
 
     public static DaysFromNowInMilliseconds(days: number): number {

@@ -67,12 +67,13 @@ routes.post("/auth/verifyUser/", function (req, res) {
         console.log("[Routes:Auth] isValid: " + isValid + ", user: " + user || "");
         if (isValid) {
             // Return with a JWT token, set cookies too
-            const token = authentication_1.AuthenticationController.generateJWT(user.username, user.accessLevel);
+            const token = authentication_1.AuthenticationController.generateJWT(user.username, user.accessLevel, user.id);
             const auth = authentication_1.AuthenticationController.authenticateJWT(token);
             // Set all JWT cookies
             res.cookie("jwt", token, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30), signed: true });
             res.cookie("username", user.username, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
             res.cookie("accessLevel", user.accessLevel, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
+            res.cookie("id", user.id, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
             // Return success
             res.json({
                 isValid: true,
@@ -87,6 +88,7 @@ routes.post("/auth/verifyUser/", function (req, res) {
             res.cookie("jwt", "", { signed: true });
             res.cookie("username", "", { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
             res.cookie("accessLevel", "", { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
+            res.cookie("id", "", { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
             // Return failure
             res.json({
                 isValid: false,
@@ -109,10 +111,11 @@ routes.post("/auth/verifyToken/", function (req, res) {
     const auth = authentication_1.AuthenticationController.authenticateJWT(token);
     if (auth.valid) {
         // Generate a new cookie for the user
-        const token = authentication_1.AuthenticationController.generateJWT(auth.username, auth.accessLevel);
+        const token = authentication_1.AuthenticationController.generateJWT(auth.username, auth.accessLevel, auth.userID);
         res.cookie("jwt", token, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30), signed: true });
         res.cookie("username", auth.username, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
         res.cookie("accessLevel", auth.accessLevel, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
+        res.cookie("id", auth.userID, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
         res.json({
             isValid: true,
             status: "Success",
@@ -126,6 +129,7 @@ routes.post("/auth/verifyToken/", function (req, res) {
         res.cookie("jwt", "", { httpOnly: true, signed: true });
         res.cookie("username", "", { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
         res.cookie("accessLevel", "", { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
+        res.cookie("id", "", { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });
         res.json({
             isValid: false,
             status: "Failure",
@@ -137,11 +141,9 @@ routes.post("/auth/users/create", function (req, res) {
     const username = req.body.username || "";
     const password = req.body.password || "";
     const accessLevel = req.body.accessLevel || "";
-    console.log(username);
-    console.log(req.body);
-    authentication_1.AuthenticationController.createUser(username, password, accessLevel);
+    const id = authentication_1.AuthenticationController.createUser(username, password, accessLevel);
     setTimeout(() => {
-        const token = authentication_1.AuthenticationController.generateJWT(username, accessLevel);
+        const token = authentication_1.AuthenticationController.generateJWT(username, accessLevel, id);
         const auth = authentication_1.AuthenticationController.authenticateJWT(token);
         res.cookie("jwt", token, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30), signed: true });
         res.cookie("username", auth.username, { maxAge: authentication_1.AuthenticationController.DaysFromNowInMilliseconds(30) });

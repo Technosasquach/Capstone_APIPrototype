@@ -5,7 +5,6 @@ export enum Answer {
   B = 'B',
   C = 'C',
   D = 'D',
-  NULL = "NULL"
 }
 
 export interface IQuestion {
@@ -59,7 +58,7 @@ const quizProvider = (props:any) => {
 
   const AddQuiz = (index: number) => {
     const temp = [...Quiz];
-    temp.push([{question: "", answer: Answer.NULL, answers: ["", "", "", ""], removeable: false}]);
+    temp.push([{question: "", answer: Answer.A, answers: ["", "", "", ""], removeable: false}]);
     setQuiz(temp);
     const tempindex = [...Indexing];
     tempindex.push({index: tempindex.length, indexstructure: index});  
@@ -128,7 +127,7 @@ const quizProvider = (props:any) => {
     for(let i = 0; i < Quiz[index].length; i++) {
       temp.push({question: Quiz[index][i].question, answer: Quiz[index][i].answer, answers: Quiz[index][i].answers, removeable: Quiz[index][i].removeable});
     }
-    temp.push({question: "", answer: "NULL" as Answer, answers: ["","","",""], removeable: true});
+    temp.push({question: "", answer: Answer.A, answers: ["","","",""], removeable: true});
     setQuestions(temp);
   }
 

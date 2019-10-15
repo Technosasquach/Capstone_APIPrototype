@@ -17,9 +17,9 @@ const InfoDisplay = (props: any) => {
                     <Title style={{marginTop: "10px"}} level={4}>Comment Section</Title>
                     <div style={{display: "flex", width: "100%"}}>
                         <div style={{width: "95%"}}>
-                            <CommentList userComments={props.Comments} />
+                            <CommentList editComment={props.CommentFunctions[1]} removeComment={props.CommentFunctions[2]} Comments={props.Comments} />
                         </div>
-                        <CommentCreator addComment={props.addComment} nodeID={props.Content.nodeID} />
+                        <CommentCreator addComment={props.CommentFunctions[0]} nodeID={props.Content.nodeID} />
                     </div>
                 </div>)
                  : 

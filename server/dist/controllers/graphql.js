@@ -22,10 +22,13 @@ const RootSchema = new graphql_1.GraphQLSchema({
     mutation: RootMutation
 });
 const root = { hello: () => 'Hello world!' };
-routes.use('/graphql', graphqlHTTP({
-    schema: RootSchema,
-    rootValue: root,
-    graphiql: true,
-}));
+routes.use('/graphql', (req, res) => {
+    graphqlHTTP({
+        schema: RootSchema,
+        rootValue: root,
+        graphiql: true,
+        context: { req },
+    })(req, res);
+});
 exports.default = routes;
 //# sourceMappingURL=graphql.js.map

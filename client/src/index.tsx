@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./index.less";
 
 import HeaderBar from "./Components/Top Level/HeaderBar/HeaderBar";
-import SideBar from "./Components/Top Level/SideBar/VersionCreator/SideBar";
 import ContentArea from "./Components/Top Level/ContentArea/ContentArea";
 
 import NodeDisplay from "./Components/Pages/NodeDisplayPage/NodePage";
@@ -23,9 +22,6 @@ import AuthProvider from "./Components/Utility/AuthProvider"
 export default class Root extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
-        this.state = {
-            sidestate: true,
-        }
     }
     componentDidMount() {
         console.log("[CORE] React has loaded");
@@ -35,11 +31,6 @@ export default class Root extends React.Component<any, any> {
         console.log("[CORE] React will load");
     }
 
-    ToggleState = () => {
-        this.setState({
-            sidestate: !this.state.sidestate,
-        })
-    }
 
     render() {
         return (
@@ -49,8 +40,7 @@ export default class Root extends React.Component<any, any> {
                         <div>
                             <HeaderBar />
                             <div className="contentarea">
-                                <SideBar sidestate={this.state.sidestate} />
-                                <ContentArea sidestate={this.state.sidestate} toggler={this.ToggleState}>
+                                <ContentArea>
                                     <Switch>
                                         <Route path="/searchresults" component={SearchResultPage} />
                                         <Route path="/learning/:id" component={LearningPage} />

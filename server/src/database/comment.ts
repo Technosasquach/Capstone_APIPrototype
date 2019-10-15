@@ -9,7 +9,7 @@ import * as mongoose from "mongoose";
  */
 export interface ICommentModel extends mongoose.Document {
   nodeId: mongoose.Schema.Types.ObjectId;
-  // user: mongoose.Schema.Types.ObjectId;
+  user: mongoose.Schema.Types.ObjectId;
   contents: string;
   createdAt: Date;
 }
@@ -54,11 +54,11 @@ export const CommentSchema: mongoose.Schema = new mongoose.Schema({
       type: String,
       unique: false,
       required: true
+  },
+  userID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'users'
   }
-  // userId: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'users'
-  // }
 });
 
 

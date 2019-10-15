@@ -5,40 +5,23 @@ import "./CommentList.less";
 
 import { List } from "antd";
 
-interface iProps {
-    userComments: iComment[];
-};
-interface iComment {
-    id: string;
-    infoNodeId: string;
-    // user: string;
-    contents: string;
-    createdAt: Date;
+const CommentList = (props: any) => {
+
+    return (
+        <div>
+            {<List
+                className="comment-list"
+                header={`${props.Comments.data.length} replies`}
+                itemLayout="horizontal"
+                dataSource={props.Comments.data}
+                renderItem={(item: any, index: number) => {return (
+                    <List.Item key={index}>
+                        <Post index={index} commentEdit={props.editComment} commentDelete={props.removeComment} who={item.who} text={item.text} editable={item.editable} id={item.id} />
+                    </List.Item>
+                )}}
+            />}
+        </div>
+    );
 }
 
-
-export default class CommentList extends React.Component<any, {}> {
-    constructor(props: iProps) {
-        super(props);
-        // this.state = { userComments: [] };
-    }
-
-
-    render() {
-        return (
-            <div>
-                {<List
-                    className="comment-list"
-                    header={`${this.props.userComments.text.length} replies`}
-                    itemLayout="horizontal"
-                    dataSource={this.props.userComments.text}
-                    renderItem={(item: any, index: number) => (
-                        <List.Item key={index}>
-                            <Post comment={item} />
-                        </List.Item>
-                    )}
-                />}
-            </div>
-        );
-    }
-}
+export default CommentList;

@@ -22,10 +22,22 @@ interface content {
   images: string[];
 }
 
+interface who {
+  id: string;
+  username: string;
+}
+
+interface data {
+  id: string;
+  text: string;
+  who: who;
+  editable: boolean;
+}
+
 interface comment {
   id: number,
   nodeID: string;
-  text: string[];
+  data: data[];
 }
 
 enum Answer {
@@ -59,7 +71,7 @@ const CourseDisplayPage = (props: any) => {
   const [Comments, setComments] = useState([] as comment[]);
   const [Quizzes, setQuizzes] = useState([] as quiz[]);
 
-  const [Selected, setSelected] = useState({id: 0, type: 0});
+  const [Selected, setSelected] = useState(0);
   const [Progress, setProgress] = useState();
 
   useEffect(() => {
@@ -111,9 +123,9 @@ const CourseDisplayPage = (props: any) => {
   }
 
   const getComments = (comment: any) => {
-    const data = [] as string[];
+    const data = [] as any[]
     for (let i = 0; i < comment.length; i++) {
-      data.push(comment[i].contents);
+      data.push({id: comment[i].id, text: comment[i].contents, who: {id: comment[i].userID.id, username: comment[i].userID.username}, editable: comment[i].userID.editable});
     }
     return data;
   }
@@ -124,7 +136,7 @@ const CourseDisplayPage = (props: any) => {
     for(let i = 0; i < nodes.length; i++) {
       const info = getInfo(nodes[i].info);
       content.push({id: i, nodeID: nodes[i].id, text: (info[0] as string), images: (info[1] as string[]), name: nodes[i].name})
-      comment.push({id: i, nodeID: nodes[i].id, text: getComments(nodes[i].comments)} as comment);
+      comment.push({id: i, nodeID: nodes[i].id, data: getComments(nodes[i].comments)} as comment);
     }
     return [content, comment];
   }
@@ -144,7 +156,7 @@ const CourseDisplayPage = (props: any) => {
   const getData = () => {
     setLoading(true);
     setCourseName("Loading Data");
-    let data:any = {query:  "query{course(id: \"" + props.match.params.id + "\"){name nodes {id name info { type data } comments { contents } } quizzes { nodeID questions answers answer }}}\n\n"};
+    let data:any = {query:  "query{course(id: \"" + props.match.params.id + "\"){name nodes {id name info { type data } comments { id contents userID { id username editable } } } quizzes { nodeID questions answers answer }}}\n\n"};
     axios.post("http://localhost:3000/graphql/", data).then(res => {
       return {
         name: res.data.data.course.name,
@@ -159,15 +171,29 @@ const CourseDisplayPage = (props: any) => {
     })
   }
 
-  const addComment = (comment: string) => {
+  const addComment = (commentID: string, comment: string, id: string, username: string) => {
     const temp = [...Comments];
-    temp[IndexMap[Selected.id].index].text.push(comment);
+    temp[IndexMap[Selected].index].data.push({id: commentID, text: comment, who: {id: id, username: username}, editable: true});
     setComments(temp);
   }
 
+  const updateComment = (index: number, data: any) => {
+    const temp = [...Comments];
+    temp[IndexMap[Selected].index].data[index] = {...temp[IndexMap[Selected].index].data[index], ...data};
+    setComments(temp);
+  }
+
+  const deleteComment = (index: number) => {
+    const temp = [...Comments];
+    temp[IndexMap[Selected].index].data.splice(index, 1);
+    setComments(temp);
+  }
+
+  const CommentFunctions = [addComment, updateComment, deleteComment];
+
   const card = (name: string, index: number, type: number) => {
     const setselected = () => {
-      setSelected({id: index, type: type});
+      setSelected(index);
     }
     return (<div key={index} className={type ? "quizcardMain" : "cardMain"}>
       <span>
@@ -175,6 +201,10 @@ const CourseDisplayPage = (props: any) => {
         <Button onClick={setselected} className={"Selector"}>></Button>
       </span>
     </div>);
+  }
+
+  const Next = () => {
+    setSelected(Selected+1);
   }
 
   if(Loading) {
@@ -191,11 +221,12 @@ const CourseDisplayPage = (props: any) => {
           </div>
         </div>
         <div className="selectregion">
-          {Selected.type ? 
-            <QuizDisplay Quiz={Quizzes[IndexMap[Selected.id].index]} setProgress={setProgress} Progress={Progress}/>
+          {IndexMap[Selected].type ? 
+            <><QuizDisplay Quiz={Quizzes[IndexMap[Selected].index]} setProgress={setProgress} Progress={Progress}/>
+            <Button className="nextButton" onClick={Next}>Next</Button></>
             :
-            <><InfoDisplay Content={Content[IndexMap[Selected.id].index]} Comments={Comments[IndexMap[Selected.id].index]} addComment={addComment} setProgress={setProgress} Progress={Progress}/> 
-            <Button className="nextButton" >Next</Button></>
+            <><InfoDisplay Content={Content[IndexMap[Selected].index]} Comments={Comments[IndexMap[Selected].index]} CommentFunctions={CommentFunctions} setProgress={setProgress} Progress={Progress}/> 
+            <Button className="nextButton" onClick={Next}>Next</Button></>
             }
         </div>
       </div>

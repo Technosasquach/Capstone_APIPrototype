@@ -38,10 +38,14 @@ const RootSchema = new GraphQLSchema({
 
 const root = { hello: () => 'Hello world!' };
 
-routes.use('/graphql', graphqlHTTP({
+routes.use('/graphql', (req, res) => {
+    graphqlHTTP({
     schema: RootSchema,
     rootValue: root,
     graphiql: true,
-}));
+    context: {req},
+
+    })(req,res);
+});
 
 export default routes;
