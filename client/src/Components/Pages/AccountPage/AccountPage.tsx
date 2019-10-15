@@ -1,6 +1,6 @@
 import * as React from "react";
-import AccountDetails from "./AccountDetails";
-import AccountPathways from "./AccountPathways";
+// import AccountDetails from "./AccountDetails";
+// import AccountPathways from "./AccountPathways";
 import "./AccountPage.less";
 import 'antd/dist/antd.css';
 
@@ -12,33 +12,24 @@ import 'antd/dist/antd.css';
 //    name: string;
 //}
 
-import { PageHeader, Tabs } from 'antd';
+import { PageHeader } from 'antd';
+import CookieHandler from "../../../utils/clientCookies";
+import AccountForm from "./AccountForm";
 
-const { TabPane } = Tabs;
 
-
+const username = CookieHandler.getCookie("username");
 export default class AccountPage extends React.Component<any, any> {
+
+
 
     render() {
         return (
             <div className="AccountPage">
                 <PageHeader
                     title="Account"
-                    subTitle="Person Name"
-                    footer={
-                        <Tabs defaultActiveKey="1">
-                            <TabPane tab="Personal Details" key="1">
-                                <AccountDetails/>
-                            </TabPane>
-                            <TabPane tab="Learning Pathways" key="2">
-                                <AccountPathways/>
-                            </TabPane>
-                        </Tabs>
-                    }
-                >
-                    
-                </PageHeader>
+                    subTitle={username} />
 
+                <AccountForm username={username}/>
             </div>
         );
     }

@@ -18,4 +18,7 @@ exports.User = users_1.User;
 var quiz_1 = require("./quiz");
 exports.QuizSchema = quiz_1.QuizSchema;
 exports.Quiz = quiz_1.Quiz;
+var account_1 = require("./account");
+exports.AccountSchema = account_1.AccountSchema;
+exports.Account = account_1.Account;
 //# sourceMappingURL=index.js.map

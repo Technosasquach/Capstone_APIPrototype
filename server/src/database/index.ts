@@ -4,3 +4,4 @@ export { ICommentModel, CommentSchema, Comment } from "./comment";
 export { CourseModel, TSCourseModel, Course } from "./courses";
 export { EUserAuthLevel, UserModel, UserSchema, User } from "./users";
 export { IQuizModel, QuizSchema, Quiz } from "./quiz";
+export { IAccountModel, AccountSchema, Account } from "./account";
