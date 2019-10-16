@@ -32,7 +32,7 @@ exports.UserQueries = {
         type: new graphql_1.GraphQLList(exports.UserType),
         args: { username: { type: graphql_1.GraphQLString } },
         resolve(parent, args) {
-            return index_1.User.find({ username: args.username });
+            return index_1.User.find({ username: args.username }); //FindOne doesnt work
         }
     }
 };

@@ -20,10 +20,6 @@ export interface iProps {
     username: string;
 }
 
-// export interface iState {
-//     user: iAccount;
-// }
-
 const AccountForm = (Props: iProps, { }) => {
 
     const [account, setAccount] = useState({
@@ -35,54 +31,58 @@ const AccountForm = (Props: iProps, { }) => {
         phone: '',
     });
 
-    
     useEffect(() => {
         findAccount(Props.username);
-
-        if (account !== null) {
-
-            console.log("account !== null");
-            console.log(account);
-        } else {
-            //clear form
-            setAccount({
-                username: Props.username,
-                firstname: ' ',
-                lastname: ' ',
-                email: ' ',
-                position: ' ',
-                phone: ' ',
-            });
-        }
+        //TODO spinner while loading
         //Dependencies below, only run if these change
     }, []);
 
-
-    const findAccount = (username: string) => {
-        let data: any = { query: "query{accountForUser(username: \"" + username + "\"){ id username firstname lastname email position phone}} \n\n" };
-        axios.post("http://localhost:3000/graphql/", data).then(res => {
-            const usersAccount: iAccount = res.data.data.accountForUser;
+    const findAccount = async (userName: string) => {
+        return await axios({
+            url: 'http://localhost:3000/graphql',
+            method: 'post',
+            data: {
+                query: `
+                query UserByName($username: String) {
+                    userByName(username: $username) {
+                        id
+                        createdAt
+                        username 
+                        coursesTaken
+                        coursesComplete
+                        history
+                        accessLevel
+                        account {
+                          id
+                          username 
+                          firstname 
+                          lastname 
+                          email 
+                          position 
+                          phone
+                        }
+                    }
+                  }`,
+                variables: {
+                    username: userName
+                }
+            }
+        }).then((res) => {
+            const usersAccount: iAccount = res.data.data.userByName[0].account;
             setAccount(usersAccount);
-            console.log("The axios return: ", usersAccount);
-            
-        })
+        }).catch((res) => {
+            console.log("Something went wrong with finding the user account, res:", res);
+        });
     }
-   
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
-        console.log("handleSubmit function");
-        console.log("account state");
-        console.log(account);
-        
         e.preventDefault();
         if (account.username == null || isNullOrUndefined(account.username)) {
             setAccount({ ...account, username: Props.username });
             addAccount(account);
-        }else{
+        } else {
             updateAccount(account);
-            console.log("handleSubmit function else");
         }
-        
     };
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -97,7 +97,7 @@ const AccountForm = (Props: iProps, { }) => {
             method: 'post',
             data: {
                 query: `
-                mutation AddAccount($username: string, $firstname: string, $lastname: string, $email: string, $position: string, $phone: string){
+                mutation AddAccount($username: String, $firstname: String, $lastname: String, $email: String, $position: String, $phone: String){
                     addAccount(username: $username, firstname: $firstname, lastname: $lastname, email: $email, position: $position, phone: $phone){
                         username 
                         firstname 
@@ -123,15 +123,15 @@ const AccountForm = (Props: iProps, { }) => {
         });
     }
 
-
     const updateAccount = async (account: iAccount) => {
         return await axios({
             url: 'http://localhost:3000/graphql',
             method: 'post',
             data: {
                 query: `
-                mutation UpdateAccount($username: string, $firstname: string, $lastname: string, $email: string, $position: string, $phone: string){
-                    updateAccount(username: $username, firstname: $firstname, lastname: $lastname, email: $email, position: $position, phone: $phone){
+                mutation UpdateAccount($id: String, $username: String, $firstname: String, $lastname: String, $email: String, $position: String, $phone: String){
+                    updateAccount(id: $id, username: $username, firstname: $firstname, lastname: $lastname, email: $email, position: $position, phone: $phone){
+                        id
                         username 
                         firstname 
                         lastname 
@@ -142,7 +142,7 @@ const AccountForm = (Props: iProps, { }) => {
                 }`,
                 variables: {
                     id: account.id,
-                    username: account.username,
+                    username: Props.username,
                     firstname: account.firstname,
                     lastname: account.lastname,
                     email: account.email,
@@ -157,11 +157,8 @@ const AccountForm = (Props: iProps, { }) => {
         });
     }
 
-
-
     return (
-        //onSubmit={handleSubmit}
-        <form  className="login-form">
+        <form className="login-form">
             <Row className="myRow">
                 <Col span={6}>
                     <p>First Name:</p>
@@ -212,4 +209,5 @@ const AccountForm = (Props: iProps, { }) => {
     );
 
 }
+
 export default AccountForm

@@ -45,7 +45,6 @@ exports.AccountMutations = {
         type: exports.AccountType,
         args: {
             id: { type: graphql_1.GraphQLString },
-            createdAt: { type: graphql_1.GraphQLString },
             username: { type: graphql_1.GraphQLString },
             firstname: { type: graphql_1.GraphQLString },
             lastname: { type: graphql_1.GraphQLString },

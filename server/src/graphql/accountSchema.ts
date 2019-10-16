@@ -47,7 +47,6 @@ export const AccountMutations = {
         type: AccountType,
         args: {
             id: { type: GraphQLString },
-            createdAt: {type: GraphQLString },
             username: {type: GraphQLString },
             firstname: {type: GraphQLString },
             lastname: {type: GraphQLString },

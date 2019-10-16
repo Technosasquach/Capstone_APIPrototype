@@ -32,7 +32,7 @@ export const UserQueries = {
         type: new GraphQLList(UserType),
         args: { username: { type: GraphQLString}},
         resolve(parent: any, args: any) {
-            return User.find({username : args.username});
+            return User.find({username : args.username}); //FindOne doesnt work
         }
     }
 };
