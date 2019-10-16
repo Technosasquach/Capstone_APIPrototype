@@ -10,7 +10,8 @@ const ContentDisplay = (props: any) => {
         (
         <div className="contentContainer">
             <div className="markdownRegion">
-                <ReactMarkdown source={props.Content.text}/>
+                {props.Content.text && <ReactMarkdown source={props.Content.text}/>}
+                {!props.Content.text && <div style={{width: "100%", textAlign: "center"}}><h1>No data set for this node</h1></div>}
             </div>
             <div className="imageRegion">
                 <ImageDisplayer images={props.Content.images} />
