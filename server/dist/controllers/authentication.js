@@ -35,7 +35,7 @@ class AuthenticationController {
             return Object.assign({}, jwt.verify(token, authKey), { valid: true });
         }
         catch (_a) {
-            return Object.assign({}, exports.JWTPayloadStandard, { username: "bad", accessLevel: database_1.EUserAuthLevel.USER, valid: false });
+            return Object.assign({}, exports.JWTPayloadStandard, { username: "bad", accessLevel: database_1.EUserAuthLevel.USER, valid: false, userID: "bad" });
         }
     }
     /**
@@ -79,10 +79,11 @@ class AuthenticationController {
      * @returns {string} Returned JWT token
      * @memberof AuthenticationController
      */
-    static generateJWT(username, accessLevel) {
+    static generateJWT(username, accessLevel, userID) {
         const token = jwt.sign({
             username,
             accessLevel,
+            userID,
             iat: exports.JWTPayloadStandard.iat
         }, autentication_config_1.AuthenticationConfig.authKey, {
             expiresIn: "30d",
@@ -130,6 +131,7 @@ class AuthenticationController {
         user.accessLevel = authLevel;
         console.log(user);
         user.save();
+        return user._id;
     }
     static DaysFromNowInMilliseconds(days) {
         return Date.now() + days * 24 * 60 * 60 * 1000;

@@ -39,11 +39,11 @@ exports.CommentSchema = new mongoose.Schema({
         type: String,
         unique: false,
         required: true
+    },
+    userID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users'
     }
-    // userId: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'users'
-    // }
 });
 exports.Comment = mongoose.model("Comment", exports.CommentSchema);
 //# sourceMappingURL=comment.js.map

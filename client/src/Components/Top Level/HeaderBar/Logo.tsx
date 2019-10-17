@@ -7,7 +7,7 @@ export default class Logo extends React.Component<any, any> {
     render() {
         return (
             <div className="logo">
-                <h1>SynLern</h1>
+                <h1>Syn|Lern</h1>
             </div>
         );
     }
