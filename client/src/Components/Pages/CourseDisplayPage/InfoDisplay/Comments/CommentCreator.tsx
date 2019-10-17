@@ -9,6 +9,8 @@ const CommentCreator = (props: any) => {
 
 
     const submitComment = async (nodeID: string, comment: string) => {
+        console.log(nodeID);
+        console.log(comment);
         return await axios({
             url: 'http://localhost:3000/graphql',
             method: 'post',

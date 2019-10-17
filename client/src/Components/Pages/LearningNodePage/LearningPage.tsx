@@ -4,6 +4,7 @@ import Loader from './../../Utility/Loader';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Card } from 'antd';
+import MarkRead from './MarkRead';
 
 interface content {
     id: number;
@@ -36,7 +37,6 @@ const LearningPage = (props: any) => {
     const [Loading, setLoading] = useState(false);
     const [Parents, setParents] = useState([] as any[]);
     const [Children, setChildren] = useState([] as any[]);
-
 
     const addComment = (commentID: string, comment: string, id: string, username: string) => {
         const temp = {id: 0, nodeID: Comments.nodeID, data: [...Comments.data]};
@@ -85,6 +85,7 @@ const LearningPage = (props: any) => {
         setLoading(true);
         let data:any = {query:  "query{node(id: \"" + props.match.params.id + "\"){ name info { type data } comments { id contents userID { id username editable } } parents { id name } children { id name } } }\n\n"};
         axios.post("http://localhost:3000/graphql/", data).then(res => {
+            console.log(res);
           return {
             name: res.data.data.node.name,
             info: res.data.data.node.info,
@@ -107,6 +108,7 @@ const LearningPage = (props: any) => {
         <div style={{height: "100%", width: "100%", overflow: "auto", display: "flex"}}>
             <div style={{height: "100%", width: "85%"}}>
                 <InfoDisplay Content={Content} Comments={Comments} CommentFunctions={CommentFunctions}/>
+                <MarkRead nodeId={Content.nodeID}/>
             </div>
             <div style={{width: "15%", marginTop:"76px"}}>
                 {Parents.length > 0 && 
