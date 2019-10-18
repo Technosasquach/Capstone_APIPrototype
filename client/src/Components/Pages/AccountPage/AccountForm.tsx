@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { isNullOrUndefined } from "util";
 
+import "./AccountForm.less";
+
 interface iAccount {
     id?: string;
     createdAt?: Date;
@@ -69,7 +71,9 @@ const AccountForm = (Props: iProps, { }) => {
             }
         }).then((res) => {
             const usersAccount: iAccount = res.data.data.userByName.account;
-            setAccount(usersAccount);
+            if(usersAccount) {
+                setAccount(usersAccount);
+            }
         }).catch((res) => {
             console.log("Something went wrong with finding the user account, res:", res);
         });
@@ -158,8 +162,8 @@ const AccountForm = (Props: iProps, { }) => {
     }
 
     return (
-        <form className="login-form">
-            <Row className="myRow">
+        <form className="account-form">
+            <Row gutter={16} className="accountRow">
                 <Col span={6}>
                     <p>First Name:</p>
                 </Col>
@@ -167,7 +171,7 @@ const AccountForm = (Props: iProps, { }) => {
                     <Input placeholder="First Name" value={account.firstname} size="large" name="firstname" onChange={handleChange} />
                 </Col>
             </Row>
-            <Row className="myRow">
+            <Row className="accountRow">
                 <Col span={6}>
                     <p>Last Name:</p>
                 </Col>
@@ -175,7 +179,7 @@ const AccountForm = (Props: iProps, { }) => {
                     <Input placeholder="Last Name" value={account.lastname} size="large" name="lastname" onChange={handleChange} />
                 </Col>
             </Row>
-            <Row className="myRow">
+            <Row className="accountRow">
                 <Col span={6}>
                     <p>Email Address:</p>
                 </Col>
@@ -183,7 +187,7 @@ const AccountForm = (Props: iProps, { }) => {
                     <Input placeholder="Email Address" value={account.email} size="large" name="email" onChange={handleChange} />
                 </Col>
             </Row>
-            <Row className="myRow">
+            <Row className="accountRow">
                 <Col span={6}>
                     <p>Job Title:</p>
                 </Col>
@@ -191,7 +195,7 @@ const AccountForm = (Props: iProps, { }) => {
                     <Input placeholder="Position in organisation" value={account.position} size="large" name="position" onChange={handleChange} />
                 </Col>
             </Row>
-            <Row className="myRow">
+            <Row className="accountRow">
                 <Col span={6}>
                     <p>Phone Number:</p>
                 </Col>
@@ -199,10 +203,9 @@ const AccountForm = (Props: iProps, { }) => {
                     <Input placeholder="Phone Number" size="large" value={account.phone} name="phone" onChange={handleChange} />
                 </Col>
             </Row>
-            <Row type="flex" justify="end" className="myRow">
-                <Col span={6}></Col>
-                <Col span={10}>
-                    <Button type="primary" onClick={handleSubmit}>Submit</Button>
+            <Row className="accountRow">
+                <Col span={16}>
+                    <Button icon="form" type="primary" onClick={handleSubmit}>Submit</Button>
                 </Col>
             </Row>
         </form>

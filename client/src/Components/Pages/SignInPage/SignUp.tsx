@@ -78,6 +78,7 @@ export class SignUpPage extends React.Component<{ submitFunc: Function, errorMsg
                                 }
                                 onChange={this.handlePasswordChange}
                                 value={this.state.password}
+                                type="password"
                                 placeholder="Password"
                             />
                             { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span className="errorMsg">{this.props.errorMsg}</span><br/></div> : undefined}

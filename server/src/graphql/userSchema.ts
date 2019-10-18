@@ -1,9 +1,9 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
 import { User, Account, Course, Node } from '../database/index';
 import { AccountType } from './accountSchema';
-import { AuthenticationController } from '../controllers/authentication';
 import { CourseType } from './courseSchema';
 import { NodeType } from './nodeSchema';
+import { AuthenticationController } from '../controllers/authentication';
 
 export const UserType = new GraphQLObjectType({
     name: 'User',
@@ -11,17 +11,30 @@ export const UserType = new GraphQLObjectType({
         id: { type: GraphQLString },
         createdAt: { type: (GraphQLString) },
         username: { type: (GraphQLString) },
-        coursesTaken: { type: new GraphQLList(GraphQLString) },
-        currentCourses: {
+        coursesTaken: { 
             type: new GraphQLList(CourseType),
-            resolve(parent, args) {
-                return parent.coursesTaken.map((id: string) => {
-                    return Course.findById(id);
-                });
+            resolve(parent, arg) {
+                return parent.coursesTaken.map((course: string) => {
+                    return Course.findById({_id: course})
+                })
             }
         },
-        coursesComplete: { type: new GraphQLList(GraphQLString) },
-        history: { type: new GraphQLList(GraphQLString) },
+        coursesComplete: { 
+            type: new GraphQLList(CourseType),
+            resolve(parent, arg) {
+                return parent.coursesComplete.map((course: string) => {
+                    return Course.findById({_id: course})
+                })
+            }
+        },
+        viewed: { 
+            type: new GraphQLList(NodeType),
+            resolve(parent, arg) {
+                return parent.viewed.map((node: string) => {
+                    return Node.findById({_id: node})
+                })
+            }
+        },
         accessLevel: { type: (GraphQLString) },
         account: {
             type: AccountType,
@@ -39,6 +52,13 @@ export const UserQueries = {
         type: new GraphQLList(UserType),
         resolve() {
             return User.find({});
+        }
+    },
+    user: {
+        type: UserType,
+        args: { id: { type: GraphQLString } },
+        resolve(parent: any, args: any) {
+            return User.findById({_id: args.id});
         }
     },
     userByName: {
@@ -68,6 +88,40 @@ export const UserMutations = {
             throw new Error();
         }
     },
+    updateCoursesTaken: {
+        type: UserType,
+        args: {
+            _id: {type: new GraphQLNonNull(GraphQLString)},
+            coursesTaken: {type: new GraphQLList(GraphQLString)}
+        },
+        async resolve(parent: any, args: any, context: any) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if(auth.accessLevel == "ADMIN") {
+                    return User.findByIdAndUpdate({_id: args._id}, args, { new: true })
+                }
+            }
+            throw new Error();
+        }
+    },
+    updateCoursesComplete: {
+        type: UserType,
+        args: {
+            _id: {type: new GraphQLNonNull(GraphQLString)},
+            coursesComplete: {type: new GraphQLList(GraphQLString)}
+        },
+        async resolve(parent: any, args: any, context: any) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if(auth.accessLevel == "ADMIN") {
+                    return User.findByIdAndUpdate({_id: args._id}, args, { new: true })
+                }
+            }
+            throw new Error();
+        }
+    }
 
     //     addUser: {
     //         type: UserType,

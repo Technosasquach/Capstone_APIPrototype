@@ -39,7 +39,7 @@ exports.UserSchema = new mongoose.Schema({
             unique: false,
             required: false
         }],
-    history: [{
+    viewed: [{
             type: String,
             unique: false,
             required: false

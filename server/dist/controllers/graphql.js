@@ -17,7 +17,7 @@ const RootQuery = new graphql_1.GraphQLObjectType({
 });
 const RootMutation = new graphql_1.GraphQLObjectType({
     name: 'Mutation',
-    fields: Object.assign({}, informationSchema_1.InformationMutations, nodeSchema_1.NodeMutations, commentSchema_1.CommentMutations, accountSchema_1.AccountMutations)
+    fields: Object.assign({}, informationSchema_1.InformationMutations, nodeSchema_1.NodeMutations, commentSchema_1.CommentMutations, userSchema_1.UserMutations, accountSchema_1.AccountMutations)
 });
 const RootSchema = new graphql_1.GraphQLSchema({
     query: RootQuery,

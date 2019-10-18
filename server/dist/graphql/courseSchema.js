@@ -52,5 +52,12 @@ exports.CourseQueries = {
             return index_1.Course.findById(args.id);
         }
     },
+    myCourses: {
+        type: exports.CourseType,
+        args: { id: { type: new graphql_1.GraphQLList(new graphql_1.GraphQLList(graphql_1.GraphQLString)) } },
+        resolve(parent, args) {
+            return index_1.Course.findById({ "$or": args.id });
+        }
+    }
 };
 //# sourceMappingURL=courseSchema.js.map

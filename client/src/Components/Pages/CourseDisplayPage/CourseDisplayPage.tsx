@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button} from 'antd';
+import {Button, Row, Col} from 'antd';
 import Loader from './../../Utility/Loader';
 import axios from 'axios';
 
@@ -211,16 +211,16 @@ const CourseDisplayPage = (props: any) => {
     return <Loader />
   } else {
     return (
-      <div className="coursepage">
-        <div className="stuctureregion">
+      <Row gutter={30} style={{ height: "100%" }}>
+        <Col span={4} style={{ height: "100%" }}>
           <h1>{CourseName}</h1>
             <div className="cardRegion">
               {Cards && Cards.map(Card => {
                 return card(Card.name, Card.id, Card.type);
               })}
           </div>
-        </div>
-        <div className="selectregion">
+        </Col>
+        <Col span={20} style={{ height: "100%" }}>
           {IndexMap[Selected].type ? 
             <><QuizDisplay Quiz={Quizzes[IndexMap[Selected].index]} setProgress={setProgress} Progress={Progress}/>
             <Button className="nextButton" onClick={Next}>Next</Button></>
@@ -228,8 +228,8 @@ const CourseDisplayPage = (props: any) => {
             <><InfoDisplay Content={Content[IndexMap[Selected].index]} Comments={Comments[IndexMap[Selected].index]} CommentFunctions={CommentFunctions} setProgress={setProgress} Progress={Progress}/> 
             <Button className="nextButton" onClick={Next}>Next</Button></>
             }
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   }
 }

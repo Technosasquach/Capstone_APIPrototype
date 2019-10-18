@@ -11,7 +11,7 @@ const ImageDisplayer = (props: any) => {
                 return <img key={index} src={image} />
             })}
             {props.images.length == 0 &&
-                <h1>No Images Saved</h1>
+                <h3>No images saved</h3>
             }
         </div>
     </div>

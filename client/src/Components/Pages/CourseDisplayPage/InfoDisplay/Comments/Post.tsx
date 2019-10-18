@@ -28,14 +28,16 @@ const Post: React.FC<iProps> = (props, { }) => {
     const data = <ReactMarkdown source={props.text} />;
     return (
         <React.Fragment>
-            <div style={{display: "flex", width: "100%"}}>
-                <Comment style={{width: "70%"}}
+            <div style={{display: "flex", justifyContent: "space-between", width: "100%", backgroundColor: "white"}}>
+                <Comment
                     author={user}
                     content={data}
                 />
                 {props.editable && <div style={{display: "flex"}}>
-                    <CommentEditor index={props.index} editComment={props.commentEdit} Comment={props.text} id={props.id} userID={props.who.id}/>
-                    <CommentDeletor index={props.index} removeComment={props.commentDelete} id={props.id} userID={props.who.id}/>
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent:"right", padding: "15px", borderRadius: "15px"}}>
+                        <CommentEditor index={props.index} editComment={props.commentEdit} Comment={props.text} id={props.id} userID={props.who.id}/>
+                        <CommentDeletor index={props.index} removeComment={props.commentDelete} id={props.id} userID={props.who.id}/>
+                    </div>
                 </div>}
             </div>
         </React.Fragment>

@@ -49,6 +49,13 @@ routes.post("/pagebuilder/", authenticateConnection, async function(req: Request
     }
 })
 
+routes.get("/logout/", function(req: Request, res: Response) {
+    res.cookie("jwt", "", { signed: true })
+    res.cookie("username", "", { maxAge: Date.now()})
+    res.cookie("accessLevel", "", { maxAge: Date.now() })
+    res.cookie("id", "", { maxAge: Date.now() });
+    res.redirect('/');
+});
 
 routes.post("/auth/verifyUser/", function(req: Request, res: Response){
     const username = req.body["username"] || "";

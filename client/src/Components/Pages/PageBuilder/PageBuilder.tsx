@@ -88,7 +88,7 @@ const PageBuilderPage = (props: any) => {
           setInformation={updateContent}
           setImages={setImages}
         />
-        <Button onClick={save} className="SaveButton"><Icon type="save"/>Save</Button>
+        <Button type="primary" onClick={save} className="SaveButton"><Icon type="save"/>Save</Button>
       </div>
     );
   }

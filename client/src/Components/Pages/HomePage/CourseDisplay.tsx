@@ -18,20 +18,22 @@ const CourseDisplay = (props: any) => {
           }).then(res => {
               setData(res);
               setLoading(false);
-          })
+          });
+          return () => {}
     }, [])
 
-  return (
-      <Loader loading={Loading}>
-        <List
-        style={{width: "100%"}}
-        bordered
-        size="large"
-        dataSource={Data}
-        renderItem={item => <List.Item><Link to={'/course/' + item.id}>{item.name}</Link></List.Item>}
-        />
-      </Loader>
-  );
+    if(Loading) {
+      return <Loader/>
+    }
+   else {return (
+      <List
+      style={{width: "100%"}}
+      bordered
+      size="large"
+      dataSource={Data}
+      renderItem={item => <List.Item><Link to={'/course/' + item.id}>{item.name}</Link></List.Item>}
+      />
+  )};
     
 }
 

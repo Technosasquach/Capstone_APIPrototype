@@ -58,6 +58,13 @@ routes.post("/pagebuilder/", authenticateConnection, function (req, res) {
         }
     });
 });
+routes.get("/logout/", function (req, res) {
+    res.cookie("jwt", "", { signed: true });
+    res.cookie("username", "", { maxAge: Date.now() });
+    res.cookie("accessLevel", "", { maxAge: Date.now() });
+    res.cookie("id", "", { maxAge: Date.now() });
+    res.redirect('/');
+});
 routes.post("/auth/verifyUser/", function (req, res) {
     const username = req.body["username"] || "";
     const password = req.body["password"] || "";

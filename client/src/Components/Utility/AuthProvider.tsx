@@ -7,16 +7,22 @@ import * as qs from "querystring";
 import CookieHandler from '../../utils/clientCookies';
 import { EUserAuthLevel } from "./../../../../server/src/database/users"
 
+export const AuthContext = React.createContext({
+    isSignUp: false,
+    isAuthorized: true,
+    errorMsg: "",
+    isAdmin: true
+});
 
-export default class AuthProvider extends React.Component<any, { isSignUp: boolean, isAuthorized: boolean, errorMsg: string }> {
-
+export default class AuthProvider extends React.Component<any, { isSignUp: boolean, isAuthorized: boolean, errorMsg: string, isAdmin: boolean }> {
     constructor(props: any) {
         super(props);
 
         this.state = {
             isSignUp: false,
             isAuthorized: true,
-            errorMsg: ""
+            errorMsg: "",
+            isAdmin: true,
         }
 
         // Check to see if the JWT token exists
@@ -39,7 +45,8 @@ export default class AuthProvider extends React.Component<any, { isSignUp: boole
                         console.log("[AuthProvider] JWT Valid, authorizing...");
                         this.setState({
                             isAuthorized: true,
-                            errorMsg: ""
+                            errorMsg: "",
+                            isAdmin: result.data.tokenInformation.accessLevel == "ADMIN" || result.data.tokenInformation.accessLevel == "OPERATOR",
                         });
                     }
                 }).catch((err: any) => {
@@ -51,7 +58,8 @@ export default class AuthProvider extends React.Component<any, { isSignUp: boole
                 this.state = {
                     isAuthorized: false,
                     errorMsg: "",
-                    isSignUp: false
+                    isSignUp: false,
+                    isAdmin: false,
                 }
             }
         } catch {
@@ -59,7 +67,8 @@ export default class AuthProvider extends React.Component<any, { isSignUp: boole
             this.state = {
                 isAuthorized: false,
                 errorMsg: "",
-                isSignUp: false
+                isSignUp: false,
+                isAdmin: false,
             }
         }
 
@@ -87,7 +96,8 @@ export default class AuthProvider extends React.Component<any, { isSignUp: boole
             } else {
                 console.log("[AuthProvider] Username / Password valid, authorizing");
                 this.setState({
-                    isAuthorized: true
+                    isAuthorized: true,
+                    isAdmin: result.data.tokenInformation.accessLevel == "ADMIN" || result.data.tokenInformation.accessLevel == "OPERATOR"
                 })
             }
         }).catch((err: any) => {
@@ -131,7 +141,7 @@ export default class AuthProvider extends React.Component<any, { isSignUp: boole
 
     render() {
         if (this.state.isAuthorized) {
-            return this.props.children
+            return <AuthContext.Provider value={this.state}>{this.props.children}</AuthContext.Provider>
         } else {
             if (this.state.isSignUp) {
                 return <SignUpPage submitFunc={this.userSignUp} errorMsg={this.state.errorMsg} signUpBtn={this.switchSignIn} />

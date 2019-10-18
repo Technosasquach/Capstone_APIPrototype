@@ -1,3 +1,4 @@
+  
 import React from 'react';
 import ContentDisplay from './ContentDisplay';
 import CommentList from './Comments/CommentList';
@@ -7,28 +8,21 @@ const { Title } = Typography;
 import './InfoDisplay.less'
 
 const InfoDisplay = (props: any) => {
-    return props.Content ? 
-        (
+    return props.Content ? (
         <div className="infoContainer">
-            <Title style={{marginBottom: "10px"}} level={1}>{props.Content.name}</Title>
+            <Title level={1}>{props.Content.name}</Title>
+            <hr style={{marginBottom: "15px"}}/>
             <ContentDisplay Content={props.Content}/>
-            {props.Comments ?
-                (<div className="commentRegion">
-                    <Title style={{marginTop: "10px"}} level={4}>Comment Section</Title>
-                    <div style={{display: "flex", width: "100%"}}>
-                        <div style={{width: "95%"}}>
-                            <CommentList editComment={props.CommentFunctions[1]} removeComment={props.CommentFunctions[2]} Comments={props.Comments} />
-                        </div>
-                        <CommentCreator addComment={props.CommentFunctions[0]} nodeID={props.Content.nodeID} />
-                    </div>
-                </div>)
-                 : 
-                <></>
-            }
+            <hr style={{marginTop: "15px", marginBottom: "30px"}}/>
+            {props.Comments ? (
+                <div className="commentRegion">
+                    <Title level={4}>Comment Section</Title>
+                    <CommentList editComment={props.CommentFunctions[1]} removeComment={props.CommentFunctions[2]} Comments={props.Comments} />
+                    <CommentCreator addComment={props.CommentFunctions[0]} nodeID={props.Content.nodeID} />
+                </div>
+            ) : "" }
         </div>
-        )
-            : 
-        <>Loading</>
+    ) : <span>Loading</span>
     
 }
 

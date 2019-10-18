@@ -17,7 +17,7 @@ import { Icon } from "antd";
 //         super(props);
 //     }
 
-    
+
 //     render() {
 //         return (
 //             <div style={divStyle}>
@@ -27,23 +27,22 @@ import { Icon } from "antd";
 //     }
 // }
 
-interface iProps{
-    svgtype: number;
+interface iProps {
+    svgtype: string;
 }
-function PathwayCard(myProps:iProps) {
+const PathwayCard: React.SFC<iProps> = (myProps) => {
     const svgTypes = ["database", "book", "car", "control", "environment", "deployment-unit", "gold", "heat-map", "sliders", "sketch"];
-    // console.log(myProps.svgtype);
-    
-    function getRandomIndex(max:number) {
-        const index = Math.floor(Math.random() * Math.floor(max));
-        return svgTypes[index];
-      }
-      
 
-    
+    const hashCode = (s: string) => {
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
+      }
+
+    const svgnum = hashCode(myProps.svgtype)%8 + 1;    
+    const svg = svgTypes[svgnum];
+
     return (
         <div>
-            <Icon type={getRandomIndex(myProps.svgtype)}theme="twoTone" style={{ fontSize: '132px' }}/>
+            <Icon type={svg} theme="twoTone" style={{ fontSize: '132px' }} />
         </div>
     )
 }

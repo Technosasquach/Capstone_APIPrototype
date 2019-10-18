@@ -1,0 +1,47 @@
+@import "./../../../../variables.less";
+
+.UserPanelContainer {
+    width: 100%;
+    height: 100%;
+
+    .UserPanelInfo {
+
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+
+        .UserNameHeader {
+            margin-bottom: 15px;
+
+            h1 {
+                margin-bottom: 0px;
+                padding-bottom: 0px;
+            }
+        }
+
+        .AccountInfo {
+
+            .ant-row {
+                margin-bottom: 15px;
+
+                &:last-of-type {
+                    margin-bottom: 0px;
+                }
+            }
+        }
+    }
+    .CourseContainer {
+
+        .ant-table {
+            background-color: white;
+        }
+
+        .ant-table-thead {
+            background-color: @colour-light;
+        }
+
+        .CourseCompleted {
+            margin-top: 35px;
+        }
+    }
+}

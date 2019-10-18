@@ -82,7 +82,7 @@ const QuizDisplay = (props: Iprops) => {
     const answer = (text: string, index: number) => {
         return (
             <div key={index} onClick={submitAnswer.bind(null, index)} className="quizQuestion" style={checkState(index)}>
-                <h2>{text}</h2>
+                <h3>{text}</h3>
             </div>
         )
     }
@@ -90,11 +90,11 @@ const QuizDisplay = (props: Iprops) => {
     const ProgressState = (index: number, num: number) => {
         switch(Answers[index]) {
             case 0:
-                return {backgroundColor: "#ffcccc", width: 100/num+"%"}
+                return {backgroundColor: "#ffcccc"}
             case 1:
-                return {backgroundColor: "#ccffcc", width: 100/num+"%"}
+                return {backgroundColor: "#ccffcc"}
             default:
-                return {width: 100/num+"%"}
+                return {}
         }
     }
 
@@ -124,10 +124,19 @@ const QuizDisplay = (props: Iprops) => {
     return (
         props.Quiz && 
             <div className="QuizContainer">
-            <h1 style={{marginLeft: "10%"}}>Quiz</h1>
+            <h1>Quiz</h1>
+            <hr/>
             <div className="QuizContentContainer">
                 <div className="quizHeader">
-                    <h1>{props.Quiz.question[Position]} {Position > 0 && <Button onClick={Previous} style={{float: "right", marginRight:"5px"}}>Previous</Button>} {Position < props.Quiz.question.length-1 && Answers[Position] != -1 && <Button onClick={Next} style={{float: "right", marginRight: "5px"}}>Next ></Button>}</h1>
+                    <h2>{props.Quiz.question[Position]}</h2>
+                    {
+                        Position > 0 && 
+                            <Button onClick={Previous}>Previous</Button>
+                    } {
+                        Position < props.Quiz.question.length-1 && 
+                        Answers[Position] != -1 && 
+                            <Button onClick={Next}>Next ></Button>
+                    }
                 </div>
                 <div className="quizQuestionCenter">
                     {
@@ -136,6 +145,7 @@ const QuizDisplay = (props: Iprops) => {
                         })
                     }        
                 </div>
+                <span className="progressTitle">Progress</span>
                 {Progress(props.Quiz.question.length)}
             </div>
         </div>

@@ -33,9 +33,19 @@ const HomePage = () => {
                       id
                       createdAt
                       username 
-                      coursesTaken
-                      coursesComplete
-                      currentCourses {
+                      coursesTaken{
+                        id
+                        createdAt
+                        name
+                        nodes{
+                          id
+                          name
+                        }
+                        quizzes{
+                          id
+                        }
+                    }
+                      coursesComplete {
                           id
                           createdAt
                           name
@@ -46,7 +56,9 @@ const HomePage = () => {
                             id
                           }
                       }
-                      history
+                      viewed {
+                        id
+                      }
                       accessLevel
                       account {
                         id
@@ -64,10 +76,9 @@ const HomePage = () => {
               }
           }
       }).then((res) => {
-          console.log(res);
-          
           const usersAccount = res.data.data.userByName;
           setUser(usersAccount);
+
       }).catch((res) => {
           console.log("Something went wrong with finding the user account and courses, res:", res);
       });
@@ -79,12 +90,10 @@ const HomePage = () => {
       <span>
         <PageHeader
           title={
-            <Typography.Title level={3}>Hello {username}</Typography.Title>
+            <Typography.Title level={3}>Hello {username} </Typography.Title>
           }
-          subTitle={
-            <Typography.Title level={4}>welcome to syn|LERN</Typography.Title>
-          }
-        />
+
+        >Welcome to syn|LERN</PageHeader>
       </span>
 
       <div id="homeTop">

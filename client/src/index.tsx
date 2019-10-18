@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render } from "react-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import "./index.less";
 
 import HeaderBar from "./Components/Top Level/HeaderBar/HeaderBar";
@@ -19,6 +19,22 @@ import PageBuilder from "./Components/Pages/PageBuilder/PageBuilder";
 import SearchState from './Context/Search/SearchState'
 import AuthProvider from "./Components/Utility/AuthProvider"
 
+import {AuthContext} from './Components/Utility/AuthProvider';
+import AdminPanel from './Components/Pages/AdminPanel/AdminPanel';
+import UserPanel from './Components/Pages/AdminPanel/UserPanel/UserPanel';
+import CourseEditor from './Components/Pages/AdminPanel/CourseEditor/CourseEditor';
+
+function PrivateRoute ({component: Component, authed, ...rest}: any) {
+    return (
+      <Route
+        {...rest}
+        render={(props) => authed === true
+          ? <Component {...props} />
+          : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
+      />
+    )
+  }
+
 export default class Root extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -34,36 +50,41 @@ export default class Root extends React.Component<any, any> {
 
     render() {
         return (
-            <AuthProvider>
-                <SearchState>
-                    <Router>
-                        <div>
-                            <HeaderBar />
-                            <div className="contentarea">
-                                <ContentArea>
-                                    <Switch>
-                                        <Route path="/searchresults" component={SearchResultPage} />
-                                        <Route path="/learning/:id" component={LearningPage} />
-                                        <Route path="/course/:id" component={CourseDisplayPage} />
-                                        <Route path="/account" component={AccountPage} />
-                                        <Route path="/node/:id/coursebuilder" component={CourseBuilder} />
-                                        <Route path="/node/:id/builder/Draft.css" component={PageBuilder} />
-                                        <Route path="/node/:id/builder" component={PageBuilder} />
-                                        <Route path="/node/:id" component={NodeDisplay} />
-                                        <Route path="/node/" component={NodeDisplay} />
-                                        <Route path="/" exact component={HomePage} />
-                                    </Switch>
-                                </ContentArea>
-                            </div>
+            <SearchState>
+                <Router>
+                    <div>
+                        <HeaderBar />
+                        <div className="contentarea">
+                            <ContentArea>
+                                <AuthContext.Consumer>
+                                    {consumer => (
+                                        <Switch>
+                                            <PrivateRoute authed={consumer.isAdmin} exact path='/Admin' component={AdminPanel}/>
+                                            <PrivateRoute authed={consumer.isAdmin} path='/Admin/EditUser/:id' component={UserPanel}/>
+                                            <PrivateRoute authed={consumer.isAdmin} path='/Admin/EditCourse/:id' component={CourseEditor}/>
+                                            <PrivateRoute authed={consumer.isAdmin} path='/Admin/EditPage/:id' component={PageBuilder}/>
+                                            <PrivateRoute authed={consumer.isAdmin} path='/node/:id/coursebuilder' component={CourseBuilder}/>
+                                            <PrivateRoute authed={consumer.isAdmin} path='/node/:id/builder' component={PageBuilder}/>
+                                            <PrivateRoute authed={consumer.isAdmin} path='/node/:id' component={NodeDisplay}/>
+                                            <Route path="/searchresults" component={SearchResultPage} />
+                                            <Route path="/learning/:id" component={LearningPage} />
+                                            <Route path="/course/:id" component={CourseDisplayPage} />
+                                            <Route path="/account" component={AccountPage} />
+
+                                            <Route path="/" exact component={HomePage} />
+                                        </Switch>
+                                    )}
+                                </AuthContext.Consumer>
+                            </ContentArea>
                         </div>
-                    </Router>
-                </SearchState>
-            </AuthProvider>
+                    </div>
+                </Router>
+            </SearchState>
         );
     }
 }
 
 render(
-    <Root />,
+    <AuthProvider><Root /></AuthProvider>,
     document.getElementById("root")
 );

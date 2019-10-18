@@ -11,7 +11,7 @@ export interface UserModel extends mongoose.Document {
     password: string;
     coursesTaken: string[];
     coursesComplete: string[];
-    history: string[];
+    viewed: string[];
     createdAt: Date;
     accessLevel: EUserAuthLevel
 }
@@ -48,7 +48,7 @@ export const UserSchema: mongoose.Schema = new mongoose.Schema({
         unique: false,
         required: false
     }],
-    history: [{
+    viewed: [{
         type: String,
         unique: false,
         required: false

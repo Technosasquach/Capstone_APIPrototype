@@ -3,24 +3,45 @@
 
 
 .HomePage {
+
     width: 100%;
     height:100%;
     display: block;
     overflow: auto;
+
+    .ant-page-header {
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+        text-align: center;
+        background-color: white;
+
+        h1, h2, h3, h4, h5, h6, span {
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+
     #homeTop {
+
         display: flex;
         height: 50%;
+
         #coursedisplay{
-            width: 50%;
+            width: 100%;
+
+            .ant-list-items {
+                background-color: white;
+            }
         }
-        #nothing{
-            width: 50%;
-        }
+
         
     }
     #homeBottom {
+
         display: flex;
         height: 50%;
+
         div{
             margin-right: 50%;
         }

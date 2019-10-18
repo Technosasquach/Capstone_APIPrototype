@@ -1,10 +1,13 @@
+  
 import React, {useState, useEffect} from 'react';
 import InfoDisplay from './../CourseDisplayPage/InfoDisplay/InfoDisplay';
 import Loader from './../../Utility/Loader';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card } from 'antd';
+import { Card, Row, Col } from 'antd';
 import MarkRead from './MarkRead';
+
+import "./LearningPage.less";
 
 interface content {
     id: number;
@@ -13,24 +16,25 @@ interface content {
     text: string;
     images: string[];
 }
-  
+
 interface who {
     id: string;
     username: string;
-  }
-  
-  interface data {
+}
+
+interface data {
     id: string;
     text: string;
     who: who;
     editable: boolean;
-  }
-  
-  interface comment {
+}
+
+interface comment {
     id: number,
     nodeID: string;
     data: data[];
-  }
+}
+
 const LearningPage = (props: any) => {
     const [Content, setContent] = useState({id: 0, name: "", nodeID: "", text: "", images: []} as content);
     const [Comments, setComments] = useState({id: 0, nodeID: "", data: []} as comment);
@@ -86,13 +90,13 @@ const LearningPage = (props: any) => {
         let data:any = {query:  "query{node(id: \"" + props.match.params.id + "\"){ name info { type data } comments { id contents userID { id username editable } } parents { id name } children { id name } } }\n\n"};
         axios.post("http://localhost:3000/graphql/", data).then(res => {
             console.log(res);
-          return {
-            name: res.data.data.node.name,
-            info: res.data.data.node.info,
-            comments: res.data.data.node.comments,
-            parents: res.data.data.node.parents,
-            children: res.data.data.node.children
-          };
+            return {
+                name: res.data.data.node.name,
+                info: res.data.data.node.info,
+                comments: res.data.data.node.comments,
+                parents: res.data.data.node.parents,
+                children: res.data.data.node.children
+            };
         }).then(json => {
             setUpContent(json.name, json.info, json.comments);
             setParents(json.parents);
@@ -105,29 +109,29 @@ const LearningPage = (props: any) => {
         return <Loader/>
     } else {
         return (
-        <div style={{height: "100%", width: "100%", overflow: "auto", display: "flex"}}>
-            <div style={{height: "100%", width: "85%"}}>
-                <InfoDisplay Content={Content} Comments={Comments} CommentFunctions={CommentFunctions}/>
-                <MarkRead nodeId={Content.nodeID}/>
-            </div>
-            <div style={{width: "15%", marginTop:"76px"}}>
-                {Parents.length > 0 && 
-                    <Card title="Parents" style={{ marginBottom: "50px", width: "90%", border: "1px solid grey", borderRadius: "5px" }}>
-                        {Parents.map(res => {
-                            return <Link key={res.id} to={"/learning/" + res.id}>{res.name}</Link>
-                        })}
-                    </Card>
-                }
-                {Children.length > 0 && 
-                    <Card title="Children" style={{ width: "90%", border: "1px solid grey", borderRadius: "5px"}}>
-                        {Children.map(res => {
-                            return <Link key={res.id} to={"/learning/" + res.id} style={{display: "block"}}>{res.name}</Link>
-                        })}
-                    </Card>
-                }
+            <Row gutter={16}>
+                <Col span={20}>
+                    <InfoDisplay Content={Content} Comments={Comments} CommentFunctions={CommentFunctions}/>
+                    <MarkRead nodeId={Content.nodeID}/>
+                </Col>
+                <Col span={4} style={{ position: "sticky"}}>
+                    {Parents.length > 0 && 
+                        <Card title="Parents" style={{marginBottom: "15px"}}>
+                            {Parents.map(res => {
+                                return <Link key={res.id} to={"/learning/" + res.id}>{res.name}</Link>
+                            })}
+                        </Card>
+                    }
+                    {Children.length > 0 && 
+                        <Card title="Children">
+                            {Children.map(res => {
+                                return <Link key={res.id} to={"/learning/" + res.id} style={{display: "block"}}>{res.name}</Link>
+                            })}
+                        </Card>
+                    }
 
-            </div>
-        </div>
+                </Col>
+            </Row>
         );
     }
 }

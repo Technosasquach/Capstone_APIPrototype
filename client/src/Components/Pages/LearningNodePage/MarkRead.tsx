@@ -38,7 +38,6 @@ const MarkRead = (Props: iProps) => {
     return (
         <div>
             <Button type="primary" style={{ float: "right", marginLeft: "10px" }} onClick={MarkAsRead} >Mark as read</Button>
-
         </div>
     )
 }

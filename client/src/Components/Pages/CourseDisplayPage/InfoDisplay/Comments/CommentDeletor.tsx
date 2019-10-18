@@ -39,7 +39,7 @@ const CommentDeletor = (props: any) => {
     }
     
     return (
-        <Button type="primary" style={{float: "right", marginLeft: "10px"}} onClick={deleteClick} >Delete Comment</Button> 
+        <Button size="small" icon="delete" onClick={deleteClick} >Delete Comment</Button> 
     );
 }
 

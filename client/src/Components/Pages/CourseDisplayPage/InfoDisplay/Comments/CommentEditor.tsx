@@ -68,7 +68,7 @@ const CommentEditor = (props: any) => {
 
     return (
         <>
-        <Button type="primary" style={{float: "right", marginLeft: "10px"}} onClick={showModal} >Edit Comment</Button>
+        <Button size="small" icon="edit" onClick={showModal} >Edit Comment</Button>
         <Modal
         visible={Visible}
         onOk={handleOk}
