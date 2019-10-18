@@ -68,7 +68,7 @@ const AccountForm = (Props: iProps, { }) => {
                 }
             }
         }).then((res) => {
-            const usersAccount: iAccount = res.data.data.userByName[0].account;
+            const usersAccount: iAccount = res.data.data.userByName.account;
             setAccount(usersAccount);
         }).catch((res) => {
             console.log("Something went wrong with finding the user account, res:", res);

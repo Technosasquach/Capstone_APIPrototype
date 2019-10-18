@@ -27,12 +27,23 @@ import { Icon } from "antd";
 //     }
 // }
 
+interface iProps{
+    svgtype: number;
+}
+function PathwayCard(myProps:iProps) {
+    const svgTypes = ["database", "book", "car", "control", "environment", "deployment-unit", "gold", "heat-map", "sliders", "sketch"];
+    // console.log(myProps.svgtype);
+    
+    function getRandomIndex(max:number) {
+        const index = Math.floor(Math.random() * Math.floor(max));
+        return svgTypes[index];
+      }
+      
 
-function PathwayCard(myProps:any) {
-
+    
     return (
         <div>
-            <Icon type={myProps.svgType} theme="twoTone" style={{ fontSize: '192px' }}/>
+            <Icon type={getRandomIndex(myProps.svgtype)}theme="twoTone" style={{ fontSize: '132px' }}/>
         </div>
     )
 }

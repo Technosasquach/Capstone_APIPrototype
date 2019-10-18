@@ -53,4 +53,11 @@ export const CourseQueries = {
             return Course.findById(args.id);
         }
     },
+    myCourses: {
+        type: CourseType,
+        args: { id: { type: new GraphQLList(new GraphQLList(GraphQLString))}},
+        resolve(parent: any, args: any) {
+            return Course.findById({"$or":args.id});
+        }
+    }
 };

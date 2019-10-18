@@ -1,7 +1,9 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
-import { User, Account } from '../database/index';
+import { User, Account, Course, Node } from '../database/index';
 import { AccountType } from './accountSchema';
 import { AuthenticationController } from '../controllers/authentication';
+import { CourseType } from './courseSchema';
+import { NodeType } from './nodeSchema';
 
 export const UserType = new GraphQLObjectType({
     name: 'User',
@@ -10,6 +12,14 @@ export const UserType = new GraphQLObjectType({
         createdAt: { type: (GraphQLString) },
         username: { type: (GraphQLString) },
         coursesTaken: { type: new GraphQLList(GraphQLString) },
+        currentCourses: {
+            type: new GraphQLList(CourseType),
+            resolve(parent, args) {
+                return parent.coursesTaken.map((id: string) => {
+                    return Course.findById(id);
+                });
+            }
+        },
         coursesComplete: { type: new GraphQLList(GraphQLString) },
         history: { type: new GraphQLList(GraphQLString) },
         accessLevel: { type: (GraphQLString) },
@@ -22,6 +32,8 @@ export const UserType = new GraphQLObjectType({
     })
 });
 
+
+
 export const UserQueries = {
     everyUser: {
         type: new GraphQLList(UserType),
@@ -30,10 +42,10 @@ export const UserQueries = {
         }
     },
     userByName: {
-        type: new GraphQLList(UserType),
+        type: UserType,
         args: { username: { type: GraphQLString } },
         resolve(parent: any, args: any) {
-            return User.find({ username: args.username }); //FindOne doesnt work
+            return User.findOne({ username: args.username }); //FindOne doesnt work
         }
     }
 };
