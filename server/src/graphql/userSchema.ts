@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
-import { User, Account, Course, Node } from '../database/index';
+import { User, Account, Course, Node, Comment } from '../database/index';
 import { AccountType } from './accountSchema';
 import { CourseType } from './courseSchema';
 import { NodeType } from './nodeSchema';
@@ -120,6 +120,41 @@ export const UserMutations = {
                 }
             }
             throw new Error();
+        }
+    },
+    deleteUser: {
+        type: new GraphQLList(UserType),
+        args: {
+            _id: {type: GraphQLString},
+        },
+        resolve(parent: any, args: any, context: any) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if(auth.accessLevel == "ADMIN") {
+                    Comment.find({userID: args._id}).then(res => {
+                        for(let i = 0; i < res.length; i++) {
+                            Comment.findByIdAndDelete({_id: res[i]._id}).catch(res => {console.log(res)});
+                        };
+                    });
+                    return User.findByIdAndDelete({_id: args._id}).then(res => {
+                        return User.find({});
+                    }).catch(() => {
+                        throw new Error();
+                    });
+                }
+            }
+            throw new Error();
+        }
+    },
+    updateUser: {
+        type: UserType,
+        args: {
+            id: { type: GraphQLString },
+            accessLevel: {type: GraphQLString},
+        },
+        resolve(parent: any, args: any) {
+            return User.findByIdAndUpdate(args.id, args);
         }
     }
 

@@ -1,5 +1,5 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
-import { Course, Quiz, Node } from '../database/index'
+import { Course, Quiz, Node, User } from '../database/index'
 import {NodeType} from './nodeSchema';
 
 export const QuizType = new GraphQLObjectType({
@@ -61,3 +61,42 @@ export const CourseQueries = {
         }
     }
 };
+
+import { AuthenticationController } from '../controllers/authentication';
+export const CourseMutations = {
+    deleteCourse: {
+        type: new GraphQLList(CourseType),
+        args: {
+            _id: {type: GraphQLString},
+        },
+        resolve(parent: any, args: any, context: any) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if(auth.accessLevel == "ADMIN") {
+                    User.find({coursesTaken: args._id}).then(res => {
+                        res.forEach(element => {
+                            User.findByIdAndUpdate({_id: element._id}, { $pull: { coursesTaken: { string: args._id } } })
+                        });
+                    });
+                    User.find({coursesCompleted: args._id}).then(res => {
+                        res.forEach(element => {
+                            User.findByIdAndUpdate({_id: element._id}, { $pull: { coursesCompleted: { string: args._id } } })
+                        });
+                    });
+                    return Course.findById({_id: args._id}).then(res => {
+                        res.quizzes.map(quiz => {
+                            Quiz.findByIdAndDelete({_id: quiz}).catch(() => {console.log("error")});
+                        });
+                        return Course.findByIdAndDelete({_id: args._id}).then(res => {
+                            return Course.find({});
+                        })
+                    }).catch(() => {
+                        throw new Error();
+                    });
+                }
+            }
+            throw new Error();
+        }
+    }
+}

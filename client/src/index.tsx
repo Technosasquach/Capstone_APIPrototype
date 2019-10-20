@@ -22,7 +22,6 @@ import AuthProvider from "./Components/Utility/AuthProvider"
 import {AuthContext} from './Components/Utility/AuthProvider';
 import AdminPanel from './Components/Pages/AdminPanel/AdminPanel';
 import UserPanel from './Components/Pages/AdminPanel/UserPanel/UserPanel';
-import CourseEditor from './Components/Pages/AdminPanel/CourseEditor/CourseEditor';
 
 function PrivateRoute ({component: Component, authed, ...rest}: any) {
     return (
@@ -61,7 +60,6 @@ export default class Root extends React.Component<any, any> {
                                         <Switch>
                                             <PrivateRoute authed={consumer.isAdmin} exact path='/Admin' component={AdminPanel}/>
                                             <PrivateRoute authed={consumer.isAdmin} path='/Admin/EditUser/:id' component={UserPanel}/>
-                                            <PrivateRoute authed={consumer.isAdmin} path='/Admin/EditCourse/:id' component={CourseEditor}/>
                                             <PrivateRoute authed={consumer.isAdmin} path='/Admin/EditPage/:id' component={PageBuilder}/>
                                             <PrivateRoute authed={consumer.isAdmin} path='/node/:id/coursebuilder' component={CourseBuilder}/>
                                             <PrivateRoute authed={consumer.isAdmin} path='/node/:id/builder' component={PageBuilder}/>
@@ -70,7 +68,6 @@ export default class Root extends React.Component<any, any> {
                                             <Route path="/learning/:id" component={LearningPage} />
                                             <Route path="/course/:id" component={CourseDisplayPage} />
                                             <Route path="/account" component={AccountPage} />
-
                                             <Route path="/" exact component={HomePage} />
                                         </Switch>
                                     )}

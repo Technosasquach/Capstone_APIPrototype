@@ -124,7 +124,8 @@ export default class AuthProvider extends React.Component<any, { isSignUp: boole
             } else {
                 console.log("[AuthProvider] Creation of user valid");
                 this.setState({
-                    isAuthorized: true
+                    isAuthorized: true,
+                    isAdmin: result.data.tokenInformation.accessLevel == "ADMIN" || result.data.tokenInformation.accessLevel == "OPERATOR"
                 });
             }
         }).catch((err: any) => {

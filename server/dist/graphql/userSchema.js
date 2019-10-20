@@ -131,6 +131,42 @@ exports.UserMutations = {
                 throw new Error();
             });
         }
+    },
+    deleteUser: {
+        type: new graphql_1.GraphQLList(exports.UserType),
+        args: {
+            _id: { type: graphql_1.GraphQLString },
+        },
+        resolve(parent, args, context) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = authentication_1.AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if (auth.accessLevel == "ADMIN") {
+                    index_1.Comment.find({ userID: args._id }).then(res => {
+                        for (let i = 0; i < res.length; i++) {
+                            index_1.Comment.findByIdAndDelete({ _id: res[i]._id }).catch(res => { console.log(res); });
+                        }
+                        ;
+                    });
+                    return index_1.User.findByIdAndDelete({ _id: args._id }).then(res => {
+                        return index_1.User.find({});
+                    }).catch(() => {
+                        throw new Error();
+                    });
+                }
+            }
+            throw new Error();
+        }
+    },
+    updateUser: {
+        type: exports.UserType,
+        args: {
+            id: { type: graphql_1.GraphQLString },
+            accessLevel: { type: graphql_1.GraphQLString },
+        },
+        resolve(parent, args) {
+            return index_1.User.findByIdAndUpdate(args.id, args);
+        }
     }
     //     addUser: {
     //         type: UserType,

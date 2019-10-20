@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Loader from './../../../Utility/Loader';
 
-import { Select, Input, Table, Row, Col } from 'antd';
+import { Select, Input, Table, Row, Col, Button } from 'antd';
 const { Option } = Select;
 
 import AddTaken from './AddTaken';
@@ -59,8 +59,6 @@ const columnsCourseCompleted = [
     },
 ];
 
-
-
 const UserPanel = (props: any) => {
     const [AllCourses, setAllCourses] = useState([] as any[]);
     const [Username, setUsername] = useState("");
@@ -90,6 +88,7 @@ const UserPanel = (props: any) => {
                     } 
                     accessLevel 
                     account { 
+                        id
                         username
                         firstname 
                         lastname 
@@ -108,7 +107,6 @@ const UserPanel = (props: any) => {
             }
         }
         axios.post("/graphql/", query).then(res => {
-            console.log(res.data.data);
             return {
                 accessLevel: res.data.data.user.accessLevel,
                 account: res.data.data.user.account,
@@ -119,7 +117,7 @@ const UserPanel = (props: any) => {
             }
         }).then(json => {
             setAccessLevel(json.accessLevel);
-            setAccount(json.account);
+            setAccount(json.account ? json.account : {id: "", firstname: "", lastname: "", email: "", position: "", phone: ""} as any);
             setCoursesComplete(json.coursesComplete);
             setCoursesTaken(json.coursesTaken);
             setUsername(json.username);
@@ -204,7 +202,6 @@ const UserPanel = (props: any) => {
             }
         }
         axios.post("/graphql/", query).then(res => {
-            console.log(res.data.data.updateCoursesComplete.coursesComplete);
             setCoursesComplete(res.data.data.updateCoursesComplete.coursesComplete);
         }).catch(res => {
             console.log(res);
@@ -234,6 +231,95 @@ const UserPanel = (props: any) => {
         })
     }
 
+    const changeFirstName = (e: any) => {
+        setAccount({...Account, firstname: e.target.value});
+    }
+
+    const changeLastName = (e: any) => {
+        setAccount({...Account, lastname: e.target.value});
+    }
+
+    const changeEmail = (e: any) => {
+        setAccount({...Account, email: e.target.value});
+    }
+
+    const changePosition = (e: any) => {
+        setAccount({...Account, position: e.target.value});
+    }
+
+    const changePhone = (e: any) => {
+        setAccount({...Account, phone: e.target.value});
+    }
+
+    const updateAuth = (e:any) => {
+        setAccessLevel(e);
+    }
+
+    const Save = () => {
+        if(Account.id) {
+            const query = {query: `
+                mutation createAccountInfo($id: String!, $username: String, $firstname: String, $lastname: String, $email: String, $position: String, $phone: String,) { 
+                    updateAccount(id: $id, username: $username, firstname: $firstname, lastname: $lastname, email: $email, position: $position, phone: $phone){
+                        id
+                        username
+                        firstname 
+                        lastname 
+                        email 
+                        position 
+                        phone 
+                    }
+                }`,
+                variables: {
+                    id: Account.id,
+                    username: Username,
+                    firstname: Account.firstname,
+                    lastname: Account.lastname,
+                    email: Account.email,
+                    position: Account.position,
+                    phone: Account.phone,
+                }
+            }
+            axios.post("/graphql/", query);
+        } else {
+            const query = {query: `
+                mutation createAccountInfo($username: String, $firstname: String, $lastname: String, $email: String, $position: String, $phone: String,) { 
+                    addAccount(username: $username, firstname: $firstname, lastname: $lastname, email: $email, position: $position, phone: $phone){
+                        id
+                        username
+                        firstname 
+                        lastname 
+                        email 
+                        position 
+                        phone 
+                    }
+                }`,
+                variables: {
+                    username: Username,
+                    firstname: Account.firstname,
+                    lastname: Account.lastname,
+                    email: Account.email,
+                    position: Account.position,
+                    phone: Account.phone,
+                }
+            }
+            axios.post("/graphql/", query);
+        }
+
+        const query = {query: `
+            mutation updateAccess($id: String!, $accessLevel: String) { 
+                updateUser(id: $id, accessLevel: $accessLevel){
+                    id
+                    accessLevel
+                }
+            }`,
+            variables: {
+                id: props.match.params.id,
+                accessLevel: AccessLevel
+            }
+        }
+        axios.post("/graphql/", query);
+    }
+
     if (Loading) {
         return <Loader/>
     }
@@ -249,7 +335,7 @@ const UserPanel = (props: any) => {
                         <span>Access Level:</span>
                     </Col>
                     <Col span={16}>
-                        <Select defaultValue={AccessLevel}>
+                        <Select onChange={updateAuth} defaultValue={AccessLevel}>
                             <Option value="USER">USER</Option>
                             <Option value="OPERATOR">OPERATOR</Option>
                             <Option value="ADMIN">ADMIN</Option>
@@ -261,18 +347,10 @@ const UserPanel = (props: any) => {
                 <h2>Account Information</h2>
                 <Row gutter={16}>
                     <Col span={8}>
-                        <span>Display Name</span>
-                    </Col>
-                    <Col span={16}>
-                        <Input defaultValue={Account ? Account.username : "No Data!"}></Input>
-                    </Col>
-                </Row>
-                <Row gutter={16}>
-                    <Col span={8}>
                         <span>First Name</span>
                     </Col>
                     <Col span={16}>
-                        <Input defaultValue={Account ? Account.firstname : "No Data!"}></Input>
+                        <Input onChange={changeFirstName} defaultValue={Account ? Account.firstname : "No Data!"}></Input>
                     </Col>
                 </Row>
                 <Row gutter={16}>
@@ -280,7 +358,7 @@ const UserPanel = (props: any) => {
                         <span>Last Name</span>
                     </Col>
                     <Col span={16}>
-                        <Input defaultValue={Account ? Account.lastname : "No Data!"}></Input>
+                        <Input onChange={changeLastName} defaultValue={Account ? Account.lastname : "No Data!"}></Input>
                     </Col>
                 </Row>
                 <Row gutter={16}>
@@ -288,7 +366,7 @@ const UserPanel = (props: any) => {
                         <span>Email</span>
                     </Col>
                     <Col span={16}>
-                        <Input defaultValue={Account ? Account.email : "No Data!"}></Input>
+                        <Input onChange={changeEmail} defaultValue={Account ? Account.email : "No Data!"}></Input>
                     </Col>
                 </Row>
                 <Row gutter={16}>
@@ -296,7 +374,7 @@ const UserPanel = (props: any) => {
                         <span>Position</span>
                     </Col>
                     <Col span={16}>
-                        <Input defaultValue={Account ? Account.position : "No Data!"}></Input>
+                        <Input onChange={changePosition} defaultValue={Account ? Account.position : "No Data!"}></Input>
                     </Col>
                 </Row>
                 <Row gutter={16}>
@@ -304,10 +382,11 @@ const UserPanel = (props: any) => {
                         <span>Phone</span>
                     </Col>
                     <Col span={16}>
-                        <Input defaultValue={Account ? Account.phone : "No Data!"}></Input>
+                        <Input onChange={changePhone} defaultValue={Account ? Account.phone : "No Data!"}></Input>
                     </Col>
                 </Row>
-            </div>     
+            </div>
+            <Button onClick={Save} >Save</Button>
         </Col>
 
         <Col span={12} className="CourseContainer">

@@ -50,9 +50,6 @@ const AccountForm = (Props: iProps, { }) => {
                         id
                         createdAt
                         username 
-                        coursesTaken
-                        coursesComplete
-                        history
                         accessLevel
                         account {
                           id

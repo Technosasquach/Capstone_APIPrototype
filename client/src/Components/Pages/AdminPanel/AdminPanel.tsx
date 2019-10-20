@@ -7,38 +7,6 @@ import {Link} from 'react-router-dom';
 
 import Loader from './../../Utility/Loader';
 
-const columnsUser = [
-    {
-      title: 'Name',
-      dataIndex: 'username',
-      render: (data: any, more: any) => {
-          return <Link to={"/Admin/EditUser/" + more.id}>{data}</Link>
-      }
-    },
-  ];
-  const columnsCourse = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      render: (data: any, more: any) => {
-        return <Link to={"/Admin/EditCourse/" + more.id}>{data}</Link>
-    }
-    },
-  ];
-  const columnsNode = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      render: (data: any, more: any) => {
-        return <Link to={"/Admin/EditPage/" + more.id}>{data}</Link>
-        }
-    },
-    {
-        title: 'Depth',
-        dataIndex: 'depth'
-    }
-  ];
-
 const AdminPanel = (props: any) => {
     const [UserData, setUserData] = useState([] as any[]);
     const [CourseData, setCourseData] = useState([] as any[]);
@@ -47,6 +15,75 @@ const AdminPanel = (props: any) => {
     const [AllCourseData, setAllCourseData] = useState([] as any[]);
     const [AllNodeData, setAllNodeData] = useState([] as any[]);
     const [Loading, setLoading] = useState(false);
+
+    const DeleteUser = (id: string) => {
+        const data = {query: 'mutation{deleteUser(_id: "' + id + '") { id username }}'}
+        axios.post('/graphql', data).then(res => {
+            setAllUserData(res.data.data.deleteUser);
+            setUserData(res.data.data.deleteUser);
+        });
+    }
+    
+    const DeleteCourse = (id: string) => {
+        const data = {query: 'mutation{deleteCourse(_id: "' + id + '") { id name }}'}
+        axios.post('/graphql', data).then(res => {
+            setAllCourseData(res.data.data.deleteCourse);
+            setCourseData(res.data.data.deleteCourse);
+        });
+    }
+
+    const columnsUser = [
+        {
+          title: 'Name',
+          dataIndex: 'username',
+        },
+        {
+            title: 'Edit',
+            render: (data: any, more: any) => {
+                return <Link to={"/Admin/EditUser/" + more.id}>Edit</Link>
+            }
+        },
+        {
+            title: 'Delete',
+            render: (data: any, more: any) => {
+                return <a onClick={DeleteUser.bind(null, more.id)}>Delete</a>
+            }
+        }
+        
+      ];
+      const columnsCourse = [
+        {
+          title: 'Name',
+          dataIndex: 'name',
+        },
+        {
+            title: 'Delete',
+            key: 'Delete',
+            render: (data: any, more: any) => {
+                return <a onClick={DeleteCourse.bind(null, more.id)}>Delete</a>
+            }
+        }
+      ];
+      const columnsNode = [
+        {
+          title: 'Name',
+          dataIndex: 'name',
+          render: (data: any, more: any) => {
+            return <Link to={"/learning/" + more.id}>{data}</Link>
+          }
+        },
+        {
+            title: 'Depth',
+            dataIndex: 'depth'
+        },
+        {
+            title: 'Edit',
+            render: (data: any, more: any) => {
+                return <Link to={"/Admin/EditPage/" + more.id}>Edit</Link>
+            }
+        }
+      ];
+    
 
     useEffect(() => {
         getData();
