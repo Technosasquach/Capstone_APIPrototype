@@ -25,10 +25,16 @@ const SearchState = (props: any) => {
         data['query'] = "query{everyNode{ id createdAt depth name json keywords }}\n\n";
         
         const res = await axios.post("http://localhost:3000/graphql/", data)
-            .then((res) => res.data.data.everyNode.filter((name: any) => {
-                return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
-            }));
-        //console.log("Sending search to reducer from SearchState");
+            .then((res) => {
+                if(text) {
+                    return res.data.data.everyNode.filter((name: any) => {
+                        return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
+                    });
+                } else {
+                    return res.data.data.everyNode;
+                }
+            });
+
         dispatch({
             type: SEARCH_NODES,
             payload: res
@@ -42,10 +48,16 @@ const SearchState = (props: any) => {
         data['query'] = "query{everyCourse{ id name nodes {id}}}\n\n";
         
         const res = await axios.post("http://localhost:3000/graphql/", data)
-            .then((res) => res.data.data.everyCourse.filter((name: any) => {
-                return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
-            }));
-        //console.log("Sending search to reducer from SearchState");
+            .then((res) => {
+                if(text) {
+                    return res.data.data.everyCourse.filter((name: any) => {
+                        return name.name.toLowerCase().indexOf(text.toLowerCase()) >= 0
+                    })
+                } else {
+                    return res.data.data.everyCourse;
+                }
+            });
+
         dispatch({
             type: SEARCH_COURSES,
             payload: res

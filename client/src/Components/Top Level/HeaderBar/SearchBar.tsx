@@ -13,16 +13,10 @@ const SearchBar = (props: any) => {
         //stops it from submitting to a file                    
         e.preventDefault();
 
-        // prevents null search
-        if (text === '') {
-            // alertContext.setAlert('Please enter something...', 'light');
-        } else {
-            //passes the text up to the app level
-            searchContext.searchNodes(text);
-            searchContext.searchCourses(text);
-            setText('');
-            props.history.push('/searchresults');
-        }
+        searchContext.searchNodes(text);
+        searchContext.searchCourses(text);
+        setText('');
+        props.history.push('/searchresults');
 
     };
 
