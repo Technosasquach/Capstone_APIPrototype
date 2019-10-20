@@ -148,10 +148,15 @@ exports.UserMutations = {
                         }
                         ;
                     });
-                    return index_1.User.findByIdAndDelete({ _id: args._id }).then(res => {
-                        return index_1.User.find({});
-                    }).catch(() => {
-                        throw new Error();
+                    return index_1.User.findById({ _id: args._id }).then(res => {
+                        index_1.Account.findOne({ username: res.username }).then(res => {
+                            index_1.Account.findByIdAndDelete({ _id: res._id }).catch();
+                        });
+                        return index_1.User.findByIdAndDelete({ _id: args._id }).then(res => {
+                            return index_1.User.find({});
+                        }).catch(() => {
+                            throw new Error();
+                        });
                     });
                 }
             }
@@ -164,8 +169,15 @@ exports.UserMutations = {
             id: { type: graphql_1.GraphQLString },
             accessLevel: { type: graphql_1.GraphQLString },
         },
-        resolve(parent, args) {
-            return index_1.User.findByIdAndUpdate(args.id, args);
+        resolve(parent, args, context) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = authentication_1.AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if (auth.accessLevel == "ADMIN") {
+                    return index_1.User.findByIdAndUpdate(args.id, args);
+                }
+            }
+            throw new Error();
         }
     }
     //     addUser: {

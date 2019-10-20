@@ -11,7 +11,7 @@ export const AuthContext = React.createContext({
     isSignUp: false,
     isAuthorized: true,
     errorMsg: "",
-    isAdmin: true
+    isAdmin: false
 });
 
 export default class AuthProvider extends React.Component<any, { isSignUp: boolean, isAuthorized: boolean, errorMsg: string, isAdmin: boolean }> {

@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLID, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList, GraphQLNonNull } from 'graphql';
 // import { Account } from '../database/account.js';
 import { Account } from '../database/index.js';
-
+import { AuthenticationController } from '../controllers/authentication';
 
 export const AccountType = new GraphQLObjectType({
     name: 'Account',
@@ -38,9 +38,15 @@ export const AccountMutations = {
             position: {type: GraphQLString },
             phone: {type: GraphQLString}
         },
-        resolve(parent: any, args: any) {
-            const account = new Account(args);
-            return account.save();
+        resolve(parent: any, args: any, context: any) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if (auth.userID == args.id || auth.accessLevel == "ADMIN") {
+                    const account = new Account(args);
+                    return account.save();
+                }
+            }
         }
     },
     updateAccount: {
@@ -54,15 +60,27 @@ export const AccountMutations = {
             position: {type: GraphQLString },
             phone: {type: GraphQLString}
         },
-        resolve(parent: any, args: any) {
-            return Account.findByIdAndUpdate(args.id, args);
+        resolve(parent: any, args: any, context: any) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if (auth.userID == args.id || auth.accessLevel == "ADMIN") {
+                    return Account.findByIdAndUpdate(args.id, args);
+                }
+            }
         }
     },
     deleteAccount: {
         type: AccountType,
         args: { id: { type: GraphQLString}},
-        resolve(parent: any, args: any) {
-            return Account.findByIdAndRemove(args.id);
+        resolve(parent: any, args: any, context: any) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if(auth.accessLevel == "ADMIN") {
+                    return Account.findByIdAndRemove(args.id);
+                }
+            }
         }
     }
 }

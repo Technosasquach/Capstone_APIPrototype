@@ -137,11 +137,16 @@ export const UserMutations = {
                             Comment.findByIdAndDelete({_id: res[i]._id}).catch(res => {console.log(res)});
                         };
                     });
-                    return User.findByIdAndDelete({_id: args._id}).then(res => {
-                        return User.find({});
-                    }).catch(() => {
-                        throw new Error();
-                    });
+                    return User.findById({_id: args._id}).then(res => {
+                        Account.findOne({username: res.username}).then(res => {
+                            Account.findByIdAndDelete({_id: res._id}).catch();
+                        })
+                        return User.findByIdAndDelete({_id: args._id}).then(res => {
+                            return User.find({});
+                        }).catch(() => {
+                            throw new Error();
+                        });
+                    })
                 }
             }
             throw new Error();
@@ -153,8 +158,15 @@ export const UserMutations = {
             id: { type: GraphQLString },
             accessLevel: {type: GraphQLString},
         },
-        resolve(parent: any, args: any) {
-            return User.findByIdAndUpdate(args.id, args);
+        resolve(parent: any, args: any, context: any) {
+            const token = context.req.signedCookies["jwt"];
+            const auth = AuthenticationController.authenticateJWT(token);
+            if (auth.valid) {
+                if(auth.accessLevel == "ADMIN") {
+                    return User.findByIdAndUpdate(args.id, args);
+                }
+            }
+            throw new Error();
         }
     }
 
