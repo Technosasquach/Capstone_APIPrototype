@@ -6,9 +6,8 @@ import { Steps, Card, Anchor } from 'antd';
 import PathwayCard from "./PathwayCard";
 import Title from "antd/lib/typography/Title";
 import { useState, useEffect } from "react";
-import { Empty } from 'antd';
+// import { Typography } from "antd";
 import { Link as Links } from "react-router-dom";
-// import Typography from "antd/lib/typography/Typography";
 // import { useState, useEffect } from "react";
 const { Link } = Anchor;
 
@@ -97,16 +96,12 @@ const Pathways = (Props: any, { }) => {
     return (
         <div>
             <div>
-                <div>
-                    <h3>Current Study Paths</h3>
-                </div>
-
+                {/* <Typography.Title level={4}>Current courses</Typography.Title> */}
             </div>
-            <hr />
             <div className="LearningCardList">
                 <div className="LearningCardList">
 
-                    {Courses ?
+                    {Courses && Courses ?
                         Courses.map(x =>
                             <Card key={x.id} style={{ width: 140 }} cover={<PathwayCard svgtype={x.id} />}>
                                 <Anchor onClick={handleClick}>
@@ -118,8 +113,8 @@ const Pathways = (Props: any, { }) => {
                         <Title level={4}>You have no courses</Title>}
                 </div>
 
-                <div className="LearningCardList">
-                    <Steps direction="vertical" >
+                <div className="LearningCardSteps">
+                    <Steps direction="vertical">
                         {CourseDetails.nodes &&
                             CourseDetails.nodes.map(x =>
                                 ViewedNodes.includes(x)
@@ -128,7 +123,6 @@ const Pathways = (Props: any, { }) => {
                             )
                         }
                     </Steps>
-                    {!CourseDetails.nodes && <Empty />}
                 </div>
 
             </div>
