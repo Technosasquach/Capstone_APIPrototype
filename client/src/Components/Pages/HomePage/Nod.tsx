@@ -14,16 +14,19 @@ interface iContent {
     id: string;
     nodeID: string;
     data: string;
+    type: string;
 }
 
 const Nod = () => {
-    const [Content, setContent] = useState({ id: "", nodeID: "", data: "" } as iContent);
+    const [Content, setContent] = useState({ id: "", nodeID: "", data: "", type: "" } as iContent);
     const [Loading, setLoading] = useState(false);
 
 
     useEffect(() => {
         setLoading(true);
         getData();
+        setLoading(false);
+        console.log(Content);
     }, [])
 
 
@@ -37,6 +40,7 @@ const Nod = () => {
                         id
                         nodeId
                         data
+                        type
                     }
                   }`
             }
@@ -46,7 +50,8 @@ const Nod = () => {
                 nod.data = nod.data.substring(0, 1000);
                 setContent(nod);
             }
-            setLoading(false);
+                        
+            // setLoading(false);
         })
     }
 
@@ -56,7 +61,7 @@ const Nod = () => {
             : <div className="Nod">
                 <Typography.Title level={4}>Asset of the day!</Typography.Title>
                 <ReactMarkdown source={Content.data} />
-                <Button type="link" title="Read more..."/>
+                <Button type="link" href={"/learning/"+Content.nodeID}>Read more...</Button>
             </div>
     )
 }

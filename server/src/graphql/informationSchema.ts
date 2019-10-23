@@ -37,11 +37,20 @@ export const InformationQueries = {
     informationRandom: {
         type: InformationType,
         resolve(_parent: any, args: any) {
-            // Get a random entry
-            var random = Math.floor(Math.random() * 100);
+            // // Get a random entry
+            // var random = Math.floor(Math.random() * 100);
 
-            // Again query all users but only fetch one offset by our random #
-            return Information.findOne().skip(random).exec();
+            // // Again query all users but only fetch one offset by our random #
+            // return Information.findOne().skip(random).exec();
+            return Information.countDocuments({}).then(async res => {
+                let data = {} as any;
+                do {
+                    var random = Math.floor(Math.random() * (res));
+                    data = await Information.findOne().skip(random).exec();
+                } while (data.type != "text");
+                return data;
+            })
+
         }
     }
 };
