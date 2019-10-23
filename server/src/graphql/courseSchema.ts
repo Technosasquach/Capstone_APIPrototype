@@ -76,12 +76,12 @@ export const CourseMutations = {
                 if(auth.accessLevel == "ADMIN") {
                     User.find({coursesTaken: args._id}).then(res => {
                         res.forEach(element => {
-                            User.findByIdAndUpdate({_id: element._id}, { $pull: { coursesTaken: { string: args._id } } })
+                            User.findByIdAndUpdate({_id: element._id}, { $pull: { coursesTaken: { $in:[args._id]} } }, {new: true}).catch(() => {console.log("error")});
                         });
                     });
-                    User.find({coursesCompleted: args._id}).then(res => {
+                    User.find({coursesComplete: args._id}).then(res => {
                         res.forEach(element => {
-                            User.findByIdAndUpdate({_id: element._id}, { $pull: { coursesCompleted: { string: args._id } } })
+                            User.findByIdAndUpdate({_id: element._id}, { $pull: { coursesComplete: { $in:[args._id]} } }, {new: true}).catch(() => {console.log("error")});
                         });
                     });
                     return Course.findById({_id: args._id}).then(res => {

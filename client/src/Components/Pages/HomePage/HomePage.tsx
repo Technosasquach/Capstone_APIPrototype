@@ -5,6 +5,7 @@ import CookieHandler from "../../../utils/clientCookies";
 // import CourseDisplay from "./CourseDisplay";
 import { Typography, PageHeader } from "antd";
 import Pathways from "./Pathways";
+import Nod from "./Nod";
 
 const HomePage = () => {
   const username = CookieHandler.getCookie("username");
@@ -88,21 +89,26 @@ const HomePage = () => {
   return (
     <div className="HomePage">
       <span>
-        <PageHeader
-          title={
-            <Typography.Title level={3}>Hello {username} </Typography.Title>
-          }
-
-        >Welcome to syn|LERN</PageHeader>
+        <PageHeader title={<Typography.Title level={3}>Hello {username} </Typography.Title>}/>
       </span>
+      <div className="WelcomeMsg">
+        <Typography.Title level={4}>Welcome to syn|LERN</Typography.Title>
+        <Typography.Paragraph>
+          Synlern is a learning platform built for the education of new and existing staff. 
+          Search for areas of interest to read about individual assests.
+          If you're new to the company check the account page for your personalised learning pathways.
+        </Typography.Paragraph>
+      </div>
 
-      <div id="homeTop">
-        <div id="coursedisplay">
+      <div id="homeBottom">
+        <div className="courseList">
           {User && <Pathways user={User} />}
-          
+
+        </div>
+        <div className="nodeOfDay">
+          <Nod/>
         </div>
       </div>
-      <div id="homeBottom"></div>
     </div>
   );
 };

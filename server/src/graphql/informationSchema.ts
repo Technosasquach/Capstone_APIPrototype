@@ -8,8 +8,8 @@ export const InformationType = new GraphQLObjectType({
         createdAt: { type: new GraphQLNonNull(GraphQLString) },
         related: { type: new GraphQLNonNull(new GraphQLList(GraphQLID)) },
         data: { type: new GraphQLNonNull(GraphQLString) },
-        nodeId: {type: GraphQLString },
-        type: {type: GraphQLString},
+        nodeId: { type: GraphQLString },
+        type: { type: GraphQLString },
     })
 });
 
@@ -22,16 +22,35 @@ export const InformationQueries = {
     },
     information: {
         type: InformationType,
-        args: { id: { type: GraphQLString }},
+        args: { id: { type: GraphQLString } },
         resolve(parent: any, args: any) {
             return Information.findById(args.id);
         }
     },
     informationByNodeId: {
         type: new GraphQLList(InformationType),
-        args: { nodeId: { type: GraphQLString }},
+        args: { nodeId: { type: GraphQLString } },
         resolve(_parent: any, args: any) {
-            return Information.find({nodeId: args.nodeId});
+            return Information.find({ nodeId: args.nodeId });
+        }
+    },
+    informationRandom: {
+        type: InformationType,
+        resolve(_parent: any, args: any) {
+            // // Get a random entry
+            // var random = Math.floor(Math.random() * 100);
+
+            // // Again query all users but only fetch one offset by our random #
+            // return Information.findOne().skip(random).exec();
+            return Information.countDocuments({}).then(async res => {
+                let data = {} as any;
+                do {
+                    var random = Math.floor(Math.random() * (res));
+                    data = await Information.findOne().skip(random).exec();
+                } while (data.type != "text");
+                return data;
+            })
+
         }
     }
 };
@@ -61,7 +80,7 @@ export const InformationMutations = {
     },
     deleteInformation: {
         type: InformationType,
-        args: { id: { type: GraphQLString}},
+        args: { id: { type: GraphQLString } },
         resolve(parent: any, args: any) {
             return Information.findByIdAndRemove(args.id);
         }
