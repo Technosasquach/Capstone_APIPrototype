@@ -182,6 +182,7 @@ const CourseNodeAdder = (props: any) => {
   
   return (
     <div>
+        ///@ts-ignore
       <Tree loadData={onLoadData} checkable checkStrictly onCheck={onCheck} checkedKeys={CheckedKeys}>
         {renderTreeNodes(TreeData)}
       </Tree>

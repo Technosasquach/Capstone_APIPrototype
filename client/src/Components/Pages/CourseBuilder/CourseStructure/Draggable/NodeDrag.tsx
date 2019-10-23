@@ -1,6 +1,6 @@
 import React, { useRef, useState, useContext } from 'react'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
-import ItemTypes from './ItemTypes'
+import ItemTypes from './itemTypes'
 import { XYCoord } from 'dnd-core'
 
 import { Button } from 'antd'

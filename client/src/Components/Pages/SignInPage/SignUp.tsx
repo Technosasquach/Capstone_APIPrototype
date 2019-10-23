@@ -82,7 +82,7 @@ export class SignUpPage extends React.Component<{ submitFunc: Function, errorMsg
                                 placeholder="Password"
                             />
                             { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span className="errorMsg">{this.props.errorMsg}</span><br/></div> : undefined}
-                            <Button type="primary" onClick={this.handleSubmit}>SignUp</Button> Or <a onClick={this.handleSignUp}>Sign In</a>
+                            <Button type="primary" onClick={this.handleSubmit}>Create User!</Button> Or <a onClick={this.handleSignUp}>Back to sign in</a>
                     </div>
                 </div>
             </div>

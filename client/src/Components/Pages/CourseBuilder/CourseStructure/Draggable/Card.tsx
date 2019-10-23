@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import { Button } from 'antd';
-import './card.less';
+import './Card.less';
 
 import {QuizContext} from './../../Context/QuizContext';
 
