@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5d9d8683df0cdd208494c85a"},"coursesTaken":["5da7e9fb4fac834a68cc16f5","5daed3378840715fd025a1d9"],"coursesComplete":[],"createdAt":{"$date":{"$numberLong":"1570604675406"}},"viewed":["5cfc758fcaac65237452719f"],"username":"chris","password":"$2b$15$Q9COFTrld.OR5FPMG/HPKeTXLT8KkE.pj/qPaP6fG62nxYC//e.nS","accessLevel":"ADMIN","__v":{"$numberInt":"0"}}

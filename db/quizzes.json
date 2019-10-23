@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5daed2558840715fd025a1d6"},"questions":["Quiz PCP"],"answer":["A"],"answers":[["aaa","bb","cccc","d"]],"nodeID":"5cfc757bcaac652374526ab1","createdAt":{"$date":{"$numberLong":"1571738197057"}},"__v":{"$numberInt":"0"}}
