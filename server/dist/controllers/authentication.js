@@ -32,10 +32,10 @@ class AuthenticationController {
         // The jwt.verify function exports the JSON of the payload, or an error
         // Using try and catch for the error, then populating the JSON structure with a valid clause
         try {
-            return Object.assign({}, jwt.verify(token, authKey), { valid: true });
+            return Object.assign(Object.assign({}, jwt.verify(token, authKey)), { valid: true });
         }
         catch (_a) {
-            return Object.assign({}, exports.JWTPayloadStandard, { username: "bad", accessLevel: database_1.EUserAuthLevel.USER, valid: false, userID: "bad" });
+            return Object.assign(Object.assign({}, exports.JWTPayloadStandard), { username: "bad", accessLevel: database_1.EUserAuthLevel.USER, valid: false, userID: "bad" });
         }
     }
     /**

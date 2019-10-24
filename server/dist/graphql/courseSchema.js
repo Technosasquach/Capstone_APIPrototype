@@ -74,12 +74,12 @@ exports.CourseMutations = {
                 if (auth.accessLevel == "ADMIN") {
                     index_1.User.find({ coursesTaken: args._id }).then(res => {
                         res.forEach(element => {
-                            index_1.User.findByIdAndUpdate({ _id: element._id }, { $pull: { coursesTaken: { string: args._id } } });
+                            index_1.User.findByIdAndUpdate({ _id: element._id }, { $pull: { coursesTaken: { $in: [args._id] } } }, { new: true }).catch(() => { console.log("error"); });
                         });
                     });
-                    index_1.User.find({ coursesCompleted: args._id }).then(res => {
+                    index_1.User.find({ coursesComplete: args._id }).then(res => {
                         res.forEach(element => {
-                            index_1.User.findByIdAndUpdate({ _id: element._id }, { $pull: { coursesCompleted: { string: args._id } } });
+                            index_1.User.findByIdAndUpdate({ _id: element._id }, { $pull: { coursesComplete: { $in: [args._id] } } }, { new: true }).catch(() => { console.log("error"); });
                         });
                     });
                     return index_1.Course.findById({ _id: args._id }).then(res => {

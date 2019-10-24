@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_1 = require("graphql");
 const information_js_1 = require("../database/information.js");
@@ -32,6 +41,23 @@ exports.InformationQueries = {
         args: { nodeId: { type: graphql_1.GraphQLString } },
         resolve(_parent, args) {
             return information_js_1.Information.find({ nodeId: args.nodeId });
+        }
+    },
+    informationRandom: {
+        type: exports.InformationType,
+        resolve(_parent, args) {
+            // // Get a random entry
+            // var random = Math.floor(Math.random() * 100);
+            // // Again query all users but only fetch one offset by our random #
+            // return Information.findOne().skip(random).exec();
+            return information_js_1.Information.countDocuments({}).then((res) => __awaiter(this, void 0, void 0, function* () {
+                let data = {};
+                do {
+                    var random = Math.floor(Math.random() * (res));
+                    data = yield information_js_1.Information.findOne().skip(random).exec();
+                } while (data.type != "text");
+                return data;
+            }));
         }
     }
 };
