@@ -43,7 +43,7 @@ const CourseNodeAdder = (props: any) => {
 
   const requestChildren = (ID: any, key: number) => {
     let data = {query:  "query{node(id:\"" + ID + "\"){children { id name }}}"};
-    return axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
+    return axios.post("/graphql/", data).then((res: any) => {
       return res.data.data.node.children;
     }).then((res: any[]) => {
         let treeData = [] as any[];
@@ -84,7 +84,7 @@ const CourseNodeAdder = (props: any) => {
 
   const loadData = (id: string) => {
     let data = {query:  "query{informationByNodeId(nodeId: \"" + id + "\"){data type id}}"};
-    axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
+    axios.post("/graphql/", data).then((res: any) => {
       return ([...res.data.data.informationByNodeId]);
     }).then((json: any) => {
       const IDS = [] as any[];

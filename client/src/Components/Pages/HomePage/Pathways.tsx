@@ -62,7 +62,7 @@ const Pathways = (Props: any, { }) => {
     
     const findUserCourseDetails = async (CourseId: string) => {
         return await axios({
-            url: 'http://localhost:3000/graphql',
+            url: '/graphql/',
             method: 'post',
             data: {
                 query: `

@@ -24,7 +24,7 @@ const SearchState = (props: any) => {
         let data: any = {};
         data['query'] = "query{everyNode{ id createdAt depth name json keywords }}\n\n";
         
-        const res = await axios.post("http://localhost:3000/graphql/", data)
+        const res = await axios.post("/graphql/", data)
             .then((res) => {
                 if(text) {
                     return res.data.data.everyNode.filter((name: any) => {
@@ -47,7 +47,7 @@ const SearchState = (props: any) => {
         let data: any = {};
         data['query'] = "query{everyCourse{ id name nodes {id}}}\n\n";
         
-        const res = await axios.post("http://localhost:3000/graphql/", data)
+        const res = await axios.post("/graphql/", data)
             .then((res) => {
                 if(text) {
                     return res.data.data.everyCourse.filter((name: any) => {

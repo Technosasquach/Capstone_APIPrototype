@@ -15,7 +15,7 @@ const CommentEditor = (props: any) => {
 
     const submitComment = async (id: string, comment: string, userID: string) => {
         return await axios({
-            url: 'http://localhost:3000/graphql',
+            url: '/graphql/',
             method: 'post',
             data: {
                 query: `

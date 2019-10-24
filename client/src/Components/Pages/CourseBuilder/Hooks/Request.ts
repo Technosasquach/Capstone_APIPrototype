@@ -7,7 +7,7 @@ export const useRequest = (query: any, dependencies: any) => {
 
   useEffect(() => {
     setIsLoading(true);
-      axios.post("http://localhost:3000/graphql/", query)
+      axios.post("/graphql/", query)
       .then(response => {
         setIsLoading(false);
         setFetchedData(response.data);

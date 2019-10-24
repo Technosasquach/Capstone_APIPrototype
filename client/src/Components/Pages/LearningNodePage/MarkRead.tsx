@@ -12,7 +12,7 @@ const MarkRead = (Props: iProps) => {
 
     const MarkAsRead = async () => {
         return await axios({
-            url: 'http://localhost:3000/graphql',
+            url: '/graphql/',
             method: 'post',
             data: {
                 query: `

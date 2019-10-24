@@ -11,7 +11,7 @@ const CourseDisplay = (props: any) => {
     useEffect(() => {
         setLoading(true);
         const data = {query:  "query{everyCourse{id name}}\n\n"};
-        axios.post("http://localhost:3000/graphql/", data).then(res => {
+        axios.post("/graphql/", data).then(res => {
             return res.data['data']['everyCourse'].map((res: any) => {
                 return {name: res.name, id: res.id};
             });

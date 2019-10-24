@@ -47,7 +47,7 @@ const SearchPage = (props: any) => {
     setLoading(true);
     setName("Loading Data");
     let data:any = {query:  "query{node(id: \"" + props.match.params.id + "\"){name children {id name} parents {id name}}}\n\n"};
-    axios.post("http://localhost:3000/graphql/", data).then(res => {
+    axios.post("/graphql/", data).then(res => {
       return {
         name: res.data['data']['node']['name'],
         children: res.data['data']['node']['children'],

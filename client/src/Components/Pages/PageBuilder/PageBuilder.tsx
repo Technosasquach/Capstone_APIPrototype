@@ -25,11 +25,11 @@ const PageBuilderPage = (props: any) => {
     setLoading(true);
     setName("Loading Data");
     let data:any = {query:  "query{node(id: \"" + props.match.params.id + "\"){name}}"};
-    axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
+    axios.post("/graphql/", data).then((res: any) => {
       setName(res.data.data.node.name);
     })
     data = {query:  "query{informationByNodeId(nodeId: \"" + props.match.params.id + "\"){data type id}}"};
-    axios.post("http://localhost:3000/graphql/", data).then((res: any) => {
+    axios.post("/graphql/", data).then((res: any) => {
       return ([...res.data.data.informationByNodeId]);
     }).then((json: any) => {
       const IDS = [] as any[];
@@ -61,7 +61,7 @@ const PageBuilderPage = (props: any) => {
           window.alert("Issue with Page submission");
         } else {
           const data2 = {query:  "query{informationByNodeId(nodeId: \"" + props.match.params.id + "\"){id type}}"};
-          axios.post("http://localhost:3000/graphql/", data2).then((res: any) => {
+          axios.post("/graphql/", data2).then((res: any) => {
             const temp: any[] = [];
             res.data.data.informationByNodeId.forEach((element: any) => {
               temp.push({id: element.id, type: element.type});

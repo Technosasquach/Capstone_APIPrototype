@@ -41,7 +41,7 @@ const AccountForm = (Props: iProps, { }) => {
 
     const findAccount = async (userName: string) => {
         return await axios({
-            url: 'http://localhost:3000/graphql',
+            url: '/graphql/',
             method: 'post',
             data: {
                 query: `
@@ -94,7 +94,7 @@ const AccountForm = (Props: iProps, { }) => {
 
     const addAccount = async (account: iAccount) => {
         return await axios({
-            url: 'http://localhost:3000/graphql',
+            url: '/graphql/',
             method: 'post',
             data: {
                 query: `
@@ -126,7 +126,7 @@ const AccountForm = (Props: iProps, { }) => {
 
     const updateAccount = async (account: iAccount) => {
         return await axios({
-            url: 'http://localhost:3000/graphql',
+            url: '/graphql/',
             method: 'post',
             data: {
                 query: `

@@ -157,7 +157,7 @@ const CourseDisplayPage = (props: any) => {
     setLoading(true);
     setCourseName("Loading Data");
     let data:any = {query:  "query{course(id: \"" + props.match.params.id + "\"){name nodes {id name info { type data } comments { id contents userID { id username editable } } } quizzes { nodeID questions answers answer }}}\n\n"};
-    axios.post("http://localhost:3000/graphql/", data).then(res => {
+    axios.post("/graphql/", data).then(res => {
       return {
         name: res.data.data.course.name,
         nodes: res.data.data.course.nodes,

@@ -25,7 +25,7 @@ const HomePage = () => {
 
   const findCourses = (userName: string) => {
       return axios({
-          url: 'http://localhost:3000/graphql',
+          url: '/graphql/',
           method: 'post',
           data: {
               query: `

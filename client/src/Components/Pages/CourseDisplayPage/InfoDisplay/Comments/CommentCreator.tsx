@@ -12,7 +12,7 @@ const CommentCreator = (props: any) => {
         console.log(nodeID);
         console.log(comment);
         return await axios({
-            url: 'http://localhost:3000/graphql',
+            url: '/graphql/',
             method: 'post',
             data: {
                 query: `
