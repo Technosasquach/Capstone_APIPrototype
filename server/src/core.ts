@@ -31,9 +31,15 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = '0';
 
 // MongooseDB
 // ----------------------------------------------------------------------------
-mongoose.connect("mongodb://localhost:27017/synlern", { useNewUrlParser: true });
-mongoose.connection.on("error", () => {
+import { MongoDBConfig } from "./config/autentication.config"
+// 
+const mongoURL = "mongodb://" + MongoDBConfig.username + ":" + MongoDBConfig.password + "@" + MongoDBConfig.host + ":27017/synlern?authSource=admin";
+console.log("MongoDB connecting too: " + mongoURL);
+mongoose.connect(mongoURL, { useNewUrlParser: true });
+mongoose.set('debug', true); // turn on debug
+mongoose.connection.on("error", (error) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running.");
+    if (error) console.log("Mongo Error: " + error);
     process.exit();
 });
 mongoose.set('useFindAndModify', false);

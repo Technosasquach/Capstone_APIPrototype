@@ -8,3 +8,9 @@ export const AuthenticationConfig = {
     authKey: "AcUntLpckGu7joCIvhL4Bcj5xk0XJV2wmTZMyOxT",
     cookieSecret: "CfUvIFw9bQOCAylcCNzGkXepBsThrpqQ2NV9YsAl"
 }
+
+export const MongoDBConfig = {
+    host: "db.synlern.com",
+    username: "QiMpwUVbHO",
+    password: "ASdCaorrmy"
+}

@@ -8,4 +8,9 @@ exports.AuthenticationConfig = {
     authKey: "AcUntLpckGu7joCIvhL4Bcj5xk0XJV2wmTZMyOxT",
     cookieSecret: "CfUvIFw9bQOCAylcCNzGkXepBsThrpqQ2NV9YsAl"
 };
+exports.MongoDBConfig = {
+    host: "db.synlern.com",
+    username: "QiMpwUVbHO",
+    password: "ASdCaorrmy"
+};
 //# sourceMappingURL=autentication.config.js.map

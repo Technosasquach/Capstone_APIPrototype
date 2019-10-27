@@ -27,9 +27,16 @@ const path = require("path");
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = '0';
 // MongooseDB
 // ----------------------------------------------------------------------------
-mongoose.connect("mongodb://localhost:27017/synlern", { useNewUrlParser: true });
-mongoose.connection.on("error", () => {
+const autentication_config_1 = require("./config/autentication.config");
+// 
+const mongoURL = "mongodb://" + autentication_config_1.MongoDBConfig.username + ":" + autentication_config_1.MongoDBConfig.password + "@" + autentication_config_1.MongoDBConfig.host + ":27017/synlern?authSource=admin";
+console.log("MongoDB connecting too: " + mongoURL);
+mongoose.connect(mongoURL, { useNewUrlParser: true });
+mongoose.set('debug', true); // turn on debug
+mongoose.connection.on("error", (error) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running.");
+    if (error)
+        console.log("Mongo Error: " + error);
     process.exit();
 });
 mongoose.set('useFindAndModify', false);
@@ -42,8 +49,8 @@ app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 // Cookie content decoding and parsing
-const autentication_config_1 = require("./config/autentication.config");
-app.use(cookieParser(autentication_config_1.AuthenticationConfig.cookieSecret));
+const autentication_config_2 = require("./config/autentication.config");
+app.use(cookieParser(autentication_config_2.AuthenticationConfig.cookieSecret));
 // Mounts the session store with an auto loader into MongooseDB
 // const MongoStore = require("connect-mongo")(session);
 // Allows the session storage to be put into mongoose
