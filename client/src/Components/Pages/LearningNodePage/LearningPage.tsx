@@ -75,7 +75,7 @@ const LearningPage = (props: any) => {
             }
         }
         for (let i = 0; i < comments.length; i++) {
-            comment.data.push({ id: comments[i].id, text: comments[i].contents, who: { id: comments[i].userID.id, username: comments[i].userID.username }, editable: comments[i].userID.editable });
+            comment.data.push({ id: comments[i].id || 0, text: comments[i].contents, who: { id: comments[i].userID.id, username: comments[i].userID.username }, editable: comments[i].userID.editable });
         }
         setContent(content);
         setComments(comment);
