@@ -75,9 +75,17 @@ const LearningPage = (props: any) => {
                 content.images = JSON.parse(info[i].data);
             }
         }
-        for (let i = 0; i < comments.length; i++) {
-            comment.data.push({ id: comments[i].id || 0, text: comments[i].contents, who: { id: comments[i].userID.id, username: comments[i].userID.username }, editable: comments[i].userID.editable });
-        }
+        comment.data = comments.map((comment: any) => {
+            return { 
+                id: comment.id || 0,
+                text: comment.contents, 
+                who: { 
+                    id: comment.userID.id,
+                    username: comment.userID.username
+                }, 
+                editable: comment.userID.editable 
+            }
+        })
         setContent(content);
         setComments(comment);
     }
