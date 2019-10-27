@@ -31,7 +31,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = '0';
 
 // MongooseDB
 // ----------------------------------------------------------------------------
-mongoose.connect("mongodb://localhost:27017/synlern", { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/synlern", { useNewUrlParser: true });
 mongoose.connection.on("error", () => {
     console.log("MongoDB connection error. Please make sure MongoDB is running.");
     process.exit();
