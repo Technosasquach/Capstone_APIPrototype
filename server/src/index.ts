@@ -10,8 +10,8 @@ import * as jwt from "jsonwebtoken";
 
 // Start Express server.
 // ----------------------------------------------------------------------------
-Server.listen(80, () => {
-    console.log(("App is running at http://localhost:%d in %s mode"), 80, App.get("env"));
+Server.listen(3000, () => {
+    console.log(("App is running at http://localhost:%d in %s mode"), 3000, App.get("env"));
     console.log("Press CTRL-C to stop\n");
 
     // Starts scrape when server starts

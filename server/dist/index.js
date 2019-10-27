@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("./core");
 // Start Express server.
 // ----------------------------------------------------------------------------
-core_1.Server.listen(80, () => {
-    console.log(("App is running at http://localhost:%d in %s mode"), 80, core_1.App.get("env"));
+core_1.Server.listen(3000, () => {
+    console.log(("App is running at http://localhost:%d in %s mode"), 3000, core_1.App.get("env"));
     console.log("Press CTRL-C to stop\n");
     // Starts scrape when server starts
     // scrape.scrapeWholeAPI();
