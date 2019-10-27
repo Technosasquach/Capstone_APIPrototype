@@ -63,6 +63,7 @@ const LearningPage = (props: any) => {
     const CommentFunctions = [addComment, editComment, removeComment];
 
     const setUpContent = (name: string, info: any, comments: any) => {
+        console.log("Comments: " + JSON.stringify(comments));
         const content = { id: 0, name: "", nodeID: "", text: "", images: [] } as content;
         const comment = { id: 0, nodeID: "", data: [] } as comment;
         content.name = name;
