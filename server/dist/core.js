@@ -32,7 +32,7 @@ const autentication_config_1 = require("./config/autentication.config");
 const mongoURL = "mongodb://" + autentication_config_1.MongoDBConfig.username + ":" + autentication_config_1.MongoDBConfig.password + "@" + autentication_config_1.MongoDBConfig.host + ":27017/synlern?authSource=admin";
 console.log("MongoDB connecting too: " + mongoURL);
 mongoose.connect(mongoURL, { useNewUrlParser: true });
-mongoose.set('debug', true); // turn on debug
+// mongoose.set('debug', true); // turn on debug
 mongoose.connection.on("error", (error) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running.");
     if (error)
@@ -51,31 +51,15 @@ app.use(bodyParser.json({ limit: '50mb' }));
 // Cookie content decoding and parsing
 const autentication_config_2 = require("./config/autentication.config");
 app.use(cookieParser(autentication_config_2.AuthenticationConfig.cookieSecret));
-// Mounts the session store with an auto loader into MongooseDB
-// const MongoStore = require("connect-mongo")(session);
-// Allows the session storage to be put into mongoose
-// app.use(session({
-//     resave: true,
-//     saveUninitialized: true,
-//     secret: "above22watersessionsecret",
-//     store: new MongoStore({
-//         host: "127.0.0.1",
-//         port: "27017",
-//         db: "session",
-//         url: "mongodb://localhost:27017/above22water",
-//         autoReconnect: true
-//     })
-// }));
-// Starts the user account session
-// app.use(passport.initialize());
-// app.use(passport.session());
 // Allows CORS
 app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
 // Pretty prints in console
 app.use(errorHandler());
 app.use(logger("dev"));
+// Static content
 app.use(express.static(path.join(__dirname, "./../../client/dist")));
+app.use(express.static(path.join(__dirname, "./../public/")));
 // Prod vs Dev code and display
 if (app.get("env") === "production") {
     app.set("trust proxy", 1); // trust first proxy

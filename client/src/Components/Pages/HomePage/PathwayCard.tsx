@@ -1,52 +1,51 @@
 import * as React from "react";
 import "./PathwayCard.less";
 import 'antd/dist/antd.css';
-import { Icon } from "antd";
+import { Link } from "react-router-dom";
+import { Button, Steps } from "antd";
 
-// var divStyle = {
-//     background: 'blue',
-//     WebkitTransition: 'all', // note the capital 'W' here
-//     msTransition: 'all' // 'ms' is the only lowercase vendor prefix
-//   };
-// style={divStyle}
-
-
-
-// export default class PathwayCard extends React.Component<any, any> {
-//     constructor(props: any) {
-//         super(props);
-//     }
-
-
-//     render() {
-//         return (
-//             <div style={divStyle}>
-//                 <Icon type="code" theme="twoTone" style={{ fontSize: '192px' }}/>
-//             </div>
-//         );
-//     }
-// }
-
-interface iProps {
-    svgtype: string;
+export interface iCourseQuery {
+    id: string,
+    name: string,
+    nodes: [{
+        id: string,
+        name: string
+    }],
+    quizzes: [{
+        id: string
+    }]
 }
-const PathwayCard: React.SFC<iProps> = (myProps) => {
-    const svgTypes = ["database", "book", "car", "control", "environment", "deployment-unit", "gold", "heat-map", "sliders", "sketch"];
 
-    const hashCode = (s: string) => {
-        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);              
-      }
+export class PathwayCard extends React.Component<{course: iCourseQuery}, any> {
 
-    const svgnum = hashCode(myProps.svgtype)%8 + 1;    
-    const svg = svgTypes[svgnum];
+    constructor(props: any) {
+        super(props)
+    }
 
-    return (
-        <div>
-            <Icon type={svg} theme="twoTone" style={{ fontSize: '132px' }} />
+    componentDidMount() {
+        console.log(this.props.course);
+    }
+
+    render() {
+
+        const { Step } = Steps;
+
+        return <div className="LearningCard">
+            <h2>{this.props.course.name}</h2>
+            <hr/>
+            <Link to={"/coursebuilder/" + this.props.course.id}><Button type={"primary"}>Take Quiz!</Button></Link>
+            <hr/>
+            <Button.Group>
+                { this.props.course.quizzes.map((quiz: { id: string} ) => {
+                    return <Link to={"/coursebuilder/" + quiz.id}><Button type={"primary"}>ID: {quiz.id}</Button></Link>
+                })}
+            </Button.Group>
+            
+            <Steps direction="vertical" size="small" current={1}>
+                { this.props.course.nodes.map((item: {id: string, name: string}) => {
+                    return <Step title={<Link to={"/node/" + item.id}>{"Node: " + item.name}</Link>}/>
+                })}
+            </Steps>
         </div>
-    )
+    }
 }
-
-export default PathwayCard
-
-

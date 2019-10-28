@@ -42,7 +42,7 @@ const Nod = () => {
                         data
                         type
                     }
-                  }`
+                }`
             }
         }).then(res => {
             const nod: iContent = res.data.data.informationRandom;
@@ -60,6 +60,7 @@ const Nod = () => {
             <Loader />
             : <div className="Nod">
                 <Typography.Title level={4}>Asset of the day!</Typography.Title>
+                <hr/>
                 <ReactMarkdown source={Content.data} />
                 <Button type="link" href={"/learning/"+Content.nodeID}>Read more...</Button>
             </div>

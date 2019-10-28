@@ -36,7 +36,7 @@ import { MongoDBConfig } from "./config/autentication.config"
 const mongoURL = "mongodb://" + MongoDBConfig.username + ":" + MongoDBConfig.password + "@" + MongoDBConfig.host + ":27017/synlern?authSource=admin";
 console.log("MongoDB connecting too: " + mongoURL);
 mongoose.connect(mongoURL, { useNewUrlParser: true });
-mongoose.set('debug', true); // turn on debug
+// mongoose.set('debug', true); // turn on debug
 mongoose.connection.on("error", (error) => {
     console.log("MongoDB connection error. Please make sure MongoDB is running.");
     if (error) console.log("Mongo Error: " + error);
@@ -47,8 +47,10 @@ mongoose.set('useFindAndModify', false);
 // Server Configuration
 // ----------------------------------------------------------------------------
 app.set("port", process.env.PORT || 3000);
+
 // Static content delivery compression
 app.use(compression());
+
 // URL/URI and HTTP content decoding and parsing
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -57,32 +59,17 @@ app.use(bodyParser.json({limit: '50mb'}));
 import { AuthenticationConfig } from "./config/autentication.config";
 app.use(cookieParser(AuthenticationConfig.cookieSecret));
 
-// Mounts the session store with an auto loader into MongooseDB
-// const MongoStore = require("connect-mongo")(session);
-// Allows the session storage to be put into mongoose
-// app.use(session({
-//     resave: true,
-//     saveUninitialized: true,
-//     secret: "above22watersessionsecret",
-//     store: new MongoStore({
-//         host: "127.0.0.1",
-//         port: "27017",
-//         db: "session",
-//         url: "mongodb://localhost:27017/above22water",
-//         autoReconnect: true
-//     })
-// }));
-// Starts the user account session
-// app.use(passport.initialize());
-// app.use(passport.session());
 // Allows CORS
 app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
+
 // Pretty prints in console
 app.use(errorHandler());
 app.use(logger("dev"));
 
+// Static content
 app.use(express.static(path.join(__dirname, "./../../client/dist")));
+app.use(express.static(path.join(__dirname, "./../public/")));
 
 // Prod vs Dev code and display
 if (app.get("env") === "production") {
