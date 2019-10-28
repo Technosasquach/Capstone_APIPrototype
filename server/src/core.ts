@@ -89,6 +89,9 @@ app.use("/", graphRoutes);
 app.get("/public/bgImage.jpeg", (req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, "./../public/serveimageA2.jpeg"));
 });
+app.get("/public/favicon.png", (req: Request, res: Response) => {
+    res.sendFile(path.resolve(__dirname, "./../public/favicon.png"));
+});
 
 // The last route run
 import { Request, Response } from "express";

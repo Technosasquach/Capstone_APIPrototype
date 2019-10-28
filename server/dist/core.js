@@ -76,6 +76,9 @@ app.use("/", graphql_1.default);
 app.get("/public/bgImage.jpeg", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./../public/serveimageA2.jpeg"));
 });
+app.get("/public/favicon.png", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "./../public/favicon.png"));
+});
 app.get("/**/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./../../client/dist/index.html"));
 });

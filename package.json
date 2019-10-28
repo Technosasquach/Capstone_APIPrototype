@@ -1,7 +1,7 @@
 {
   "name": "capstone_apiprototype",
   "version": "1.0.0",
-  "description": "The main web application for Family Law Tool Kits",
+  "description": "Project for QUT IT Capstone, 2019, produced by Bitwise Productions for the client Synengco",
   "main": "index.js",
   "scripts": {
     "start": "npm run build && npm run watch",
