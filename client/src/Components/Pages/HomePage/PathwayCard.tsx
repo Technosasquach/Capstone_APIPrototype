@@ -2,7 +2,7 @@ import * as React from "react";
 import "./PathwayCard.less";
 import 'antd/dist/antd.css';
 import { Link } from "react-router-dom";
-import { Button, Steps } from "antd";
+import { Steps } from "antd";
 
 export interface iCourseQuery {
     id: string,
@@ -31,19 +31,16 @@ export class PathwayCard extends React.Component<{course: iCourseQuery}, any> {
         const { Step } = Steps;
 
         return <div className="LearningCard">
-            <h2>{this.props.course.name}</h2>
+            <Link to={"/course/" + this.props.course.id}><h2>{this.props.course.name}</h2></Link>
             <hr/>
-            <Link to={"/coursebuilder/" + this.props.course.id}><Button type={"primary"}>Take Quiz!</Button></Link>
-            <hr/>
-            <Button.Group>
+            {/* <Button.Group>
                 { this.props.course.quizzes.map((quiz: { id: string} ) => {
-                    return <Link to={"/coursebuilder/" + quiz.id}><Button type={"primary"}>ID: {quiz.id}</Button></Link>
+                    return <Link to={"/course/" + quiz.id}><Button type={"primary"}>ID: {quiz.id}</Button></Link>
                 })}
-            </Button.Group>
-            
+            </Button.Group> */}
             <Steps direction="vertical" size="small" current={1}>
                 { this.props.course.nodes.map((item: {id: string, name: string}) => {
-                    return <Step title={<Link to={"/node/" + item.id}>{"Node: " + item.name}</Link>}/>
+                    return <Step title={<Link to={"/learning/" + item.id}>{"Node: " + item.name}</Link>}/>
                 })}
             </Steps>
         </div>

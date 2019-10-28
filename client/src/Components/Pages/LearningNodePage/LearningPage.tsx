@@ -4,8 +4,9 @@ import InfoDisplay from './../CourseDisplayPage/InfoDisplay/InfoDisplay';
 import Loader from './../../Utility/Loader';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Card, Row, Col } from 'antd';
+import { Card, Row, Col, Button } from 'antd';
 import MarkRead from './MarkRead';
+import IsAdmin from "./../../Utility/IsAdmin"
 
 import "./LearningPage.less";
 
@@ -140,7 +141,14 @@ const LearningPage = (props: any) => {
                                 })}
                             </Card>
                         }
-
+                        
+                        <IsAdmin>
+                            <Card title="Admin">
+                                <Link to={"/node/" + Content.nodeID + "/coursebuilder/"}><Button type="primary">Course Builder</Button></Link>
+                                <br/>
+                                <Link to={"/node/" + Content.nodeID + "/builder/"}><Button type="primary">Page Builder</Button></Link>
+                            </Card>
+                        </IsAdmin>
                     </Col>
                 </Row>
             </div>

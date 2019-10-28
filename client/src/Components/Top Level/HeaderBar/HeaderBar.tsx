@@ -19,6 +19,7 @@ export default class HeaderBar extends React.Component<any, any> {
                     {Consumer => (
                         <div > {/* className={Consumer.isAdmin ? "threeButton" : "twoButton"}> */}
                             <Button type="primary" size="large"><Link to="/">Home</Link></Button>
+                            <Button type="primary" size="large"><Link to="/tree">Tree</Link></Button>
                             {/* <Button type="primary" size="large"><Link to="/">Courses</Link></Button> */}
                             {Consumer.isAdmin && <Button type="primary" size="large"><Link to="/Admin">Admin</Link></Button>}
                         </div>

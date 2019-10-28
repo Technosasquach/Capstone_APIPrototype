@@ -34,55 +34,68 @@ const AdminPanel = (props: any) => {
 
     const columnsUser = [
         {
-          title: 'Name',
-          dataIndex: 'username',
+            title: 'View as User',
+            dataIndex: 'username',
+            render: (data: any, more: any) => {
+                return <Link to={"/account/" + more.id}>{data}</Link>
+            }
         },
         {
-            title: 'Edit',
+            title: 'Edit Account',
             render: (data: any, more: any) => {
                 return <Link to={"/Admin/EditUser/" + more.id}>Edit</Link>
             }
         },
         {
-            title: 'Delete',
+            title: 'Delete Account',
             render: (data: any, more: any) => {
                 return <a onClick={DeleteUser.bind(null, more.id)}>Delete</a>
             }
         }
         
-      ];
-      const columnsCourse = [
+    ];
+    const columnsCourse = [
         {
-          title: 'Name',
-          dataIndex: 'name',
+            title: 'View as User',
+            dataIndex: 'name',
+            render: (data: any, more: any) => {
+                    return <Link to={"/course/" + more.id}>{data}</Link>
+            }
         },
         {
-            title: 'Delete',
+            title: 'Edit Course',
+            key: 'Edit',
+            render: (data: any, more: any) => {
+                return <Link to={"/node/" + more.id + "/coursebuilder"}>Edit</Link>
+            }
+        },
+        {
+            title: 'Delete Course',
             key: 'Delete',
             render: (data: any, more: any) => {
                 return <a onClick={DeleteCourse.bind(null, more.id)}>Delete</a>
             }
         }
-      ];
-      const columnsNode = [
+    ];
+    const columnsNode = [
         {
-          title: 'Name',
-          dataIndex: 'name',
-          render: (data: any, more: any) => {
-            return <Link to={"/learning/" + more.id}>{data}</Link>
-          }
+            title: 'View Learning Page',
+            dataIndex: 'name',
+            render: (data: any, more: any) => {
+                return <Link to={"/learning/" + more.id}>{data}</Link>
+            }
         },
         {
             title: 'Depth',
             dataIndex: 'depth'
         },
         {
-            title: 'Edit',
+            title: 'Edit Node Page',
             render: (data: any, more: any) => {
                 return <Link to={"/Admin/EditPage/" + more.id}>Edit</Link>
             }
         }
-      ];
+    ];
     
 
     useEffect(() => {
