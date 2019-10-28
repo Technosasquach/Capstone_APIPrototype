@@ -12,6 +12,7 @@ import AccountPage from "./Components/Pages/AccountPage/AccountPage";
 import CourseBuilder from "./Components/Pages/CourseBuilder/CourseBuilder";
 import HomePage from './Components/Pages/HomePage/HomePage';
 import SearchResultPage from "./Components/Pages/Search/SearchResult";
+import TreePage from "./Components/Pages/TreePage/TreePage";
 
 import CourseDisplayPage from "./Components/Pages/CourseDisplayPage/CourseDisplayPage";
 import PageBuilder from "./Components/Pages/PageBuilder/PageBuilder";
@@ -68,6 +69,7 @@ export default class Root extends React.Component<any, any> {
                                             <Route path="/learning/:id" component={LearningPage} />
                                             <Route path="/course/:id" component={CourseDisplayPage} />
                                             <Route path="/account" component={AccountPage} />
+                                            <Route path="/tree" component={TreePage} />
                                             <Route path="/" exact component={HomePage} />
                                         </Switch>
                                     )}
