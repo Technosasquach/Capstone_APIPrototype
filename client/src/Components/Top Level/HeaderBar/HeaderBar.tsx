@@ -14,7 +14,8 @@ export default class HeaderBar extends React.Component<any, any> {
     render() {
         return (
             <div className="navbar">
-                <h1>Syn|Lern</h1>
+                
+                <h1><img src="/public/favicon.png"/>Syn|Lern</h1>
                 <AuthContext.Consumer>
                     {Consumer => (
                         <div > {/* className={Consumer.isAdmin ? "threeButton" : "twoButton"}> */}
