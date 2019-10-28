@@ -181,14 +181,10 @@ const CourseNodeAdder = (props: any) => {
     return <TreeNode key={item.key} {...item} dataRef={item} />;
   });
   
-  
-  return (
-    <div>
-      <Tree loadData={onLoadData} checkable checkStrictly onCheck={onCheck} checkedKeys={CheckedKeys}>
+  ///@ts-ignore
+  return <Tree loadData={onLoadData} checkable checkStrictly onCheck={onCheck} checkedKeys={CheckedKeys}>
         {renderTreeNodes(TreeData)}
-      </Tree>
-    </div>
-  );
+    </Tree>
 }
 
 export default CourseNodeAdder;

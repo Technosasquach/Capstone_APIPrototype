@@ -86,6 +86,10 @@ app.use("/", routes);
 import graphRoutes from "./controllers/graphql";
 app.use("/", graphRoutes);
 
+app.get("/public/bgImage.jpeg", (req: Request, res: Response) => {
+    res.sendFile(path.resolve(__dirname, "./../public/serveimageA2.jpeg"));
+});
+
 // The last route run
 import { Request, Response } from "express";
 app.get("/**/", (req: Request, res: Response) => {

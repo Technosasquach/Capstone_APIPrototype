@@ -13,11 +13,11 @@ const accountSchema_1 = require("./../graphql/accountSchema");
 // WE SHOULD IMPLEMENT THIS https://github.com/Urigo/graphql-scalars?source=post_page-----3f8a38965b53----------------------
 const RootQuery = new graphql_1.GraphQLObjectType({
     name: 'RootQueryType',
-    fields: Object.assign({}, informationSchema_1.InformationQueries, nodeSchema_1.NodeQueries, commentSchema_1.CommentQueries, courseSchema_1.CourseQueries, userSchema_1.UserQueries, accountSchema_1.AccountQueries)
+    fields: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, informationSchema_1.InformationQueries), nodeSchema_1.NodeQueries), commentSchema_1.CommentQueries), courseSchema_1.CourseQueries), userSchema_1.UserQueries), accountSchema_1.AccountQueries)
 });
 const RootMutation = new graphql_1.GraphQLObjectType({
     name: 'Mutation',
-    fields: Object.assign({}, informationSchema_1.InformationMutations, nodeSchema_1.NodeMutations, commentSchema_1.CommentMutations, userSchema_1.UserMutations, accountSchema_1.AccountMutations, courseSchema_1.CourseMutations)
+    fields: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, informationSchema_1.InformationMutations), nodeSchema_1.NodeMutations), commentSchema_1.CommentMutations), userSchema_1.UserMutations), accountSchema_1.AccountMutations), courseSchema_1.CourseMutations)
 });
 const RootSchema = new graphql_1.GraphQLSchema({
     query: RootQuery,
