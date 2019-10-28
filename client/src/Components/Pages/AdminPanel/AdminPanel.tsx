@@ -83,9 +83,15 @@ const AdminPanel = (props: any) => {
             dataIndex: 'depth'
         },
         {
-            title: 'Edit Node Page',
+            title: 'Edit Page',
             render: (data: any, more: any) => {
                 return <Link to={"/Admin/EditPage/" + more.id}>Edit</Link>
+            }
+        },
+        {
+            title: 'Create Course',
+            render: (data: any, more: any) => {
+                return <Link to={"/node/" + more.id + "/coursebuilder/"}>Create</Link>
             }
         }
     ];
