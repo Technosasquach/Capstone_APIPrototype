@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ContentBuilder.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ContentBuilder.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+var __awaiter = (this &amp;&amp; this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = require("./../database/index");
+/**
+ * Answer
+ * enum to indentify answer of a quiz question
+ *
+ * @enum Answer
+ */
+var Answer;
+(function (Answer) {
+    Answer["A"] = "A";
+    Answer["B"] = "B";
+    Answer["C"] = "C";
+    Answer["D"] = "D";
+    Answer["NULL"] = "NULL";
+})(Answer || (Answer = {}));
+/**
+ * ContentController
+ *
+ * @export
+ * @class ContentController
+ */
+class ContentController {
+    /**
+     * checkInputs()
+     * Checks pre-existing information documents for a node and updates/deletes if they match the condition set
+     *
+     * @static
+     * @param {boolean} condition
+     * @param {string} type
+     * @param {string} data
+     * @param {idtype[]} ids
+     * @param {string} id
+     * @memberof ContentController
+     */
+    static checkInputs(condition, type, data, ids, id) {
+        if (condition) {
+            if (!this.checkType(ids, type)) {
+                return new index_1.Information({
+                    nodeId: id,
+                    type: type,
+                    data: data
+                }).save().catch(() => { throw (-1); });
+            }
+        }
+        else {
+            if (this.checkType(ids, type)) {
+                index_1.Information.findByIdAndDelete(this.getType(ids, type)).then(() => { ids.splice(this.getIndex(ids, type), 1); }).catch(() => { throw (-1); });
+            }
+        }
+    }
+    /**
+     * BuildPage()
+     * Builds the information documents for a node, will update previous information documents if they exist instead.
+     *
+     * @static
+     * @param {string} text
+     * @param {string} images
+     * @param {idtype[]} ids
+     * @param {string} id
+     * @memberof ContentController
+     */
+    static BuildPage(text, images, ids, id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.checkInputs((text !== "" &amp;&amp; text !== undefined), "text", text, ids, id);
+                yield this.checkInputs((JSON.parse(images).length > 0 &amp;&amp; images !== undefined), "images", images, ids, id);
+                ids.forEach((element) => __awaiter(this, void 0, void 0, function* () {
+                    yield index_1.Information.findByIdAndUpdate(element.id, {
+                        id: element.id,
+                        type: element.type,
+                        data: (element.type === "text" ? text : images)
+                    }).catch(() => { throw (-1); });
+                }));
+            }
+            catch (_a) {
+                return -1;
+            }
+        });
+    }
+    /**
+     * BuildQuiz()
+     * Builds a quiz for a specfic node
+     *
+     * @static
+     * @param {IQuestion[]} questions
+     * @param {string} node
+     * @memberof ContentController
+     */
+    static BuildQuiz(questions, node) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (questions.length > 0) {
+                const Questions = [];
+                const Answer = [];
+                const Answers = [];
+                for (let i = 0; i &lt; questions.length; i++) {
+                    if (!this.checkQuestionValid(questions[i])) {
+                        throw (-2);
+                    }
+                    Questions.push(questions[i].question);
+                    Answer.push(questions[i].answer);
+                    Answers.push(questions[i].answers);
+                }
+                return yield new index_1.Quiz({
+                    nodeID: node,
+                    questions: Questions,
+                    answer: Answer,
+                    answers: Answers
+                }).save().catch(() => { throw (-2); });
+            }
+        });
+    }
+    /**
+     * BuildCourse()
+     * Builds a course from the course builder section of the application
+     *
+     * @static
+     * @param {string} coursename
+     * @param {string[]} nodes
+     * @param {string[]} text
+     * @param {IQuestion[][]} quizzes
+     * @param {string[]} images
+     * @param {idtype[][]} ids
+     * @memberof ContentController
+     */
+    static BuildCourse(coursename, nodes, text, quizzes, images, ids) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const Quizzes = [];
+            for (let i = 0; i &lt; nodes.length; i++) {
+                const temp = yield this.BuildPage(text[i], images[i], ids[i], nodes[i]);
+                if (temp == -1) {
+                    return -1;
+                }
+                try {
+                    const quiz = yield this.BuildQuiz(quizzes[i], nodes[i]);
+                    if (quiz != null) {
+                        Quizzes.push(quiz);
+                    }
+                }
+                catch (_a) {
+                    return -2;
+                }
+            }
+            ;
+            try {
+                return yield new index_1.Course({
+                    name: coursename,
+                    nodes: nodes,
+                    quizzes: Quizzes
+                }).save().catch(() => { throw (-3); });
+            }
+            catch (_b) {
+                return -3;
+            }
+        });
+    }
+}
+/**
+ * checkType()
+ * checks type of information
+ *
+ * @static
+ * @param {idtype[]} types
+ * @param {string} type
+ * @returns {boolean} Is valid or not
+ * @memberof ContentController
+ */
+ContentController.checkType = (types, type) => {
+    for (let i = 0; i &lt; types.length; i++) {
+        if (types[i].type === type) {
+            return true;
+        }
+    }
+    return false;
+};
+/**
+ * checkType()
+ * Returns the id for a document of information
+ *
+ * @static
+ * @param {idtype[]} types
+ * @param {string} type
+ * @returns {string} id for information document
+ * @memberof ContentController
+ */
+ContentController.getType = (types, type) => {
+    for (let i = 0; i &lt; types.length; i++) {
+        if (types[i].type === type) {
+            return types[i].id;
+        }
+    }
+};
+/**
+ * getIndex()
+ * Returns the index for a matched type
+ *
+ * @static
+ * @param {idtype[]} types
+ * @param {string} type
+ * @returns {string} index for a information that matches type
+ * @memberof ContentController
+ */
+ContentController.getIndex = (types, type) => {
+    for (let i = 0; i &lt; types.length; i++) {
+        if (types[i].type === type) {
+            return i;
+        }
+    }
+};
+/**
+ * checkQuestionValid()
+ * Checks that a question has valid inputs for a quiz
+ *
+ * @static
+ * @param {IQuestion} question
+ * @memberof ContentController
+ */
+ContentController.checkQuestionValid = (question) => {
+    if (!question.answer) {
+        return false;
+    }
+    if (!question.answer) {
+        return false;
+    }
+    for (let i = 0; i &lt; 4; i++) {
+        if (!question.answers[i]) {
+            return false;
+        }
+    }
+    return true;
+};
+exports.ContentController = ContentController;
+//# sourceMappingURL=ContentBuilder.js.map</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AuthenticationController.html">AuthenticationController</a></li><li><a href="ContentController.html">ContentController</a></li><li><a href="KeyWordEngine.html">KeyWordEngine</a></li><li><a href="NodalMemory.html">NodalMemory</a></li><li><a href="ObjectBuffer.html">ObjectBuffer</a></li><li><a href="OSIPiAPIScraper.html">OSIPiAPIScraper</a></li><li><a href="SystemSearch.html">SystemSearch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Answer">Answer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Oct 28 2019 18:15:06 GMT+1000 (AEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
