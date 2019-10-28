@@ -55,9 +55,9 @@ const InformationField = (props: any) => {
                     editorState={contentContext.Content[structureContext.Selected.index]}
                     onEditorStateChange={onChange}
                     toolbar={{
-                        options: ['inline', 'blockType', 'fontSize', 'list', 'history'],
+                        options: ['inline', 'blockType', 'list', 'history'],
                         inline: {
-                            options: ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript']
+                            options: ['bold', 'italic', 'underline', 'strikethrough']
                         },
                     }}
                 />
