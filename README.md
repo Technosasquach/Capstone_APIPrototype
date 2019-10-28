@@ -1,5 +1,7 @@
 # Capstone Prototype
 
+This is all being hosted at [synlern.com](synlern.com). Please read the readme located in the root of this directory for future information!
+
 ## Requisite software / programs
 
 If you have never installed this programs beforehand, if your using a Mac or Linux machine, you will be able to install almost all of these with Homebrew / package-manager respectively. (Except NodeJS on Mac, with Homebrew I believe)
