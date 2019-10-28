@@ -2,14 +2,11 @@ import React, {useEffect, useState} from "react";
 import {Button, Row, Col} from 'antd';
 import Loader from './../../Utility/Loader';
 import axios from 'axios';
-import { Link } from "react-router-dom"
 
 import InfoDisplay from './InfoDisplay/InfoDisplay';
 import QuizDisplay from './QuizDisplay/QuizDisplay';
 
 import "./CourseDisplayPage.less"
-
-import IsAdmin from "./../../Utility/IsAdmin";
 
 interface card {
   id: number;
@@ -199,16 +196,12 @@ const CourseDisplayPage = (props: any) => {
     const setselected = () => {
       setSelected(index);
     }
-    return (<div key={index} className={type ? "quizcardMain" : "cardMain"}>
+    return (<div key={index} className={type ? "quizcardMain2" : "cardMain"}>
       <span>
-        {name}
+        <p>{name}</p>
         <Button onClick={setselected} className={"Selector"}>></Button>
       </span>
     </div>);
-  }
-
-  const Next = () => {
-    setSelected(Selected+1);
   }
 
     if(Loading) {
@@ -223,17 +216,12 @@ const CourseDisplayPage = (props: any) => {
                             return card(Card.name, Card.id, Card.type);
                         })}
                     </div>
-                    <IsAdmin>
-                        <Link to={"/"}><Button type={"primary"}>Edit Course</Button></Link>
-                    </IsAdmin>
                 </Col>
                 <Col span={20} style={{ height: "100%" }}>
                 {IndexMap[Selected].type ? 
-                    <><QuizDisplay Quiz={Quizzes[IndexMap[Selected].index]} setProgress={setProgress} Progress={Progress}/>
-                    <Button className="nextButton" onClick={Next}>Next</Button></>
+                    <QuizDisplay Quiz={Quizzes[IndexMap[Selected].index]} setProgress={setProgress} Progress={Progress}/>
                     :
-                    <><InfoDisplay Content={Content[IndexMap[Selected].index]} Comments={Comments[IndexMap[Selected].index]} CommentFunctions={CommentFunctions} setProgress={setProgress} Progress={Progress}/> 
-                    <Button className="nextButton" onClick={Next}>Next</Button></>
+                    <InfoDisplay Content={Content[IndexMap[Selected].index]} Comments={Comments[IndexMap[Selected].index]} CommentFunctions={CommentFunctions} setProgress={setProgress} Progress={Progress}/> 
                     }
                 </Col>
             </Row>

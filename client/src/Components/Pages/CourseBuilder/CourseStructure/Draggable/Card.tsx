@@ -29,14 +29,16 @@ const Carder = (props: any) => {
       <div>
         <div className="cardMain">
           <span>
-            {props.name}
-            <Button onClick={select} className={"Selector"} style={props.Selected.index == 0 && props.Selected.type == 0 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
+            <p>{props.name}</p>
             <Button onClick={updatequiz} className={"Selector"}>{Quiz ? 'x' : '+'}</Button>
+            <Button onClick={select} className={"Selector"} style={props.Selected.index == 0 && props.Selected.type == 0 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
           </span>
         </div>
         {Quiz && <div className="quizcardMain">
-          {props.name} Quiz
+          <span>
+          <p>{props.name} Quiz</p>
           <Button onClick={selectquiz} className={"Selector"} style={props.Selected.index == 0 && props.Selected.type == 1 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
+          </span>
         </div>}
       </div>
     );

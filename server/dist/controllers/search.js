@@ -96,7 +96,6 @@ class SystemSearch {
         });
     }
 }
-exports.SystemSearch = SystemSearch;
 /**
  * nodeSearchEngine
  * Storage for the node search engine
@@ -123,4 +122,5 @@ SystemSearch.informationSearchEngine = elasticLunr(function () {
     this.saveDocument(false); // http://elasticlunr.com/docs/index.html
     // Will not save original JSON, makes updating and deleting elements without ID impossible
 });
+exports.SystemSearch = SystemSearch;
 //# sourceMappingURL=search.js.map

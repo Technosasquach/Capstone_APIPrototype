@@ -115,14 +115,16 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
     <div ref={ref}>
       <div className="card" style={{ opacity }}>
         <span>
-          {text}
-          <Button onClick={editPage} className={"Selector"} style={structureContext.Selected.index == id+1 && structureContext.Selected.type == 0 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
+          <p>{text}</p>
           <Button onClick={setquiz} className={"Selector"}>{Quiz ? 'x' : '+'}</Button>
+          <Button onClick={editPage} className={"Selector"} style={structureContext.Selected.index == id+1 && structureContext.Selected.type == 0 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
         </span>
       </div>
       {Quiz && <div className="quizcard">
-        {text} Quiz
+        <span>
+        <p>{text} Quiz</p>
         <Button onClick={editQuiz} className={"Selector"} style={structureContext.Selected.index == id+1 && structureContext.Selected.type == 1 ? {backgroundColor: "#ADD8E6"} : {}}>></Button>
+        </span>
       </div>}
     </div>
   )
