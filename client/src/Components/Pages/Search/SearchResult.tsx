@@ -12,7 +12,7 @@ const SearchResult = () => {
     const searchContext = useContext(SearchContext);
     const authContext = useContext(AuthContext);
     
-    const { loading, courses, nodes } = searchContext;
+    const { courseLoading, pageLoading, courses, nodes } = searchContext;
     interface iNode {
         id: string,
         // parent: string[];
@@ -72,7 +72,7 @@ const SearchResult = () => {
         },
     ];
     
-    if (loading) {
+    if (pageLoading && courseLoading) {
         return (
             <div className='loading'>
                 <Spin tip="Conducting node search..."  size="large" />
@@ -84,24 +84,48 @@ const SearchResult = () => {
                     <Col span={14}>
                         <h1>Pages</h1>
                         <hr/>
-                        <Table
+                        {pageLoading ? 
+                        <Spin>
+                            <Table
                             rowKey={record => record.id} 
                             columns={columns} 
                             pagination={{ pageSize: 50 }} 
                             scroll={{ y: 600 }} 
                             dataSource={nodes} 
-                        />
+                            /> 
+                        </Spin> 
+                        :
+                        <Table
+                        rowKey={record => record.id} 
+                        columns={columns} 
+                        pagination={{ pageSize: 50 }} 
+                        scroll={{ y: 600 }} 
+                        dataSource={nodes} 
+                        /> 
+                        }
                     </Col>
                     <Col span={10}>
                         <h1>Courses</h1>
                         <hr/>
+                        {courseLoading ? 
+                        <Spin>
+                            <Table
+                                rowKey={record => record.id} 
+                                columns={course} 
+                                pagination={{ pageSize: 50 }} 
+                                scroll={{ y: 600 }} 
+                                dataSource={courses} 
+                            />
+                        </Spin>
+                        :
                         <Table
-                            rowKey={record => record.id} 
-                            columns={course} 
-                            pagination={{ pageSize: 50 }} 
-                            scroll={{ y: 600 }} 
-                            dataSource={courses} 
+                        rowKey={record => record.id} 
+                        columns={course} 
+                        pagination={{ pageSize: 50 }} 
+                        scroll={{ y: 600 }} 
+                        dataSource={courses} 
                         />
+                        }
                     </Col>
                 </Row>
             </div>

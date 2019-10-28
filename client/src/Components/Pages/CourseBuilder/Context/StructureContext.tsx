@@ -27,7 +27,11 @@ const structureProvider = (props:any) => {
         if(Selected.index == 0) {
           setName(Parent.name);
         } else {
-          setName(Structure.cards[Selected.index-1].name);
+          try {
+            setName(Structure.cards[Selected.index-1].name);
+          } catch {
+            setSelected({index: 0, type: 0});
+          }
         }
     }, [Selected]);
 

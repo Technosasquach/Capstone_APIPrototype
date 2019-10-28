@@ -25,6 +25,7 @@ const initialState = {
     DeleteQuiz(_index: number): any{},
     checkIfRemove(_index: number): any{},
     getQuiz(_index: number): any{},
+    findIndex(_index: number): any{}
 };
 
 import {StructureContext} from './StructureContext';
@@ -143,6 +144,7 @@ const quizProvider = (props:any) => {
       DeleteQuiz,
       checkIfRemove,
       getQuiz,
+      findIndex,
     }}>
       {props.children}
     </QuizContext.Provider>

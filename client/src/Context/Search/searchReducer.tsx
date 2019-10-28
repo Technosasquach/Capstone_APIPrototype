@@ -1,6 +1,7 @@
 import {
     SEARCH_NODES,
-    SET_LOADING,
+    SET_LOADING_PAGE,
+    SET_LOADING_COURSE,
     SEARCH_COURSES,
     // CLEAR_USERS,
     // GET_USER,
@@ -13,17 +14,23 @@ export default (state : any, action : any) => {
             return{
                 ...state,
                 nodes: action.payload,
+                pageLoading: false
             }
-        case SET_LOADING:
+        case SET_LOADING_PAGE:
             return{
                 ...state,
-                loading: true
+                pageLoading: true
+            }
+        case SET_LOADING_COURSE:
+            return{
+                ...state,
+                courseLoading: true
             }
         case SEARCH_COURSES:
             return{
                 ...state,
                 courses: action.payload,
-                loading: false
+                courseLoading: false
             }
         // case CLEAR_USERS:
         //     return{

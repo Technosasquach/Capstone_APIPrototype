@@ -33,6 +33,7 @@ routes.post("/coursebuilder/", authenticateConnection, function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const data = req.body;
         if (data.auth.accessLevel === "ADMIN") {
+            console.log(data);
             const response = yield ContentBuilder_1.ContentController.BuildCourse(data.coursename, data.nodes, data.data, data.quizzes, data.images, data.ids);
             if (typeof (response) == "object") {
                 res.end(res.json(response._id));

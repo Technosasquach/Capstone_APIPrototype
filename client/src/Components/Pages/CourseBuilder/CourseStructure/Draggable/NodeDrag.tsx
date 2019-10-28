@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react'
+import React, { useRef, useState, useContext, useEffect } from 'react'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd'
 import ItemTypes from './itemTypes'
 import { XYCoord } from 'dnd-core'
@@ -26,7 +26,11 @@ const Card: React.FC<CardProps> = ({ id, text, index, moveCard }) => {
   const structureContext = useContext(StructureContext);
   const quizContext = useContext(QuizContext);
 
-  const [Quiz, setQuiz] = useState(false);
+  const [Quiz, setQuiz] = useState(quizContext.findIndex(id+1) > -1);
+
+  useEffect(() => {
+    setQuiz(quizContext.findIndex(id+1) > -1)
+  }, [quizContext.Quiz]);
 
   const ref = useRef<HTMLDivElement>(null)
   const [, drop] = useDrop({
