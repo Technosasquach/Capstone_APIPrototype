@@ -12,13 +12,13 @@ const ReactMarkdown = require('react-markdown')
 
 interface iContent {
     id: string;
-    nodeID: string;
+    nodeId: string;
     data: string;
     type: string;
 }
 
 const Nod = () => {
-    const [Content, setContent] = useState({ id: "", nodeID: "", data: "", type: "" } as iContent);
+    const [Content, setContent] = useState({ id: "", nodeId: "", data: "", type: "" } as iContent);
     const [Loading, setLoading] = useState(false);
 
 
@@ -62,7 +62,7 @@ const Nod = () => {
                 <Typography.Title level={4}>Asset of the day!</Typography.Title>
                 <hr/>
                 <ReactMarkdown source={Content.data} />
-                <Button type="link" href={"/learning/"+Content.nodeID}>Read more...</Button>
+                <Button type="link" href={"/learning/"+Content.nodeId}>Read more...</Button>
             </div>
     )
 }

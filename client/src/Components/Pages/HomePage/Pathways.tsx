@@ -78,8 +78,8 @@ export class Pathways extends React.Component<{user: any}, { courses: iCourseQue
             return <div className="LearningCardList">
                 <h2>Courses</h2>
                 <hr/>
-                { this.state.courses.map((course: iCourseQuery) =>{
-                    return <PathwayCard course={course}/>
+                { this.state.courses.map((course: iCourseQuery, index: number) =>{
+                    return <PathwayCard key={index} course={course}/>
                 })}
             </div>
         } else {

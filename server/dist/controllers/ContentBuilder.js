@@ -1,15 +1,20 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("./../database/index");
+/**
+ * Answer
+ * enum to indentify answer of a quiz question
+ *
+ * @enum Answer
+ */
 var Answer;
 (function (Answer) {
     Answer["A"] = "A";
@@ -18,7 +23,25 @@ var Answer;
     Answer["D"] = "D";
     Answer["NULL"] = "NULL";
 })(Answer || (Answer = {}));
+/**
+ * ContentController
+ *
+ * @export
+ * @class ContentController
+ */
 class ContentController {
+    /**
+     * checkInputs()
+     * Checks pre-existing information documents for a node and updates/deletes if they match the condition set
+     *
+     * @static
+     * @param {boolean} condition
+     * @param {string} type
+     * @param {string} data
+     * @param {idtype[]} ids
+     * @param {string} id
+     * @memberof ContentController
+     */
     static checkInputs(condition, type, data, ids, id) {
         if (condition) {
             if (!this.checkType(ids, type)) {
@@ -35,6 +58,17 @@ class ContentController {
             }
         }
     }
+    /**
+     * BuildPage()
+     * Builds the information documents for a node, will update previous information documents if they exist instead.
+     *
+     * @static
+     * @param {string} text
+     * @param {string} images
+     * @param {idtype[]} ids
+     * @param {string} id
+     * @memberof ContentController
+     */
     static BuildPage(text, images, ids, id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -53,6 +87,15 @@ class ContentController {
             }
         });
     }
+    /**
+     * BuildQuiz()
+     * Builds a quiz for a specfic node
+     *
+     * @static
+     * @param {IQuestion[]} questions
+     * @param {string} node
+     * @memberof ContentController
+     */
     static BuildQuiz(questions, node) {
         return __awaiter(this, void 0, void 0, function* () {
             if (questions.length > 0) {
@@ -76,6 +119,19 @@ class ContentController {
             }
         });
     }
+    /**
+     * BuildCourse()
+     * Builds a course from the course builder section of the application
+     *
+     * @static
+     * @param {string} coursename
+     * @param {string[]} nodes
+     * @param {string[]} text
+     * @param {IQuestion[][]} quizzes
+     * @param {string[]} images
+     * @param {idtype[][]} ids
+     * @memberof ContentController
+     */
     static BuildCourse(coursename, nodes, text, quizzes, images, ids) {
         return __awaiter(this, void 0, void 0, function* () {
             const Quizzes = [];
@@ -108,7 +164,16 @@ class ContentController {
         });
     }
 }
-exports.ContentController = ContentController;
+/**
+ * checkType()
+ * checks type of information
+ *
+ * @static
+ * @param {idtype[]} types
+ * @param {string} type
+ * @returns {boolean} Is valid or not
+ * @memberof ContentController
+ */
 ContentController.checkType = (types, type) => {
     for (let i = 0; i < types.length; i++) {
         if (types[i].type === type) {
@@ -117,6 +182,16 @@ ContentController.checkType = (types, type) => {
     }
     return false;
 };
+/**
+ * checkType()
+ * Returns the id for a document of information
+ *
+ * @static
+ * @param {idtype[]} types
+ * @param {string} type
+ * @returns {string} id for information document
+ * @memberof ContentController
+ */
 ContentController.getType = (types, type) => {
     for (let i = 0; i < types.length; i++) {
         if (types[i].type === type) {
@@ -124,6 +199,16 @@ ContentController.getType = (types, type) => {
         }
     }
 };
+/**
+ * getIndex()
+ * Returns the index for a matched type
+ *
+ * @static
+ * @param {idtype[]} types
+ * @param {string} type
+ * @returns {string} index for a information that matches type
+ * @memberof ContentController
+ */
 ContentController.getIndex = (types, type) => {
     for (let i = 0; i < types.length; i++) {
         if (types[i].type === type) {
@@ -131,6 +216,14 @@ ContentController.getIndex = (types, type) => {
         }
     }
 };
+/**
+ * checkQuestionValid()
+ * Checks that a question has valid inputs for a quiz
+ *
+ * @static
+ * @param {IQuestion} question
+ * @memberof ContentController
+ */
 ContentController.checkQuestionValid = (question) => {
     if (!question.answer) {
         return false;
@@ -145,4 +238,5 @@ ContentController.checkQuestionValid = (question) => {
     }
     return true;
 };
+exports.ContentController = ContentController;
 //# sourceMappingURL=ContentBuilder.js.map

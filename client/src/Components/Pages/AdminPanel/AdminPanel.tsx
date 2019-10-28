@@ -63,13 +63,6 @@ const AdminPanel = (props: any) => {
             }
         },
         {
-            title: 'Edit Course',
-            key: 'Edit',
-            render: (data: any, more: any) => {
-                return <Link to={"/node/" + more.id + "/coursebuilder"}>Edit</Link>
-            }
-        },
-        {
             title: 'Delete Course',
             key: 'Delete',
             render: (data: any, more: any) => {

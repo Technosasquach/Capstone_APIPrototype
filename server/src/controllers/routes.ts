@@ -11,11 +11,15 @@ routes.post("/", (req: Request, res: Response) => {
 
 import {scrape} from './../controllers/scraper';
 routes.get("/api/", authenticateConnection, function(req: Request, res: Response) {
-    console.log("Test");
-    //scrape.scrapeWholeAPI();
-    res.json({
-        message: "Scraping Database."
-    });
+    const data = req.body;
+    if(data.auth.accessLevel === "ADMIN") {
+        //scrape.scrapeWholeAPI();
+        res.json({
+            message: "Scraping Database."
+        });
+    } else {
+        res.status(401).json({ status: 'Access Denied, Invalid Access'});
+    }
 });
 
 

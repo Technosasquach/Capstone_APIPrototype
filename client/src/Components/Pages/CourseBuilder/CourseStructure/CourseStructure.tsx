@@ -65,7 +65,7 @@ const CourseStructure = (props: any) => {
     query.images = images;
     query.ids = ids;
     query.quizzes = quizzes;
-    axios.post("http://localhost:3000/coursebuilder/", query).then(res => {
+    axios.post("/coursebuilder/", query).then(res => {
       switch(res.data) {
         case -1:
             window.alert("Issue with Page submission");

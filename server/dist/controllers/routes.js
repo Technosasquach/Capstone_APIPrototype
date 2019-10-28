@@ -1,10 +1,9 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -18,11 +17,16 @@ routes.post("/", (req, res) => {
     res.json({ message: "API is active" });
 });
 routes.get("/api/", authenticateConnection, function (req, res) {
-    console.log("Test");
-    //scrape.scrapeWholeAPI();
-    res.json({
-        message: "Scraping Database."
-    });
+    const data = req.body;
+    if (data.auth.accessLevel === "ADMIN") {
+        //scrape.scrapeWholeAPI();
+        res.json({
+            message: "Scraping Database."
+        });
+    }
+    else {
+        res.status(401).json({ status: 'Access Denied, Invalid Access' });
+    }
 });
 const ContentBuilder_1 = require("./ContentBuilder");
 routes.post("/coursebuilder/", authenticateConnection, function (req, res) {
@@ -176,7 +180,7 @@ function authenticateConnection(req, res, next) {
     const token = req.signedCookies["jwt"];
     const auth = authentication_1.AuthenticationController.authenticateJWT(token);
     if (auth.valid) {
-        req.body = Object.assign(Object.assign({}, req.body), { auth: auth });
+        req.body = Object.assign({}, req.body, { auth: auth });
         next();
     }
     else {

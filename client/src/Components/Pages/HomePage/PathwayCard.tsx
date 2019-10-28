@@ -40,7 +40,7 @@ export class PathwayCard extends React.Component<{course: iCourseQuery}, any> {
             </Button.Group> */}
             <Steps direction="vertical" size="small" current={1}>
                 { this.props.course.nodes.map((item: {id: string, name: string}) => {
-                    return <Step title={<Link to={"/learning/" + item.id}>{"Node: " + item.name}</Link>}/>
+                    return <Step key={item.id} title={<Link to={"/learning/" + item.id}>{"Node: " + item.name}</Link>}/>
                 })}
             </Steps>
         </div>
