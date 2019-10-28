@@ -120,14 +120,13 @@ const CourseNodeAdder = (props: any) => {
       e.checkedNodes.forEach((element: any) => {
         if(element.key === change) {
           structure.cards.push({
-            id: element.props.nodeID,
-            name: element.props.title
+            id: element.props.dataRef.nodeID,
+            name: element.props.dataRef.title
           });
           structure.index.push(index);
           structure.treeIndex.push(change);
+          loadData(element.props.dataRef.nodeID);
           structureContext.setStructure(structure);
-
-          loadData(element.props.nodeID);
         }
       });
     } else if (CheckedKeysNew.checked.length < CheckedKeys.checked.length) {
@@ -139,6 +138,12 @@ const CourseNodeAdder = (props: any) => {
           structure.index[temp] -= 1;
         }
       }
+
+      const temp2 = [...contentContext.Content];
+      temp2.splice(remove + 1, 1);
+      contentContext.setContent(temp2);
+      quizContext.checkIfRemove(remove+1);
+
       structure.cards.splice(remove, 1);
       structure.treeIndex.splice(remove, 1);
       const findIndex = structure.index.indexOf(remove);
@@ -148,10 +153,7 @@ const CourseNodeAdder = (props: any) => {
       if(structureContext.Selected.index === remove + 1) {
         structureContext.setSelected({index: 0, type: 0});
       }
-      const temp2 = [...contentContext.Content];
-      temp2.splice(remove + 1, 1);
-      contentContext.setContent(temp2);
-      quizContext.checkIfRemove(remove+1);
+
     }
   };
 

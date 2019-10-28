@@ -52,6 +52,7 @@ const CourseStructure = (props: any) => {
     let images = [JSON.stringify(contentContext.Images[0])] as any;
     let ids = [contentContext.IDS[0]];
     let quizzes = [quizContext.getQuiz(0)];
+    console.log(structureContext.Structure.cards);
     for(let i = 0; i < structureContext.Structure.cards.length; i++){
       nodes.push(structureContext.Structure.cards[order[i]].id);
       data.push(extractData(contentContext.Content[order[i]+1]));

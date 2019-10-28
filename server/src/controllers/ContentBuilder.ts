@@ -196,18 +196,23 @@ export class ContentController {
             const Answers = [] as any[][];
             for(let i = 0; i < questions.length; i++) {
                 if(!this.checkQuestionValid(questions[i])) {
+                    console.log("Invalid Questions")
                     throw(-2);
                 }
                 Questions.push(questions[i].question);
                 Answer.push(questions[i].answer);
                 Answers.push(questions[i].answers);
             }
+            console.log(node);
             return await new Quiz({
                 nodeID: node,
                 questions: Questions,
                 answer: Answer,
                 answers: Answers
-            }).save().catch(() => {throw(-2)});
+            }).save().catch((err) => {
+                console.log(err);
+                throw(-2);
+            });
         }
     }
 

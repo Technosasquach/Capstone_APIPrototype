@@ -146,9 +146,9 @@ const LearningPage = (props: any) => {
                         
                         <IsAdmin>
                             <Card title="Admin">
-                                <Link to={"/node/" + Content.nodeID + "/coursebuilder/"}><Button type="primary">Course Builder</Button></Link>
+                                <div className="buts"><Link to={"/node/" + Content.nodeID + "/coursebuilder/"}><Button type="primary">Course Builder</Button></Link></div>
                                 <br/>
-                                <Link to={"/node/" + Content.nodeID + "/builder/"}><Button type="primary">Page Builder</Button></Link>
+                                <div className="buts"><Link to={"/node/" + Content.nodeID + "/builder/"}><Button type="primary">Page Builder</Button></Link></div>
                             </Card>
                         </IsAdmin>
                     </Col>
