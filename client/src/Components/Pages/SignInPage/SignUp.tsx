@@ -88,6 +88,11 @@ export class SignUpPage extends React.Component<{ submitFunc: Function, errorMsg
                             <Button type="primary" onClick={this.handleSubmit}>Create User!</Button> Or <a onClick={this.handleSignUp}>Back to sign in</a>
                     </div>
                 </div>
+                <div className="bitwise">
+                    <span>Made By: <b>BitWise Productions</b></span>
+                    <br/>
+                    <a href="mailto:bitwiseproductions.team@gmail.com">bitwiseproductions.team@gmail.com</a>
+                </div>
             </div>
         );
     }

@@ -118,6 +118,11 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
                         </div>
                     }
                 </div>
+                <div className="bitwise">
+                    <span>Made By: <b>BitWise Productions</b></span>
+                    <br/>
+                    <a href="mailto:bitwiseproductions.team@gmail.com">bitwiseproductions.team@gmail.com</a>
+                </div>
             </div>
         );
     }
