@@ -26,6 +26,7 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleCookieAcceptance = this.handleCookieAcceptance.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
+        this.handleOnKeyDown = this.handleOnKeyDown.bind(this);
     }
 
     componentWillReceiveProps() {
@@ -64,6 +65,12 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
         this.props.signUpBtn();
     }
 
+    handleOnKeyDown(event: any) {
+        if(event.key === 'Enter') {
+            this.handleSubmit(event);
+        }
+    }
+
     render() {
         if(this.state.isWaiting) {
             return <Loader />
@@ -76,32 +83,34 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
                     </div>
                     { this.state.hasAcceptedCookies ? 
                         <div className="SignInRight">
-                                <Input 
-                                    prefix={
-                                        <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                                    }
-                                    onChange={this.handleUsernameChange}
-                                    value={this.state.username}
-                                    placeholder="Username"
-                                />
-                                <Input
-                                    prefix={
-                                        <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                                    }
-                                    onChange={this.handlePasswordChange}
-                                    value={this.state.password}
-                                    type="password"
-                                    placeholder="Password"
-                                />
-                                { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span className="errorMsg">{this.props.errorMsg}</span><br/></div> : undefined}
-                                <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a onClick={this.handleSignUp}>register now!</a>
+                            <Input 
+                                prefix={
+                                    <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                                }
+                                onChange={this.handleUsernameChange}
+                                value={this.state.username}
+                                placeholder="Username"
+                                onKeyDown={this.handleOnKeyDown}
+                            />
+                            <Input
+                                prefix={
+                                    <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                                }
+                                onChange={this.handlePasswordChange}
+                                value={this.state.password}
+                                type="password"
+                                placeholder="Password"
+                                onKeyDown={this.handleOnKeyDown}
+                            />
+                            { (this.props.errorMsg != "" && this.state.isWaiting == false) ? <div><span className="errorMsg">{this.props.errorMsg}</span><br/></div> : undefined}
+                            <Button type="primary" onClick={this.handleSubmit}>Submit</Button> Or <a onClick={this.handleSignUp}>register now!</a>
                         </div>
                     :
                         <div className="SignInRight">
                             <p>This site uses cookies. To comply with the European <a href="https://gdpr-info.eu/">General Data Protection Regulation (GDPR)</a> we must ask you to accept us using cookies. <br/> You will not be able to use this service without them</p>
                             <ButtonGroup>
                                 <Button type="primary" onClick={this.handleCookieAcceptance}>Accept</Button>
-                                <Button type="danger" >Reject</Button>
+                                <Button type="danger">Reject</Button>
                             </ButtonGroup>
                         </div>
                     }

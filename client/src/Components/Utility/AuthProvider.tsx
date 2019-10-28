@@ -39,7 +39,7 @@ export default class AuthProvider extends React.Component<any, { isSignUp: boole
                         console.log("[AuthProvider] JWT not valid, forcing login");
                         this.setState({
                             isAuthorized: false,
-                            errorMsg: "JWT Token has expired, please login again"
+                            errorMsg: "Login has expired, please login again"
                         })
                     } else {
                         console.log("[AuthProvider] JWT Valid, authorizing...");
