@@ -35,6 +35,7 @@ interface data {
   text: string;
   who: who;
   editable: boolean;
+  createdAt: string;
 }
 
 interface comment {
@@ -128,7 +129,7 @@ const CourseDisplayPage = (props: any) => {
   const getComments = (comment: any) => {
     const data = [] as any[]
     for (let i = 0; i < comment.length; i++) {
-      data.push({id: comment[i].id, text: comment[i].contents, who: {id: comment[i].userID.id, username: comment[i].userID.username}, editable: comment[i].userID.editable});
+      data.push({id: comment[i].id, text: comment[i].contents, who: {id: comment[i].userID.id, username: comment[i].userID.username}, editable: comment[i].userID.editable, createdAt: comment[i].createdAt});
     }
     return data;
   }
@@ -159,7 +160,7 @@ const CourseDisplayPage = (props: any) => {
   const getData = () => {
     setLoading(true);
     setCourseName("Loading Data");
-    let data:any = {query:  "query{course(id: \"" + props.match.params.id + "\"){name nodes {id name info { type data } comments { id contents userID { id username editable } } } quizzes { nodeID questions answers answer }}}\n\n"};
+    let data:any = {query:  "query{course(id: \"" + props.match.params.id + "\"){name nodes {id name info { type data } comments { id contents createdAt userID { id username editable } } } quizzes { nodeID questions answers answer }}}\n\n"};
     axios.post("/graphql/", data).then(res => {
       return {
         name: res.data.data.course.name,
@@ -174,9 +175,9 @@ const CourseDisplayPage = (props: any) => {
     })
   }
 
-  const addComment = (commentID: string, comment: string, id: string, username: string) => {
+  const addComment = (commentID: string, comment: string, id: string, username: string, createdAt: string) => {
     const temp = [...Comments];
-    temp[IndexMap[Selected].index].data.push({id: commentID, text: comment, who: {id: id, username: username}, editable: true});
+    temp[IndexMap[Selected].index].data.push({id: commentID, text: comment, who: {id: id, username: username}, editable: true, createdAt: createdAt});
     setComments(temp);
   }
 

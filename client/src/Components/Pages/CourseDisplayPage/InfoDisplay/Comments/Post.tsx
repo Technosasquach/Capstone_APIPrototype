@@ -21,6 +21,7 @@ interface iProps {
     text: string,
     editable: boolean,
     id: string,
+    createdAt: string,
     commentEdit?: () => void,
     commentDelete?: () => void
 }
@@ -36,7 +37,7 @@ const Post: React.FC<iProps> = (props, { }) => {
                 <Comment
                     author={user}
                     content={data}
-                    datetime={<span>{new Date(12030512).toLocaleDateString('en-GB', options)}</span>}
+                    datetime={<span>{new Date(parseInt(props.createdAt)).toLocaleDateString('en-GB', options)}</span>}
                 />
                 {props.editable && <div style={{display: "flex"}}>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent:"right", padding: "15px", borderRadius: "15px"}}>

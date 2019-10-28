@@ -16,7 +16,7 @@ const CommentList = (props: any) => {
                 dataSource={props.Comments.data}
                 renderItem={(item: any, index: number) => {return (
                     <List.Item key={index}>
-                        <Post index={index} commentEdit={props.editComment} commentDelete={props.removeComment} who={item.who} text={item.text} editable={item.editable} id={item.id} />
+                        <Post index={index} commentEdit={props.editComment} commentDelete={props.removeComment} who={item.who} text={item.text} editable={item.editable} id={item.id} createdAt={item.createdAt}/>
                     </List.Item>
                 )}}
             />}

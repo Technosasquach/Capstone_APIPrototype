@@ -20,6 +20,7 @@ const CommentCreator = (props: any) => {
                     addComment(infoNodeId: $infoNodeId, contents: $comment) {
                         id
                         contents
+                        createdAt
                         userID {
                             id
                             username
@@ -36,7 +37,8 @@ const CommentCreator = (props: any) => {
                 id: res.data.data.addComment.id,
                 text: res.data.data.addComment.contents,
                 userID: res.data.data.addComment.userID.id,
-                username: res.data.data.addComment.userID.username
+                username: res.data.data.addComment.userID.username,
+                createdAt: res.data.data.addComment.createdAt
             };
         }).catch(() => {
             return null;
@@ -51,7 +53,7 @@ const CommentCreator = (props: any) => {
         if(Ref.textAreaRef.value) {
             const temp = await submitComment(props.nodeID, Ref.textAreaRef.value);
             if (temp) {
-                props.addComment(temp.id, temp.text, temp.userID, temp.username);
+                props.addComment(temp.id, temp.text, temp.userID, temp.username, temp.createdAt);
                 Ref.textAreaRef.value = "";
             } else {
                 window.alert("Invalid Comment");

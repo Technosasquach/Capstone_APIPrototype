@@ -28,6 +28,7 @@ interface data {
     text: string;
     who: who;
     editable: boolean;
+    createdAt: string;
 }
 
 interface comment {
@@ -43,9 +44,9 @@ const LearningPage = (props: any) => {
     const [Parents, setParents] = useState([] as any[]);
     const [Children, setChildren] = useState([] as any[]);
 
-    const addComment = (commentID: string, comment: string, id: string, username: string) => {
+    const addComment = (commentID: string, comment: string, id: string, username: string, createdAt: string) => {
         const temp = { id: 0, nodeID: Comments.nodeID, data: [...Comments.data] };
-        temp.data.push({ id: commentID, text: comment, who: { id: id, username: username }, editable: true });
+        temp.data.push({ id: commentID, text: comment, who: { id: id, username: username }, editable: true , createdAt: createdAt});
         setComments(temp);
     }
 
@@ -84,7 +85,8 @@ const LearningPage = (props: any) => {
                     id: comment.userID.id,
                     username: comment.userID.username
                 }, 
-                editable: comment.userID.editable 
+                editable: comment.userID.editable,
+                createdAt: comment.createdAt
             }
         })
         setContent(content);
@@ -97,7 +99,7 @@ const LearningPage = (props: any) => {
 
     const getData = () => {
         setLoading(true);
-        let data: any = { query: "query{node(id: \"" + props.match.params.id + "\"){ name info { type data } comments { id contents userID { id username editable } } parents { id name } children { id name } } }\n\n" };
+        let data: any = { query: "query{node(id: \"" + props.match.params.id + "\"){ name info { type data } comments { id contents createdAt userID { id username editable } } parents { id name } children { id name } } }\n\n" };
         axios.post("/graphql/", data).then(res => {
             console.log(res);
             return {
