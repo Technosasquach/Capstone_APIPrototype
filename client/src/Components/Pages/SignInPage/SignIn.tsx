@@ -79,7 +79,10 @@ export class SignInPage extends React.Component<{ submitFunc: Function, errorMsg
             <div className="SignInContainer">
                 <div className="SignIn">
                     <div className="SignInLeft">
-                        <span>Syn|LERN</span>
+                        <div className="SignInLeftCenter">
+                            <img src="/public/favicon.png"/>
+                            <span>Syn|LERN</span>
+                        </div>
                     </div>
                     { this.state.hasAcceptedCookies ? 
                         <div className="SignInRight">

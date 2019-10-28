@@ -59,7 +59,10 @@ export class SignUpPage extends React.Component<{ submitFunc: Function, errorMsg
             <div className="SignInContainer">
                 <div className="SignIn">
                     <div className="SignInLeft">
-                        <span>Syn|LERN</span>
+                        <div className="SignInLeftCenter">
+                            <img src="/public/favicon.png"/>
+                            <span>Syn|LERN</span>
+                        </div>
                     </div>
                     <div className="SignInRight">
                             <span>SignUp!</span>
