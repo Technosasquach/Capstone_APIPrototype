@@ -4,7 +4,8 @@ import SearchContext from './searchContext';
 import SearchReducer from './searchReducer';
 import {
     SEARCH_NODES,
-    SET_LOADING,
+    SET_LOADING_PAGE,
+    SET_LOADING_COURSE,
     SEARCH_COURSES,
 } from '../types';
 
@@ -16,10 +17,11 @@ const SearchState = (props: any) => {
     }
 
     const [state, dispatch] = useReducer(SearchReducer, initialState);
-    const setLoading = () => dispatch({ type: SET_LOADING });
+    const setLoadingPage = () => dispatch({ type: SET_LOADING_PAGE });
+    const setLoadingCourse = () => dispatch({ type: SET_LOADING_COURSE });
 
     const searchNodes = async (text: any) => {
-        setLoading();
+        setLoadingPage();
 
         let data: any = {};
         data['query'] = "query{everyNode{ id createdAt depth name json keywords }}\n\n";
@@ -42,7 +44,7 @@ const SearchState = (props: any) => {
     }
 
     const searchCourses = async (text: any) => {
-        setLoading();
+        setLoadingCourse();
 
         let data: any = {};
         data['query'] = "query{everyCourse{ id name nodes {id}}}\n\n";
@@ -69,7 +71,8 @@ const SearchState = (props: any) => {
         value={{
             nodes: state.nodes,
             courses: state.courses,
-            loading: state.loading,
+            pageLoading: state.pageLoading,
+            courseLoading: state.courseLoading,
             searchNodes,
             searchCourses,
         }}

@@ -3,7 +3,8 @@ import { createContext } from 'react';
 const initialState = {
     nodes: [],
     courses: [],
-    loading: false,
+    pageLoading: false,
+    courseLoading: false,
     searchNodes(text: any): any {},
     searchCourses(text: any): any {},
 };
