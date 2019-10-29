@@ -1,84 +1,96 @@
 @import "./../../../core.less";
 @import "./../../../variables.less";
 
-.SignInContainer {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-image: url("/public/bgImage.jpeg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    .bitwise {
+.authContainer  {
+    .bg {
+        width: 100vw;
+        height: 100vh;
         position: absolute;
-        right: 0px;
-        bottom: 0px;
-        background-color: white;
-        border-top-left-radius: 5px;
-        text-align: right;
-        padding: 10px;
+        top: 0;
+        left: 0;
+        
+        z-index: -1000;
+        
+        background-image: url("/public/bgImage.jpeg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
-    .SignIn {
-
-        border-radius: 20px;
-        -webkit-box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
-        -moz-box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
-        box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
-        background-color: white;
-
+    .SignInContainer {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+    
         display: flex;
-        align-items: stretch;
-
-        .SignInLeft {
-            background-color: @colour-main;
-            border-top-left-radius: 20px;
-            border-bottom-left-radius: 20px;
-
+        justify-content: center;
+        align-items: center;
+    
+        .bitwise {
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            background-color: white;
+            border-top-left-radius: 5px;
+            text-align: right;
+            padding: 10px;
+        }
+    
+        .SignIn {
+    
+            border-radius: 20px;
+            -webkit-box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
+            -moz-box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
+            box-shadow: 0px 10px 45px -9px rgba(0,0,0,0.25);
+            background-color: white;
+    
             display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .SignInLeftCenter {
-
+            align-items: stretch;
+    
+            .SignInLeft {
+                background-color: @colour-main;
+                border-top-left-radius: 20px;
+                border-bottom-left-radius: 20px;
+    
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                margin: 20px;
-                // justify-content: center;
-
-                img {
-                    width: 50px;
-                    height: 50px;
+                justify-content: center;
+    
+                .SignInLeftCenter {
+    
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin: 20px;
+                    // justify-content: center;
+    
+                    img {
+                        width: 50px;
+                        height: 50px;
+                    }
+        
+                    span  {
+                        color: white;
+                        font-size: 2rem;
+                    }
                 }
     
-                span  {
-                    color: white;
-                    font-size: 2rem;
+                
+            }
+    
+            .SignInRight {
+                padding: 20px;
+                min-width: 100px;
+    
+                input {
+                    margin-bottom: 8px !important;
                 }
-            }
-
-            
-        }
-
-        .SignInRight {
-            padding: 20px;
-            min-width: 100px;
-
-            input {
-                margin-bottom: 8px !important;
-            }
-
-            .errorMsg {
-                color: #AA0404;
-                margin-bottom: 10px !important;
-                padding-bottom: 10px !important;
+    
+                .errorMsg {
+                    color: #AA0404;
+                    margin-bottom: 10px !important;
+                    padding-bottom: 10px !important;
+                }
             }
         }
     }

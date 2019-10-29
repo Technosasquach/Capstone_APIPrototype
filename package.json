@@ -108,6 +108,7 @@
     "react-dom": "^16.3.2",
     "react-draft-wysiwyg": "^1.13.2",
     "react-markdown": "^4.2.2",
+    "react-particles-js": "^2.7.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-wysiwyg-typescript": "^1.0.2",

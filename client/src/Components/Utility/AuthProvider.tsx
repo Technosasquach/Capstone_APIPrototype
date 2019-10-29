@@ -6,6 +6,7 @@ import Axios from 'axios';
 import * as qs from "querystring";
 import CookieHandler from '../../utils/clientCookies';
 import { EUserAuthLevel } from "./../../../../server/src/database/users"
+import Particles from 'react-particles-js';
 
 export const AuthContext = React.createContext({
     isSignUp: false,
@@ -144,11 +145,109 @@ export default class AuthProvider extends React.Component<any, { isSignUp: boole
         if (this.state.isAuthorized) {
             return <AuthContext.Provider value={this.state}>{this.props.children}</AuthContext.Provider>
         } else {
-            if (this.state.isSignUp) {
-                return <SignUpPage submitFunc={this.userSignUp} errorMsg={this.state.errorMsg} signUpBtn={this.switchSignIn} />
-            } else {
-                return <SignInPage submitFunc={this.userSubmission} errorMsg={this.state.errorMsg} signUpBtn={this.switchSignIn} />
-            }
+            return <div className="authContainer">
+                { this.state.isSignUp ? (
+                    <SignUpPage submitFunc={this.userSignUp} errorMsg={this.state.errorMsg} signUpBtn={this.switchSignIn} />
+                ) : (
+                    <SignInPage submitFunc={this.userSubmission} errorMsg={this.state.errorMsg} signUpBtn={this.switchSignIn} />
+                ) }
+                <div className="bg">
+                    <Particles params={{
+                    "particles": {
+                        "number": {
+                        "value": 100,
+                        "density": {
+                            "enable": false,
+                            "value_area": 1000
+                        }
+                        },
+                        "color": {
+                        "value": "#ffffff"
+                        },
+                        "shape": {
+                        "type": "circle",
+                        "polygon": {
+                            "nb_sides": 3
+                        },
+                        },
+                        "opacity": {
+                        "value": 0.43246706442958394,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.3,
+                            "sync": false
+                        }
+                        },
+                        "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 31.635045140775965,
+                            "sync": false
+                        }
+                        },
+                        "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                        },
+                        "move": {
+                        "enable": true,
+                        "speed": 3.2034597365154363,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "bubble"
+                        },
+                        "resize": true
+                        },
+                        "modes": {
+                        "grab": {
+                            "distance": 400,
+                            "line_linked": {
+                            "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 231.17917602874746,
+                            "size": 8.1115500360964,
+                            "duration": 2
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                        }
+                    }
+                    }}/>
+                </div>
+            </div>
         }
     }
 }
