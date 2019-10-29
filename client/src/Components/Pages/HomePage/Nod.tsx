@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import axios from 'axios'
 import { useState, useEffect } from "react";
 import { Typography, Button } from "antd";
+import { Link } from "react-router-dom";
 import Loader from './../../Utility/Loader';
 const ReactMarkdown = require('react-markdown')
 // import { Anchor } from 'antd';
@@ -62,7 +63,7 @@ const Nod = () => {
                 <Typography.Title level={4}>Asset of the day!</Typography.Title>
                 <hr/>
                 <ReactMarkdown source={Content.data} />
-                <Button type="link" href={"/learning/"+Content.nodeId}>Read more...</Button>
+                <Button type="primary"><Link to={"/learning/"+Content.nodeId}>Read more...</Link></Button>
             </div>
     )
 }
