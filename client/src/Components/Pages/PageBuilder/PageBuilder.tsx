@@ -56,7 +56,7 @@ const PageBuilderPage = (props: any) => {
       setLoading(true);
       let temp: string = draftandmark.draftToMarkdown(convertToRaw(Information.getCurrentContent()));
       let data = {text: temp, images: JSON.stringify(Images), ids: IDS, id: props.match.params.id};
-      axios.post("http://localhost:3000/pagebuilder/", data).then(res => {
+      axios.post("/pagebuilder/", data).then(res => {
         if(res.data == -1) {
           window.alert("Issue with Page submission");
         } else {
