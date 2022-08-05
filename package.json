@@ -96,7 +96,7 @@
     "less-loader": "^4.1.0",
     "log-update": "^3.2.0",
     "lusca": "^1.5.2",
-    "mongoose": "^5.5.12",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.0",
     "nodemon": "^1.19.1",
     "npm": "^5.8.0",
